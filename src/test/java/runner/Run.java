@@ -1,12 +1,22 @@
 package runner;
 
-import cucumber.junit.Cucumber;
+import com.cucumber.listener.Reporter;
+import cucumber.api.CucumberOptions;
+import cucumber.api.junit.Cucumber;
+import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 
+import java.io.File;
+
 @RunWith(Cucumber.class)
-@Cucumber.Options(dryRun = false, features = "features", glue = "stepDef",
-        tags = "@PartnerDashboard", format = {"pretty", "html:target/cucumber"}
+@CucumberOptions(dryRun = false, features = "src/test/resources/features", glue = "stepDef",
+        tags = "@HealthJourney", plugin = {"pretty", "com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html"}
 
 )
 public class Run {
+    @AfterClass
+    public static void writeExtentReport() {
+        Reporter.loadXMLConfig(new File("src/test/java/config/config.xml"));
+
+    }
 }

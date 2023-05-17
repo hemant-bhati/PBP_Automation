@@ -1,8 +1,6 @@
 @HealthJourney
 Feature: Health Journey functionality
   Scenario Outline: Health journey Functionality
-#    Given Opens the browser
-#    When Enter the URLs
     When Enter the Partner Code
     Then Clicks on the send otp button in login page
     Then enter the generated otp numbers

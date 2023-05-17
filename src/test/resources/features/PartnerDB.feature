@@ -9,3 +9,4 @@ Feature: Partner Dashboard functionality
     Scenario: Partner Dashboard functionality
       Given Validate Support Tickets tab under My Actionables
 
+

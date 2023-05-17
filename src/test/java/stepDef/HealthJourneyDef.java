@@ -1,25 +1,20 @@
 package stepDef;
 
-import cucumber.annotation.After;
-import cucumber.annotation.Before;
-import cucumber.annotation.en.Given;
-import cucumber.annotation.en.Then;
-import cucumber.annotation.en.When;
-import cucumber.runtime.PendingException;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
+
+import cucumber.api.java.Before;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
-import org.junit.Test;
-import org.openqa.selenium.*;
-import org.openqa.selenium.Dimension;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.TestBase;
-import java.awt.*;
-import java.awt.event.InputEvent;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.List;
@@ -35,7 +30,7 @@ public class HealthJourneyDef extends TestBase {
 
     @Before
     public void intialization() {
-        System.setProperty("webdriver.chrome.driver", "D:\\Cucumber_automation\\Test\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "Test/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get(prop.getProperty("getURL"));
@@ -404,7 +399,7 @@ public class HealthJourneyDef extends TestBase {
 
     @When("^Click on Sell now module$")
     public void clickOnSellNowModule() throws InterruptedException {
-        Thread.sleep(35000L);
+        Thread.sleep(350);
         driver.findElement(By.xpath("//li[@id='id-sellnow']")).click();
 //        JavascriptExecutor jse2 = (JavascriptExecutor)driver;
 //        jse2.executeScript("arguments[0].scrollIntoView()", sellNow);
@@ -633,7 +628,7 @@ public class HealthJourneyDef extends TestBase {
 
     public void test() {
         try {
-            String query = "select  top(1) LeadID from dbo.LeadDetails_v1 where productID = 190 and name like '%automation%' order by LeadID asc";
+            String query = "select top(1) LeadID from dbo.LeadDetails_v1 where productID = 190 and name like '%automation%' order by LeadID desc";
 // Get the contents of userinfo table from DB
             ResultSet res = stmt.executeQuery(query);
 // Print the result untill all the records are printed
@@ -646,7 +641,7 @@ public class HealthJourneyDef extends TestBase {
                 List<WebElement> leadId = driver.findElements(By.xpath("//span[@class='leadid']"));
                 for(WebElement e:leadId){
                     String leadValue=  res.getString(1);
-                    Assert.assertEquals(leadValue,e.getText());
+                    Assert.assertEquals("LEAD ID: "+leadValue,e.getText());
 //                Assert.assertEquals(res.getString(1),1234);
                 }
             }
