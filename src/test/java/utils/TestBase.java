@@ -1,9 +1,12 @@
 package utils;
 
 
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import jdk.jfr.events.FileReadEvent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -16,7 +19,8 @@ import java.util.Properties;
 
 public class TestBase {
     public static WebDriver driver;
-   public FileReader reader = new FileReader("application.properties");
+   public FileReader reader;
+
   public  Properties prop = new Properties();
     // Connection object
     Connection con = null;
@@ -30,23 +34,50 @@ public class TestBase {
     public static String DB_PASSWORD = "Affiliate@546510@Us@er";
 
 
-    public TestBase() throws IOException {
-    prop.load(reader);
-        try{
+    public void setUp() throws IOException {
+       // if (driver == null) {
+            reader = new FileReader("application.properties");
+            prop.load(reader);
+            try {
 // Database connection
-            String dbClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-            Class.forName(dbClass).newInstance();
+                String dbClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+                Class.forName(dbClass).newInstance();
+                Connection con;
 // Get connection to DB
-            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+                if (prop.getProperty("env").equalsIgnoreCase("prod")) {
+                    con = DriverManager.getConnection(prop.getProperty("DBUrlProd"), prop.getProperty("DBUserNameProd"), prop.getProperty("DBPasswordProd"));
+                } else {
+                    con = DriverManager.getConnection(prop.getProperty("DBUrlQA"), prop.getProperty("DBUserNameQA"), prop.getProperty("DBPasswordQA"));
+                }
 // Statement object to send the SQL statement to the Database
-            stmt = con.createStatement();
+                stmt = con.createStatement();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+       // }
+        if (prop.getProperty("browser").equalsIgnoreCase("chrome")) {
+            System.setProperty("webdriver.chrome.driver", "Test/chromedriver.exe");
+            ChromeOptions options = new ChromeOptions();
+           // options.addArguments("--headless");
+            options.addArguments("--remote-allow-origins=*");
+            driver = new ChromeDriver(options);
+            if (prop.getProperty("env").equalsIgnoreCase("prod")) {
+                driver.get(prop.getProperty("ProdURL"));
+            } else {
+                driver.get(prop.getProperty("QAURL"));
+            }
+            driver.manage().window().maximize();
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+    }
+
+
+
+//    public void closeBrowser(){
+//        driver.quit();
+
 
 
     }
 
-}
+
+

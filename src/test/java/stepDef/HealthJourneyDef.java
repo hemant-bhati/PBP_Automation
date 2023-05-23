@@ -1,6 +1,6 @@
 package stepDef;
 
-
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class HealthJourneyDef extends TestBase {
-    //    WebDriverWait webDriverWait;
+
     String parent;
 
 
@@ -29,12 +29,15 @@ public class HealthJourneyDef extends TestBase {
     }
 
     @Before
-    public void intialization() {
-        System.setProperty("webdriver.chrome.driver", "Test/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get(prop.getProperty("getURL"));
+    public void initialization() throws IOException {
+
+        setUp();
     }
+
+//    @After
+//    public void tearDown() {
+//        closeBrowser();
+//    }
 
     @Then("^Clicks on the send otp button in login page$")
     public void clicksOnTheSendOtpButtonInLoginPage() {
@@ -44,13 +47,21 @@ public class HealthJourneyDef extends TestBase {
 
     @Then("^enter the generated otp numbers$")
     public void enterTheGeneratedOtpNumbers() {
-        new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox1']"))).sendKeys("1");
-        new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox2']"))).sendKeys("0");
-        new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox3']"))).sendKeys("1");
-        new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox4']"))).sendKeys("0");
-        new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox5']"))).sendKeys("1");
-        new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox6']"))).sendKeys("0");
-
+        if (prop.getProperty("env").equalsIgnoreCase("prod")) {
+            new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox1']"))).sendKeys(prop.getProperty("OTP1"));
+            new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox2']"))).sendKeys(prop.getProperty("OTP2"));
+            new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox3']"))).sendKeys(prop.getProperty("OTP3"));
+            new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox4']"))).sendKeys(prop.getProperty("OTP4"));
+            new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox5']"))).sendKeys(prop.getProperty("OTP5"));
+            new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox6']"))).sendKeys(prop.getProperty("OTP6"));
+        }else{
+            new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox1']"))).sendKeys(prop.getProperty("QaOTP1"));
+            new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox2']"))).sendKeys(prop.getProperty("QaOTP2"));
+            new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox3']"))).sendKeys(prop.getProperty("QaOTP3"));
+            new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox4']"))).sendKeys(prop.getProperty("QaOTP4"));
+            new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox5']"))).sendKeys(prop.getProperty("QaOTP5"));
+            new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='codeBox6']"))).sendKeys(prop.getProperty("QaOTP6"));
+        }
     }
 
     @Then("^Click on verify otp buttons$")
@@ -104,8 +115,11 @@ public class HealthJourneyDef extends TestBase {
     @When("^Enter the Partner Code$")
     public void enterThePartnerCode() {
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        driver.findElement(By.xpath("//input[@id='user']")).sendKeys("IP9022");
-
+        if (prop.getProperty("env").equalsIgnoreCase("prod")) {
+            driver.findElement(By.xpath("//input[@id='user']")).sendKeys(prop.getProperty("IPCodeProd"));
+        }else{
+            driver.findElement(By.xpath("//input[@id='user']")).sendKeys(prop.getProperty("IPCodeQA"));
+        }
     }
 
     @Then("^Enter the details Health landing page$")
@@ -279,7 +293,7 @@ public class HealthJourneyDef extends TestBase {
     }
 
     @Then("^Accept declaration pop-up$")
-    public void acceptDeclarationPopUp() throws InterruptedException {
+    public void acceptDeclarationPopUp() throws InterruptedException, IOException {
         driver.findElement(By.xpath("//input[@id='declarationInput']")).click();
         driver.findElement(By.xpath("//button[contains(text(),'CONTINUE')]")).click();
         Thread.sleep(10000L);
@@ -292,17 +306,9 @@ public class HealthJourneyDef extends TestBase {
 
         String actualFullName = fullName.get(0).getText();
         System.out.println("actualFullName is" + actualFullName);
-//        driver.close();
-        Thread.sleep(10000L);
-        driver.close();
-        driver.quit();
-        intialization();
-//        String parentWindow=driver.getWindowHandle();
-//        String clickl = Keys.chord(Keys.CONTROL,Keys.TAB);
-//        driver.findElement(By.cssSelector("body")).sendKeys(clickl);
 
-//        driver.switchTo().defaultContent();
-//        System.out.println(driver.getTitle());
+        Thread.sleep(5000L);
+
 
     }
 
@@ -334,8 +340,6 @@ public class HealthJourneyDef extends TestBase {
                 break;
             }
         }
-//        String actualFullName= fullName.get(0).getText();
-//        System.out.println("actualFullName is" + actualFullName);
 
     }
 
@@ -494,7 +498,6 @@ public class HealthJourneyDef extends TestBase {
     }
 
 
-
     @When("^choose Policy Type$")
     public void choosePolicyType() {
     }
@@ -634,14 +637,17 @@ public class HealthJourneyDef extends TestBase {
 // Print the result untill all the records are printed
 // res.next() returns true if there is any next record else returns false
             while (res.next()) {
-                System.out.print(res.getString(1));
+                System.out.println("leadId value from DB " + res.getString(1));
 //                System.out.print(" " + res.getString(2));
 //                System.out.print(" " + res.getString(3));
 //                System.out.println(" " + res.getString(4));
-                List<WebElement> leadId = driver.findElements(By.xpath("//span[@class='leadid']"));
-                for(WebElement e:leadId){
-                    String leadValue=  res.getString(1);
-                    Assert.assertEquals("LEAD ID: "+leadValue,e.getText());
+                Thread.sleep(3000L);
+                List<WebElement> leadId = driver.findElements(By.xpath("(//span[@class='leadid'])[1]"));
+
+                for (WebElement e : leadId) {
+                    System.out.println("Lead Id value from UI " + e.getText());
+                    String leadValue = res.getString(1);
+                    Assert.assertEquals("LEAD ID: " + leadValue, e.getText());
 //                Assert.assertEquals(res.getString(1),1234);
                 }
             }
@@ -767,11 +773,11 @@ public class HealthJourneyDef extends TestBase {
 
     @When("^Enter the Pin \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
     public void enterThePin(String pincode, String DOB, String polTerm, String sumAssured, String premium) throws Throwable {
-      driver.findElement(By.xpath(prop.getProperty("pincode"))).sendKeys(pincode);
-      driver.findElement(By.xpath(prop.getProperty("DOB"))).sendKeys(DOB);
-      driver.findElement(By.xpath(prop.getProperty("policyTerm"))).sendKeys(polTerm);
-      driver.findElement(By.xpath(prop.getProperty("sumAssured"))).sendKeys(sumAssured);
-      driver.findElement(By.xpath(prop.getProperty("premium"))).sendKeys(premium);
+        driver.findElement(By.xpath(prop.getProperty("pincode"))).sendKeys(pincode);
+        driver.findElement(By.xpath(prop.getProperty("DOB"))).sendKeys(DOB);
+        driver.findElement(By.xpath(prop.getProperty("policyTerm"))).sendKeys(polTerm);
+        driver.findElement(By.xpath(prop.getProperty("sumAssured"))).sendKeys(sumAssured);
+        driver.findElement(By.xpath(prop.getProperty("premium"))).sendKeys(premium);
     }
 
     @When("^select customer Occupation \"([^\"]*)\"$")
