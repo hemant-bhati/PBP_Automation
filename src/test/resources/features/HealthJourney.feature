@@ -1,10 +1,11 @@
 @HealthJourney
 Feature: Health Journey functionality
-  Scenario Outline: Health journey Functionality
+  Background: Login Application
     When Enter the Partner Code
     Then Clicks on the send otp button in login page
     Then enter the generated otp numbers
     Then Click on verify otp buttons
+  Scenario Outline: Health journey Functionality
     When Click on Sell now module
     Given Click on the Health button
     Then Verify the title of Health journey landing page
@@ -19,15 +20,13 @@ Feature: Health Journey functionality
     Then choose medical questions
     Then fill the nominee section
     Then Accept declaration pop-up
-    When Enter the Partner Code
-    Then Clicks on the send otp button in login page
-    Then enter the generated otp numbers
-    Then Click on verify otp buttons
-    Then click on Lead navigation
-#    Then click on Request Offline Quote navigation
+    Examples:
+    ||
+    ||
 
-#    Then click on proceed to payment button
-    #Then get f name details
+
+  Scenario Outline: Validate the Lead ID in DB which is created in previous scenario
+    Then click on Lead navigation
     Examples:
     ||
     ||
