@@ -1,4 +1,4 @@
-package utils;
+package stepDef;
 
 
 import cucumber.api.java.After;
@@ -21,7 +21,7 @@ public class TestBase {
     public static WebDriver driver;
    public FileReader reader;
 
-  public  Properties prop = new Properties();
+  public  static Properties prop = new Properties();
     // Connection object
     Connection con = null;
     // Statement object
@@ -35,7 +35,7 @@ public class TestBase {
 
 
     public void setUp() throws IOException {
-       // if (driver == null) {
+        if (driver == null) {
             reader = new FileReader("application.properties");
             prop.load(reader);
             try {
@@ -54,7 +54,7 @@ public class TestBase {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-       // }
+        }
         if (prop.getProperty("browser").equalsIgnoreCase("chrome")) {
             System.setProperty("webdriver.chrome.driver", "Test/chromedriver.exe");
             ChromeOptions options = new ChromeOptions();
@@ -72,10 +72,10 @@ public class TestBase {
 
 
 
-//    public void closeBrowser(){
-//        driver.quit();
+    public void closeBrowser() {
+        driver.quit();
 
-
+    }
 
     }
 

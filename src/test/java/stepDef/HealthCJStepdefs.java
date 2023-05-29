@@ -1,7 +1,5 @@
 package stepDef;
 
-import cucumber.api.PendingException;
-import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -12,12 +10,9 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.TestBase;
 
 import java.io.IOException;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.Duration;
 import java.util.List;
 
 public class HealthCJStepdefs extends TestBase {
@@ -77,7 +72,7 @@ public class HealthCJStepdefs extends TestBase {
     @And("^user should enter the mandatory fields on member screen \"([^\"]*)\"$")
     public void userShouldEnterTheMandatoryFieldsOnMemberScreen(String eldestmemberage) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-            new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("2Addult")))).click();
+            new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("2Adult")))).click();
 
             WebElement age = driver.findElement(By.xpath(prop.getProperty("eldestmemberagexpath")));
             dropdownAge = new Select(age);

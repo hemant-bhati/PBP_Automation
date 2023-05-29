@@ -1,7 +1,5 @@
 package stepDef;
 
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -9,11 +7,9 @@ import junit.framework.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.TestBase;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -28,16 +24,9 @@ public class HealthJourneyDef extends TestBase {
     public HealthJourneyDef() throws IOException {
     }
 
-    @Before
-    public void initialization() throws IOException {
 
-        setUp();
-    }
 
-//    @After
-//    public void tearDown() {
-//        closeBrowser();
-//    }
+
 
     @Then("^Clicks on the send otp button in login page$")
     public void clicksOnTheSendOtpButtonInLoginPage() {
