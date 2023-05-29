@@ -77,7 +77,7 @@ public class HealthCJStepdefs extends TestBase {
     @And("^user should enter the mandatory fields on member screen \"([^\"]*)\"$")
     public void userShouldEnterTheMandatoryFieldsOnMemberScreen(String eldestmemberage) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-            new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("2Adult")))).click();
+            new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("2Addult")))).click();
 
             WebElement age = driver.findElement(By.xpath(prop.getProperty("eldestmemberagexpath")));
             dropdownAge = new Select(age);
