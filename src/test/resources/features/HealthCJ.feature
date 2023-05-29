@@ -24,7 +24,8 @@ Feature: Health Journey functionality
       And user should enter the mandatory fields on member screen "<eldestmemberage>"
       And select City "<city>"
       And select existing illness and click on View Plan
-      And click on proceed to payment button of NivaBupa
+      And click on premium button of NivaBupa
+      And click on proceed to proposal page
       Examples:
       |FullName|MobileNo|eldestmemberage|city|
       |Test Automation|9810168351|35    |Noida|
