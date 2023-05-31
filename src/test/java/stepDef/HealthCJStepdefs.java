@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class HealthCJStepdefs extends TestBase {
@@ -96,82 +97,59 @@ public class HealthCJStepdefs extends TestBase {
 
         //driver.findElement(By.xpath(prop.getProperty("viewplanbutton"))).click();
     }
-    public void validatePremiumButtonText() {
+    public void validatePremiumButtonText() throws SQLException {
         try {
             String query = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=626 and SumInsured=500000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and CityGroup_Id=204 and Term = 1";
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
                 System.out.println("premium value from DB " + res.getString(1));
                 Thread.sleep(3000L);
-                List<WebElement> niva = driver.findElements(By.xpath(prop.getProperty("NivaReAssure")));
-                for (int i = 0; i < niva.size(); i++) {
-                    String reAssure = driver.findElement(By.xpath("//*[contains(text(),'Health ReAssure')]")).getText();
-
-                    List<WebElement> proceedButton = driver.findElements(By.xpath("//div[@id='ProceedToProduct']"));
-                    for (int j = 0; j < proceedButton.size(); j++) {
-                        String buttontext = proceedButton.get(j).getText();
-                        if (reAssure.equalsIgnoreCase("Health ReAssure") && buttontext.contains("/year")) {
-                            System.out.println("reassure value is " + reAssure);
-                            System.out.println("button text is" + buttontext);
-                            String actualbuttontext = proceedButton.get(j+1).getText();
-                            String symbol1 = actualbuttontext.replaceAll("₹", "");
+                WebElement niva = driver.findElement(By.xpath(prop.getProperty("Nivabutton")));
+                    String reAssure = niva.getText();
+                            String symbol1 = reAssure.replaceAll("₹", "");
                             String symbol2 = symbol1.replaceAll("/year", "");
                             String finalsymbol = symbol2.replaceAll(",", "");
+                            System.out.println("premium value from UI = "+finalsymbol);
                             String expectedbuttontext = res.getString(1);
                             junit.framework.Assert.assertEquals(expectedbuttontext, finalsymbol);
                         }
-                    }
-                }
 
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-
+                } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+
     }
 
-    @And("^click on premium button of NivaBupa$")
-    public void clickOnpremiumButtonOfNivaBupa() throws InterruptedException {
-       // validatePremiumButtonText();
-        Thread.sleep(5000L);
-       List<WebElement> niva= driver.findElements(By.xpath(prop.getProperty("NivaReAssure")));
-       for(int i=0;i<niva.size();i++){
-         String reAssure =  driver.findElement(By.xpath("//*[contains(text(),'Health ReAssure')]")).getText();
-         List<WebElement> proceedButton=driver.findElements(By.xpath("//div[@id='ProceedToProduct']"));
-         for(int j=0;j<proceedButton.size();j++) {
-             String buttontext = proceedButton.get(j).getText();
-             if (reAssure.equalsIgnoreCase("Health ReAssure") && buttontext.contains("/year")) {
 
-                     System.out.println("reassure value is " + reAssure);
-                     System.out.println("button text is" + buttontext);
-                     try{
-                     proceedButton.get(j + 1).click();
-                     break;
-                 }
-                     catch(StaleElementReferenceException ex) {
-                         ex.printStackTrace();
-                     }
-             }
-         }
-         }
+
+    @And("^click on premium button of NivaBupa$")
+    public void clickOnpremiumButtonOfNivaBupa() throws InterruptedException, SQLException {
+        validatePremiumButtonText();
+        Thread.sleep(5000L);
+
+        WebElement niva = driver.findElement(By.xpath(prop.getProperty("Nivabutton")));
+        niva.click();
        }
     @And("^click on proceed to proposal page$")
-    public void clickOnProceedToProposalPage() {
+    public void clickOnProceedToProposalPage() throws InterruptedException {
         WebElement premiumvalue = driver.findElement(By.xpath("//div[@class='flexRow section_premium']//div//span"));
         System.out.println("*****Premium value before adding rider*****" + premiumvalue.getText());
-        driver.findElement(By.xpath("(//div[@class='fullWidthBtn'])[2]")).click();
-        Select spouseage = new Select(driver.findElement(By.xpath("//select[@class='checkPremium_Selectbox select_color']")));
-        spouseage.selectByValue("30");
-        new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(),'UPDATE & SHOW PREMIUM')]"))).click();
-        driver.findElement(By.xpath("(//div[@class='fullWidthBtn'])[2]")).click();
-         try {
-         }
-         catch (StaleElementReferenceException ey) {
-             ey.printStackTrace();
-         }
+        String beforerider =premiumvalue.getText();
+        driver.findElement(By.xpath("(//div[@class='fullWidthBtn'])[1]")).click();
+        //Thread.sleep(10000L);
+        WebElement premiumvalue1 = driver.findElement(By.xpath("//div[@class='flexRow section_premium']//div//span"));
+        System.out.println("*****Premium value after adding rider*****" + premiumvalue1.getText());
+        Assert.assertNotEquals(beforerider,premiumvalue1.getText());
+        driver.findElement(By.xpath(prop.getProperty("proceedtoproposal"))).click();
+    }
 
-        System.out.println("*****Premium value after adding rider*****" + premiumvalue.getText());
-       // driver.findElement(By.xpath(prop.getProperty("proceedtoproposal"))).click();
+    @And("^Enter spouse age through edit member$")
+    public void enterSpouseAgeThroughEditMember() throws InterruptedException {
+        driver.findElement(By.xpath("//span[contains(text(),'Edit Members')]")).click();
+        Thread.sleep(5000L);
+        Select spouseage = new Select(driver.findElement(By.xpath("(//div[@class='select_members_age']//select)[2]")));
+        spouseage.selectByValue("30");
+        driver.findElement(By.xpath("//div[contains(text(),'Apply')]")).click();
     }
 }
 

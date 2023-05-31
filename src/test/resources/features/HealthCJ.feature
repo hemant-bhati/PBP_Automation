@@ -24,6 +24,7 @@ Feature: Health Journey functionality
       And user should enter the mandatory fields on member screen "<eldestmemberage>"
       And select City "<city>"
       And select existing illness and click on View Plan
+      And Enter spouse age through edit member
       And click on premium button of NivaBupa
       And click on proceed to proposal page
       Examples:
