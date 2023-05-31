@@ -8,5 +8,8 @@ Feature: Partner Dashboard functionality
 
     Scenario: Partner Dashboard functionality
       Given Validate Support Tickets tab under My Actionables
+      Then Validate Offline Request tab under My Actionables
+      Then Validate Leads tab under My Actionables
+      Then Click on continue button through leads
 
 

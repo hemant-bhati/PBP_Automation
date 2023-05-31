@@ -775,9 +775,4 @@ public class HealthJourneyDef extends TestBase {
         occuption.selectByValue(custOccupation);
     }
 
-    @Then("^Validate Support Tickets tab under My Actionables$")
-    public void validateSupportTicketsTabUnderMyActionables() {
-        driver.findElement(By.xpath("//a[@class='viewall']")).click();
-        driver.navigate().back();
-    }
 }
