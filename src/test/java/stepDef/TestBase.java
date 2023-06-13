@@ -56,7 +56,7 @@ public class TestBase {
             }
         }
         if (prop.getProperty("browser").equalsIgnoreCase("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "Test/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
             ChromeOptions options = new ChromeOptions();
            // options.addArguments("--headless");
             options.addArguments("--remote-allow-origins=*");
