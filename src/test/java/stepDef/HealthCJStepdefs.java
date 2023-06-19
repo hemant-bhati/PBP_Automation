@@ -41,7 +41,6 @@ public class HealthCJStepdefs extends TestBase {
     @And("^Enter the detail in Health landing page \"([^\"]*)\",\"([^\"]*)\"$")
     public void enterTheDetailInHealthLandingPage(String FullName, String MobileNo) throws Throwable {
          parent = driver.getWindowHandle();
-
         for (String child : driver.getWindowHandles()) {
             if (!parent.contentEquals(child)) {
                 driver.switchTo().window(child);
@@ -413,17 +412,25 @@ public class HealthCJStepdefs extends TestBase {
     @And("^click on Continue button from Lead section$")
     public void clickOnContinueButtonFromLeadSection() throws InterruptedException {
         driver.findElement(By.xpath("(//a[contains(text(),'Continue ')])[1]")).click();
-        Thread.sleep(3000L);
+        Thread.sleep(5000L);
     }
     @And("^click on proceed to payment page$")
     public void clickOnProceedToPaymentPage() {
+        parent = driver.getWindowHandle();
+        for (String child : driver.getWindowHandles()) {
+            if (!parent.contentEquals(child)) {
+                driver.switchTo().window(child);
+                break;
+            }
+        }
+
 //        driver.navigate().refresh();
 //        WebElement childElement1 = driver.findElement(By.xpath("//button[@class='btn']"));
 //        JavascriptExecutor jse4 = (JavascriptExecutor) driver;
 //        jse4.executeScript("arguments[0].scrollIntoView()", childElement1);
 //        jse4.executeScript("arguments[0].click();", childElement1);
-        //driver.findElement(By.xpath("(//button[text()='Proceed to PAYMENT'])[2]")).click();
-        new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='btn']"))).click();
+        driver.findElement(By.xpath("//button[@class='btn']")).click();
+       // new WebDriverWait(driver, 30).until(ExpectedConditions.pre(By.xpath("//button[@class='btn']"))).click();
     }
 }
 
