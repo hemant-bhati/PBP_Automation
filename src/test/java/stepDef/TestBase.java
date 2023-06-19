@@ -23,13 +23,13 @@ public class TestBase {
 
   public  static Properties prop = new Properties();
     // Connection object
-    Connection con = null;
+    public static Connection con = null;
     // Statement object
-    public Statement stmt;
+    public static Statement stmt;
     // Constant for Database URL
-    public String DB_URL = "jdbc:sqlserver://10.81.5.54:1433;databaseName=PospDB";
+    public static String DB_URL = "jdbc:sqlserver://10.81.5.54:1433;databaseName=PospDB";
     //Database Username
-    public String DB_USER = "Affiliate";
+    public static String DB_USER = "Affiliate";
     // Database Password
     public static String DB_PASSWORD = "Affiliate@546510@Us@er";
 
@@ -56,7 +56,7 @@ public class TestBase {
             }
         }
         if (prop.getProperty("browser").equalsIgnoreCase("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "Test/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
             ChromeOptions options = new ChromeOptions();
            // options.addArguments("--headless");
             options.addArguments("--remote-allow-origins=*");
