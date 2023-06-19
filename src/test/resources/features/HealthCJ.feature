@@ -34,7 +34,9 @@ Feature: Health Journey functionality
       And check the Declaration popup
       And move to the POSP parent portal
       And click on the Lead tab
-      And verify the
+      And verify the Lead ID from UI and DB
+      And click on Continue button from Lead section
+      And click on proceed to payment page
       Examples:
       |FullName|MobileNo|eldestmemberage|city|panCard|address|contactEmail|emergencyMobile|dob|occupation|heightFeet|heightInch|weight|spouseName|spouseDOB|spouseOccupation|spouseHeightFeet|spouseHeightInch|spouseWeight|
       |Test Automation|9810168351|35    |Noida|AYMPB1667K|Delhi|test@gmail.com|9411073568 |01-01-1998|1|60    |8         |72    |Pooja k   |01-01-2002|5     |60               |4               |68          |

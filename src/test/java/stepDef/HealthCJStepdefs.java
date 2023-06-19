@@ -24,7 +24,7 @@ public class HealthCJStepdefs extends TestBase {
 
     @When("^Click on Sell now modules$")
     public void clickOnSellNowModules() throws InterruptedException {
-        Thread.sleep(5000L);
+        Thread.sleep(10000L);
         driver.findElement(By.xpath(prop.getProperty("sellnowbutton"))).click();
     }
 
@@ -364,20 +364,8 @@ public class HealthCJStepdefs extends TestBase {
 
     @And("^Enter the details on Nominee page$")
     public void enterTheDetailsOnNomineePage() throws InterruptedException {
-//        Actions actions = new Actions(driver);
-//        WebElement nominee = driver.findElement(By.xpath("(//input[@type='checkbox'])[1]"));
-//        actions.moveToElement(nominee).build().perform();
-//
-//        try {
-//            new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("(//div[@class='optionsModule'])[1]"))).click();
-//        }catch(Exception e){
-//            e.getMessage();
-//        }finally {
-//            driver.findElement(By.xpath("(//div[@class='optionsModule'])[1]")).click();
-//        }
         Thread.sleep(5000L);
         driver.navigate().refresh();
-
         WebElement childElement1 = driver.findElement(By.xpath("(//div[@class='InputLabelBox'])[1]"));
         JavascriptExecutor jse4 = (JavascriptExecutor) driver;
         jse4.executeScript("arguments[0].scrollIntoView()", childElement1);
@@ -385,26 +373,57 @@ public class HealthCJStepdefs extends TestBase {
 
         driver.findElement(By.xpath("//button[contains(text(),'REVIEW & PAY')]")).click();
     }
-
     @And("^check the Declaration popup$")
     public void checkTheDeclarationPopup() throws InterruptedException {
         driver.findElement(By.xpath("//input[@id='declarationInput']")).click();
         driver.findElement(By.xpath("//button[@class='btn zuno']")).click();
-        Thread.sleep(5000L);
+        Thread.sleep(10000L);
     }
-
     @And("^move to the POSP parent portal$")
     public void moveToThePOSPParentPortal() {
         driver.close();
         driver.switchTo().window(parent);
     }
-
     @And("^click on the Lead tab$")
     public void clickOnTheLeadTab() {
         WebElement element = driver.findElement(By.xpath("//a//span[contains(text(),'Lead')]"));
         JavascriptExecutor jse2 = (JavascriptExecutor) driver;
         jse2.executeScript("arguments[0].scrollIntoView()", element);
         jse2.executeScript("arguments[0].click();", element);
+    }
+    @And("^verify the Lead ID from UI and DB$")
+    public void verifyTheLeadIDFromUIAndDB() {
+        try {
+            String query = "use PospDB select top(1) LeadID from dbo.LeadDetails_v1 where productID = 190 and name like '%Test Automation%' order by LeadID desc";
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                System.out.println("leadId value from DB " + res.getString(1));
+                Thread.sleep(3000L);
+                List<WebElement> leadId = driver.findElements(By.xpath("(//span[@class='leadid'])[1]"));
+                for (WebElement e : leadId) {
+                    System.out.println("Lead Id value from UI " + e.getText());
+                    String leadValue = res.getString(1);
+                    junit.framework.Assert.assertEquals("LEAD ID: " + leadValue, e.getText());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @And("^click on Continue button from Lead section$")
+    public void clickOnContinueButtonFromLeadSection() throws InterruptedException {
+        driver.findElement(By.xpath("(//a[contains(text(),'Continue ')])[1]")).click();
+        Thread.sleep(3000L);
+    }
+    @And("^click on proceed to payment page$")
+    public void clickOnProceedToPaymentPage() {
+//        driver.navigate().refresh();
+//        WebElement childElement1 = driver.findElement(By.xpath("//button[@class='btn']"));
+//        JavascriptExecutor jse4 = (JavascriptExecutor) driver;
+//        jse4.executeScript("arguments[0].scrollIntoView()", childElement1);
+//        jse4.executeScript("arguments[0].click();", childElement1);
+        //driver.findElement(By.xpath("(//button[text()='Proceed to PAYMENT'])[2]")).click();
+        new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='btn']"))).click();
     }
 }
 
