@@ -430,7 +430,16 @@ public class HealthCJStepdefs extends TestBase {
 //        jse4.executeScript("arguments[0].scrollIntoView()", childElement1);
 //        jse4.executeScript("arguments[0].click();", childElement1);
         driver.findElement(By.xpath("//button[@class='btn']")).click();
-       // new WebDriverWait(driver, 30).until(ExpectedConditions.pre(By.xpath("//button[@class='btn']"))).click();
+           }
+
+    @And("^navigate to payment page and fill all mandatory entries$")
+    public void navigateToPaymentPageAndFillAllMandatoryEntries() throws InterruptedException {
+        driver.findElement(By.xpath("(//div[@class='selectBank'])[1]")).click();
+        driver.findElement(By.xpath("//button[@class=\"btn\" and @id=\"paynb\"]")).click();
+        driver.findElement(By.xpath("//button[@data-val=\"S\" and @class=\"success\"]")).click();
+        Thread.sleep(15000L);
+        driver.navigate().refresh();
+
     }
 }
 
