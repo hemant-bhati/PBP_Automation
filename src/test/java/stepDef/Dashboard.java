@@ -16,22 +16,22 @@ public class Dashboard extends TestBase {
         }
         driver.navigate().back();
         try {
-            String query = "use POSPDB EXEC [stats].[GetProductWiseBusinessStats_v1] @AffiliateCode='IP9022', @FromDate='2023-05-01', @ToDate='2023-05-09', @businessCheckOn=1";
+            String query = "use POSPDB EXEC [stats].[GetProductWiseBusinessStats_v1] @AffiliateCode='IP9022', @FromDate='2023-06-01', @ToDate='2023-06-21', @businessCheckOn=1";
 // Get the contents of userinfo table from DB
             ResultSet res = stmt.executeQuery(query);
 // Print the result untill all the records are printed
 // res.next() returns true if there is any next record else returns false
             int counter = 0;
             while (res.next()) {
-                System.out.print(" " + res.getString(1));
-                System.out.print(" " + res.getString(2));
-                System.out.print(" " + res.getString(3));
-                System.out.println(" " + res.getString(4));
-                System.out.print(" " + res.getString(5));
-                System.out.print(" " + res.getString(6));
-                System.out.println(" " + res.getString(7));
-                counter += res.getInt(3);
-                System.out.println(counter);
+                //System.out.print("product id " + res.getString(1));
+                System.out.println("product name=" + res.getString(2) + "\n");
+                System.out.println("Total no of policies= " + res.getString(3));
+                //System.out.println(" " + res.getString(4));
+                System.out.println("Total premium=" + res.getString(5));
+                System.out.println("Renewal booking count=" + res.getString(6));
+                System.out.println("Renewal APE=" + res.getString(7));
+                //counter += res.getInt(3);
+                //System.out.println(counter);
                 WebElement totalPol = driver.findElement(By.xpath("//div[@class='details']//h6"));
                 String totalPol1 = totalPol.getText();
                 String polCount=  res.getString(1);
