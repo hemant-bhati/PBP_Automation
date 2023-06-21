@@ -14,7 +14,6 @@ public class Dashboard extends TestBase {
         if(spticket.contains("Support Tickets")){
             driver.findElement(By.xpath(prop.getProperty("supportTickets"))).click();
         }
-
         driver.navigate().back();
         try {
             String query = "use POSPDB EXEC [stats].[GetProductWiseBusinessStats_v1] @AffiliateCode='IP9022', @FromDate='2023-05-01', @ToDate='2023-05-09', @businessCheckOn=1";
@@ -39,9 +38,6 @@ public class Dashboard extends TestBase {
                    //     Assert.assertEquals("Total Policies\r\n"+ polCount,totalPol1);
                 //Assert.assertEquals(res.getString(1),1234);
             }
-
-
-
 //            List<WebElement> leadId = driver.findElements(By.xpath("//span[@class='leadid']"));
 //            for(WebElement e:leadId){
 //              String leadValue=  res.getString(1);
@@ -51,23 +47,17 @@ public class Dashboard extends TestBase {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
-
     @Then("^Validate Offline Request tab under My Actionables$")
     public void validateOfflineRequestTabUnderMyActionables() {
         driver.findElement(By.xpath(prop.getProperty("OfflineRequest"))).click();
         driver.navigate().back();
-
     }
-
     @Then("^Validate Leads tab under My Actionables$")
     public void validateLeadsTabUnderMyActionables() {
         driver.findElement(By.xpath(prop.getProperty("leads"))).click();
         driver.navigate().back();
     }
-
     @Then("^Click on continue button through leads$")
     public void clickOnContinueButtonThroughLeads() {
         driver.findElement(By.xpath(prop.getProperty("continueLeadButton"))).click();
