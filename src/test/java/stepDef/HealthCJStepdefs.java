@@ -1,17 +1,18 @@
 package stepDef;
 
-import cucumber.api.PendingException;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -84,6 +85,7 @@ public class HealthCJStepdefs extends TestBase {
     @And("^select existing illness and click on View Plan$")
     public void selectExistingIllnessAndClickOnViewPlan() throws InterruptedException {
         driver.findElement(By.xpath(prop.getProperty("Noneofthese"))).click();
+        Thread.sleep(3000L);
 
         //driver.findElement(By.xpath(prop.getProperty("viewplanbutton"))).click();
     }
@@ -98,26 +100,26 @@ public class HealthCJStepdefs extends TestBase {
         WebElement NivaReasure2BronzePlus = null;
         WebElement NivaArogyaSanjeevani = null;
         WebElement nivaReAsure = null;
-        try {
-            nivaHealthPlusEnhance = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthPlusEnhance")));
-            String queryHealthPlus = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=574 and SumInsured=300000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
-            ResultSet res = stmt.executeQuery(queryHealthPlus);
-            while (res.next()) {
-                System.out.println("premium value from DB " + res.getString(1));
-                Thread.sleep(3000L);
-                String nivaHealthPlusEnhancetext;
-                nivaHealthPlusEnhancetext = nivaHealthPlusEnhance.getText();
-                String nivaHealthPlussymbol1 = nivaHealthPlusEnhancetext.replaceAll("₹", "");
-                String nivaHealthPlussymbol2 = nivaHealthPlussymbol1.replaceAll("/year", "");
-                String nivaHealthPlusfinalsymbol = nivaHealthPlussymbol2.replaceAll(",", "");
-                System.out.println("premium value from HealthPlusEnhance UI = " + nivaHealthPlusfinalsymbol);
-                String expectedbuttontext = res.getString(1);
-                junit.framework.Assert.assertEquals(expectedbuttontext, nivaHealthPlusfinalsymbol);
-                WebElement niva = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthPlusEnhance")));
-                niva.click();
-            }
-        } catch (org.openqa.selenium.NoSuchElementException e) {
-        }
+//        try {
+//            nivaHealthPlusEnhance = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthPlusEnhance")));
+//            String queryHealthPlus = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=574 and SumInsured=300000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
+//            ResultSet res = stmt.executeQuery(queryHealthPlus);
+//            while (res.next()) {
+//                System.out.println("premium value from DB " + res.getString(1));
+//                Thread.sleep(3000L);
+//                String nivaHealthPlusEnhancetext;
+//                nivaHealthPlusEnhancetext = nivaHealthPlusEnhance.getText();
+//                String nivaHealthPlussymbol1 = nivaHealthPlusEnhancetext.replaceAll("₹", "");
+//                String nivaHealthPlussymbol2 = nivaHealthPlussymbol1.replaceAll("/year", "");
+//                String nivaHealthPlusfinalsymbol = nivaHealthPlussymbol2.replaceAll(",", "");
+//                System.out.println("premium value from HealthPlusEnhance UI = " + nivaHealthPlusfinalsymbol);
+//                String expectedbuttontext = res.getString(1);
+//                junit.framework.Assert.assertEquals(expectedbuttontext, nivaHealthPlusfinalsymbol);
+//                WebElement niva = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthPlusEnhance")));
+//                niva.click();
+//            }
+//        } catch (org.openqa.selenium.NoSuchElementException e) {
+//        }
 //        try {
 //            nivaReAsure = driver.findElement(By.xpath(prop.getProperty("NivabuttonReasure")));
 //            String queryNivaReasure = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=626 and SumInsured=500000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
@@ -137,25 +139,25 @@ public class HealthCJStepdefs extends TestBase {
 //            }
 //        } catch (org.openqa.selenium.NoSuchElementException e) {
 //        }
-//        try {
-//            NivaHealthCompanion = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthCompanion")));
-//            String queryNivaCompanion = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=319 and SumInsured=500000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
-//            ResultSet res1 = stmt.executeQuery(queryNivaCompanion);
-//            while (res1.next()) {
-//                System.out.println("premium value from DB " + res1.getString(1));
-//                String nivaCompaniontext;
-//                nivaCompaniontext = NivaHealthCompanion.getText();
-//                String Companionsymbol1 = nivaCompaniontext.replaceAll("₹", "");
-//                String Companionsymbol2 = Companionsymbol1.replaceAll("/year", "");
-//                String Companionfinalsymbol = Companionsymbol2.replaceAll(",", "");
-//                System.out.println("premium value from nivareasure UI = " + Companionfinalsymbol);
-//                String expectedbuttontext = res1.getString(1);
-//                junit.framework.Assert.assertEquals(expectedbuttontext, Companionfinalsymbol);
-//                WebElement niva = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthCompanion")));
-//                niva.click();
-//            }
-//        } catch (org.openqa.selenium.NoSuchElementException e) {
-//        }
+        try {
+            NivaHealthCompanion = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthCompanion")));
+            String queryNivaCompanion = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=319 and SumInsured=300000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
+            ResultSet res1 = stmt.executeQuery(queryNivaCompanion);
+            while (res1.next()) {
+                System.out.println("premium value from DB " + res1.getString(1));
+                String nivaCompaniontext;
+                nivaCompaniontext = NivaHealthCompanion.getText();
+                String Companionsymbol1 = nivaCompaniontext.replaceAll("₹", "");
+                String Companionsymbol2 = Companionsymbol1.replaceAll("/year", "");
+                String Companionfinalsymbol = Companionsymbol2.replaceAll(",", "");
+                System.out.println("premium value from nivareasure UI = " + Companionfinalsymbol);
+                String expectedbuttontext = res1.getString(1);
+                junit.framework.Assert.assertEquals(expectedbuttontext, Companionfinalsymbol);
+                WebElement niva = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthCompanion")));
+                niva.click();
+            }
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+        }
 //        try {
 //            NivaReasure2PlatinumPlus = driver.findElement(By.xpath(prop.getProperty("NivabuttonReasure2PlatinumPlus")));
 //            String queryReasure2PlatinumPlus = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=44426 and SumInsured=500000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
@@ -440,6 +442,11 @@ public class HealthCJStepdefs extends TestBase {
         Thread.sleep(15000L);
         driver.navigate().refresh();
 
+    }
+
+    @And("^click on the view more plans button$")
+    public void clickOnTheViewMorePlansButton() {
+        driver.findElement(By.xpath(prop.getProperty("viewplanbutton"))).click();
     }
 }
 
