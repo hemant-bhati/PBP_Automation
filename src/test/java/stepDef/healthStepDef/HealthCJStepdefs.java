@@ -1,4 +1,4 @@
-package stepDef;
+package stepDef.healthStepDef;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.Before;
@@ -12,6 +12,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import stepDef.TestBase;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
