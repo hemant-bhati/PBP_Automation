@@ -522,38 +522,6 @@ public class HealthJourneyDef extends TestBase {
 //
 //        }
     }
-
-    //    Offline Quote Request
-    @When("^click on Request Offline Quote navigations$")
-    public void clickOnRequestOfflineQuoteNavigations() {
-        driver.findElement(By.xpath("//a[@data-bs-toggle='collapse']")).click();
-        WebElement childElement = driver.findElement(By.xpath("//li[@data-sidenav='raise-mapping-request']"));
-        JavascriptExecutor jse2 = (JavascriptExecutor) driver;
-        jse2.executeScript("arguments[0].scrollIntoView()", childElement);
-        jse2.executeScript("arguments[0].click();", childElement);
-        childElement.click();
-        List<WebElement> productName = driver.findElements(By.xpath("//select[@id='product_id']"));
-        Select details = new Select(productName.get(0));
-        details.selectByValue("186");
-        driver.findElement(By.xpath("//input[@id='cust_name']")).sendKeys("Neha gupta");
-        driver.findElement(By.xpath("//input[@id='reg_num']")).sendKeys("RJ09CM8899");
-        WebElement insurer = driver.findElement(By.xpath("//select[@id='insurer_id']"));
-        Select insurerdropdown = new Select(insurer);
-        insurerdropdown.selectByValue("4");
-        driver.findElement(By.xpath("//input[@id='policy_number']")).sendKeys("tax452004188");
-        driver.findElement(By.xpath("//input[@id='premium']")).sendKeys("5000");
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        // identify element
-        WebElement l = driver.findElement(By.xpath("//input[@id='file1']"));
-        // file path passed with sendkeys()
-        l.sendKeys("C:\\Users\\NehaGupta\\Desktop\\Backup folder\\Download data\\43400916.pdf");
-        WebElement submitButton = driver.findElement(By.xpath("//button[@class='btn btn-primary']"));
-        jse2.executeScript("arguments[0].scrollIntoView()", submitButton);
-        jse2.executeScript("arguments[0].click();", submitButton);
-
-
-    }
-
     // Term Offline Request
     @Given("^Click on the the New Offline Term Request$")
     public void clickOnTheTheNewOfflineTermRequest() {
