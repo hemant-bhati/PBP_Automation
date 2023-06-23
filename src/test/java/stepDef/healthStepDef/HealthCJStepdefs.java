@@ -441,6 +441,7 @@ public class HealthCJStepdefs extends TestBase {
         driver.findElement(By.xpath("//button[@data-val=\"S\" and @class=\"success\"]")).click();
         Thread.sleep(15000L);
         driver.navigate().refresh();
+        System.out.println("hello");
 
     }
 }
