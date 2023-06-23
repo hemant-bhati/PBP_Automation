@@ -50,8 +50,8 @@ public class RaiseMappingRequest extends TestBase {
         Thread.sleep(70000l);
 
     }
-    @Then("^Open the Admin Panel \"([^\"]*)\"$")
-    public void openTheAdminPanel(String prePolNum) throws Throwable {
+    @Then("^Open the Admin Panel \"([^\"]*)\", \"([^\"]*)\"$")
+    public void openTheAdminPanel(String prePolNum, String netPremium) throws Throwable {
         WebElement sentenceElement = driver.findElement(By.xpath("//div[@class='alert alert-success alert-important']"));
         // Get the text from the element
         String sentence = sentenceElement.getText();
@@ -95,16 +95,20 @@ public class RaiseMappingRequest extends TestBase {
         stpNstp.selectByValue("1");
         List<WebElement> planVal = driver1.findElements(By.xpath(prop.getProperty("planId")));
         Select planId = new Select(planVal.get(0));
-        planId.selectByValue("901");
+        planId.selectByValue("3139");
         driver1.findElement(By.xpath(prop.getProperty("prePolNum"))).sendKeys(prePolNum);
        List<WebElement> fuelT = driver1.findElements(By.xpath(prop.getProperty("fuelType")));
        Select fuelTy = new Select(fuelT.get(0));
         fuelTy.selectByValue("2");
       List<WebElement> mode= driver1.findElements(By.xpath(prop.getProperty("model")));
       Select carModel = new Select(mode.get(0));
-        carModel.selectByValue("230");
-       List<WebElement> term = driver1.findElements(By.xpath(prop.getProperty("polTerm")));
-       Select termpol= new Select(mode.get(0));
-        termpol.selectByValue("1");
+        carModel.selectByVisibleText("CARNIVAL");
+        driver1.findElement(By.xpath(prop.getProperty("netPremium"))).sendKeys(netPremium);
+        WebElement submitButt= driver1.findElement(By.xpath(prop.getProperty("updateButton")));
+        jse2.executeScript("arguments[0].scrollIntoView()", submitButt);
+        jse2.executeScript("arguments[0].click();", submitButt);
+//       List<WebElement> term = driver1.findElements(By.xpath(prop.getProperty("polTerm")));
+//       Select termpol= new Select(mode.get(0));
+//        termpol.selectByValue("1");
     }
 }
