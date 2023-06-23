@@ -10,7 +10,7 @@ import java.io.File;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(dryRun = false, features = "src/test/resources/features", glue = "stepDef",
-        tags = "@MappingRequest", plugin = {"pretty", "com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html"}
+        tags = "@HealthCJ", plugin = {"pretty", "com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html"}
 
 )
 public class Run {
