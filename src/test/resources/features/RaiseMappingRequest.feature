@@ -8,9 +8,9 @@ Feature: Request Offline Quote
 
   Scenario Outline: Generate Request Offline Quote
     When click on Request Offline Quote navigations "<prodID>","<custName>", "<regisNum>","<polNum>","<preMium>", "<docUpload>"
-    Then Open the Admin Panel "<prePolNum>"
+    Then Open the Admin Panel "<prePolNum>", "<netPremium>"
 
 #    Then Click on Tickets
     Examples:
-      |prePolNum|prodID|custName|regisNum|preMium|docUpload|polNum|
-      |2872665565|186  |Neha Gupta|RJ09RG8899|56000  |C:\Users\NehaGupta\Desktop\Policies folder\Reliance\rel car tp 4.pdf|hu78hcm20|
+      |prePolNum|prodID|custName|regisNum|preMium|docUpload|polNum|netPremium|
+      |2872665565|186  |Neha Gupta|RJ09RG8899|56000  |C:\Users\NehaGupta\Desktop\Policies folder\Reliance\reliance car saod.pdf|hu78hcm76|12596|
