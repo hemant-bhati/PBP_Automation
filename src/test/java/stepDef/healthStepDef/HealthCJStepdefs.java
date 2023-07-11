@@ -170,6 +170,7 @@ public class HealthCJStepdefs extends TestBase {
         Select spouseage = new Select(driver.findElement(By.xpath("(//div[@class='select_members_age']//select)[2]")));
         spouseage.selectByValue("30");
         driver.findElement(By.xpath("//div[contains(text(),'Apply')]")).click();
+        Thread.sleep(3000L);
     }
 
     @And("^Enter the details on proposer details screen \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
