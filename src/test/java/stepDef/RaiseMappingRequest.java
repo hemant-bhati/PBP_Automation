@@ -24,7 +24,7 @@ public class RaiseMappingRequest extends TestBase {
     }
     @When("^click on Request Offline Quote navigations \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\"$")
     public void clickOnRequestOfflineQuoteNavigations(String prodID, String custName, String regisNum, String polNum, String preMium, String docUpload) throws Throwable {
-        driver.findElement(By.xpath("(//a[@data-bs-toggle='collapse'])[1]")).click();
+        driver.findElement(By.xpath("//a[@data-bs-toggle='collapse']")).click();
         WebElement childElement = driver.findElement(By.xpath("//li[@data-sidenav='raise-mapping-request']"));
         JavascriptExecutor jse2 = (JavascriptExecutor) driver;
        // JavascriptExecutor jse2 = (JavascriptExecutor) driver;
