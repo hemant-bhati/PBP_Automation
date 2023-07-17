@@ -89,21 +89,19 @@ public class HealthCJStepdefs extends TestBase {
     public void selectExistingIllnessAndClickOnViewPlan() throws InterruptedException {
         driver.findElement(By.xpath(prop.getProperty("Noneofthese"))).click();
         Thread.sleep(5000L);
-        //driver.navigate().refresh();
-        //driver.findElement(By.xpath(prop.getProperty("viewplanbutton"))).click();
-    }
+        }
 
     public void validatePremiumButtonText() throws SQLException, InterruptedException {
         Thread.sleep(5000L);
        // driver.navigate().refresh();
         WebElement nivaHealthPlusEnhance = null;
-        WebElement NivaHealthCompanion = null;
-        WebElement NivaReasure2PlatinumPlus = null;
-        WebElement NivaReasure2TitaniumPlus = null;
-        WebElement NivaGoActive = null;
-        WebElement NivaReasure2BronzePlus = null;
-        WebElement NivaArogyaSanjeevani = null;
-        WebElement nivaReAsure = null;
+//        WebElement NivaHealthCompanion = null;
+//        WebElement NivaReasure2PlatinumPlus = null;
+//        WebElement NivaReasure2TitaniumPlus = null;
+//        WebElement NivaGoActive = null;
+//        WebElement NivaReasure2BronzePlus = null;
+//        WebElement NivaArogyaSanjeevani = null;
+//        WebElement nivaReAsure = null;
 
         try {
             nivaHealthPlusEnhance = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthPlusEnhance")));
@@ -255,7 +253,7 @@ public class HealthCJStepdefs extends TestBase {
         driver.findElement(By.xpath("//input[@id='declarationInput']")).click();
         driver.findElement(By.xpath("//button[@class='btn zuno']")).click();
         Thread.sleep(10000L);
-        String premiumonpaymentsummarypage = driver.findElement(By.xpath("//div[@class='summaryTotalBlock__amount']")).getText();
+            String premiumonpaymentsummarypage = driver.findElement(By.xpath("//div[@class='summaryTotalBlock__amount']")).getText();
         System.out.println("***"+premiumonpaymentsummarypage+"****");
         //Assert.assertEquals(premiumonpaymentsummarypage,premiumofproposalpage);
     }

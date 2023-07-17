@@ -9,6 +9,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.io.IOException;
@@ -23,12 +24,17 @@ public class RaiseMappingRequest extends TestBase {
     }
     @When("^click on Request Offline Quote navigations \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\"$")
     public void clickOnRequestOfflineQuoteNavigations(String prodID, String custName, String regisNum, String polNum, String preMium, String docUpload) throws Throwable {
-        driver.findElement(By.xpath("//a[@data-bs-toggle='collapse']")).click();
+        driver.findElement(By.xpath("(//a[@data-bs-toggle='collapse'])[1]")).click();
         WebElement childElement = driver.findElement(By.xpath("//li[@data-sidenav='raise-mapping-request']"));
         JavascriptExecutor jse2 = (JavascriptExecutor) driver;
+       // JavascriptExecutor jse2 = (JavascriptExecutor) driver;
         jse2.executeScript("arguments[0].scrollIntoView()", childElement);
         jse2.executeScript("arguments[0].click();", childElement);
         childElement.click();
+//        Actions action = new Actions(driver);
+//        WebElement childElement = driver.findElement(By.xpath("//li[@data-sidenav='raise-mapping-request']"));
+//        action.moveToElement(childElement).click().perform();
+
         List<WebElement> productName = driver.findElements(By.xpath(prop.getProperty("prodID")));
         Select details = new Select(productName.get(0));
         details.selectByValue(prodID);
@@ -45,6 +51,7 @@ public class RaiseMappingRequest extends TestBase {
         // file path passed with sendkeys()
         l.sendKeys(docUpload);
         WebElement submitButton = driver.findElement(By.xpath(prop.getProperty("subBut")));
+        //JavascriptExecutor jse2 = (JavascriptExecutor) driver;
         jse2.executeScript("arguments[0].scrollIntoView()", submitButton);
         jse2.executeScript("arguments[0].click();", submitButton);
         Thread.sleep(70000l);
