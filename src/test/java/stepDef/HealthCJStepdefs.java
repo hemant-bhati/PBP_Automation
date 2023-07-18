@@ -770,12 +770,12 @@ public class HealthCJStepdefs extends TestBase {
 //        WebElement nivaHealthMaxsaver = null;
 //        try {
 //            nivaHealthMaxsaver = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthmaxsaver")));
-//            String queryNivaCompanion = "use HealthDB Select top 1 Premium from Hi.Health_Rates nolock where Plan_Id=319 and SumInsured=750000 and NumberOfAdults=2 and NumberOfChildren=1 and Max_AgeOfEldestMember=35 and Term = 1";
+//            String querynivaHealthMaxsaver = "use HealthDB Select top 1 Premium from Hi.Health_Rates nolock where Plan_Id=319 and SumInsured=750000 and NumberOfAdults=2 and NumberOfChildren=1 and Max_AgeOfEldestMember=35 and Term = 1";
 //            ResultSet res1 = stmt.executeQuery(queryNivaCompanion);
 //            while (res1.next()) {
 //                System.out.println("premium value from DB " + res1.getString(1));
-//                String nivaCompaniontext;
-//                nivaCompaniontext = nivaHealthCompanion.getText();
+//                String nivaHealthMaxsavertext;
+//                nivaHealthMaxsavertext = nivaHealthMaxsaver.getText();
 //                String Companionsymbol1 = nivaCompaniontext.replaceAll("₹", "");
 //                String Companionsymbol2 = Companionsymbol1.replaceAll("/year", "");
 //                String Companionfinalsymbol = Companionsymbol2.replaceAll(",", "");
