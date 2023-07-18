@@ -1,12 +1,4 @@
-#Scenario: Niva Health Pulse Enhanced
-#1)Gender - FeMale
-#2)Combination - 2A
-#3)City - Noida
-#4)Cover - 3 lakh(POS)
-#5)Plan - Health Pulse Enhanced
-#6)Riders - Safeguard Benefit , Hospital Cash
-
-@Health
+@HealthCJ
 Feature: Health Journey functionality
   Background: Login Application
     When Enter the Partner Code
@@ -14,6 +6,14 @@ Feature: Health Journey functionality
     Then enter the generated otp numbers
     Then Click on verify otp buttons
 
+#  Scenario Outline: validate the error msg while keeping name and mobile no as blank in Health page
+#    When Click on Sell now modules
+#    When Click on the Health buttons
+#    And Enter the detail in Health landing page "<FullName>","<MobileNo>"
+#    Then validate the error msg
+#    Examples:
+#      |FullName|MobileNo|
+#      |||
 
 
     Scenario Outline: Verify User should be able to enter the details in Health page

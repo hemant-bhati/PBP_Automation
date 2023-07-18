@@ -1,21 +1,23 @@
 package stepDef;
 
 
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
+import jdk.jfr.events.FileReadEvent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.Properties;
-
 public class TestBase {
     public static WebDriver driver;
    public FileReader reader;
-
   public  static Properties prop = new Properties();
     // Connection object
     public static Connection con = null;
@@ -27,8 +29,6 @@ public class TestBase {
     public static String DB_USER = "Affiliate";
     // Database Password
     public static String DB_PASSWORD = "Affiliate@546510@Us@er";
-
-
     public void setUp() throws IOException {
         if (driver == null) {
             reader = new FileReader("application.properties");
@@ -64,14 +64,9 @@ public class TestBase {
             driver.manage().window().maximize();
         }
     }
-
-
-
     public void closeBrowser() {
         driver.quit();
-
     }
-
     }
 
 
