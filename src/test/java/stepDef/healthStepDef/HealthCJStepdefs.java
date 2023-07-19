@@ -108,7 +108,7 @@ public class HealthCJStepdefs extends TestBase {
         WebElement nivaReAsure = null;
         try {
             nivaHealthPlusEnhance = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthPlusEnhance")));
-            String queryHealthPlus = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=574 and SumInsured=300000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
+            String queryHealthPlus = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=574 and SumInsured=500000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
             ResultSet res = stmt.executeQuery(queryHealthPlus);
             while (res.next()) {
                 System.out.println("premium value from DB " + res.getString(1));
