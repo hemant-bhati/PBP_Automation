@@ -13,4 +13,4 @@ Feature: Request Offline Quote
 #    Then Click on Tickets
     Examples:
       |prePolNum|prodID|custName|regisNum|preMium|docUpload|polNum|netPremium|
-      |2872665565|186  |Automation User|RJ09RG8899|56000  |D:\PB Partners\POSP\OCR\Reliance\reliance car comp.pdf|hu78pty76|12596|
+      |2872665565|186  |Automation User|RJ09RG8899|56000  |D:\PB Partners\POSP\OCR\Reliance\reliance car comp.pdf|hu78pyc76|12596|
