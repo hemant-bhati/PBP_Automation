@@ -1,5 +1,6 @@
 package stepDef.healthStepDef;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -744,4 +745,7 @@ public class HealthJourneyDef extends TestBase {
         occuption.selectByValue(custOccupation);
     }
 
+    @And("^Enter the ChildRelationship through the edit member$")
+    public void enterTheChildRelationshipThroughTheEditMember() {
+    }
 }
