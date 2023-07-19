@@ -15,7 +15,7 @@ Feature: Health Journey functionality
     Then enter the generated otp numbers
     Then Click on verify otp buttons
 
-  @NivaEnhanced
+
     Scenario Outline: Verify User should be able to enter the details in Health page
       When Click on Sell now modules
       When Click on the Health buttons
