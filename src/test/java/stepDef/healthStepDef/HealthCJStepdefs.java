@@ -1,5 +1,7 @@
 package stepDef.healthStepDef;
 
+import cucumber.api.PendingException;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -41,7 +43,7 @@ public class HealthCJStepdefs extends TestBase {
 
     @And("^Enter the detail in Health landing page \"([^\"]*)\",\"([^\"]*)\"$")
     public void enterTheDetailInHealthLandingPage(String FullName, String MobileNo) throws Throwable {
-        parent = driver.getWindowHandle();
+         parent = driver.getWindowHandle();
         for (String child : driver.getWindowHandles()) {
             if (!parent.contentEquals(child)) {
                 driver.switchTo().window(child);
@@ -86,26 +88,24 @@ public class HealthCJStepdefs extends TestBase {
     @And("^select existing illness and click on View Plan$")
     public void selectExistingIllnessAndClickOnViewPlan() throws InterruptedException {
         driver.findElement(By.xpath(prop.getProperty("Noneofthese"))).click();
-        Thread.sleep(3000L);
-
-        //driver.findElement(By.xpath(prop.getProperty("viewplanbutton"))).click();
-    }
+        Thread.sleep(5000L);
+        }
 
     public void validatePremiumButtonText() throws SQLException, InterruptedException {
         Thread.sleep(5000L);
        // driver.navigate().refresh();
         WebElement nivaHealthPlusEnhance = null;
-
-        WebElement NivaReasure2PlatinumPlus = null;
-        WebElement NivaReasure2TitaniumPlus = null;
-        WebElement NivaGoActive = null;
-        WebElement NivaReasure2BronzePlus = null;
-        WebElement NivaArogyaSanjeevani = null;
-        WebElement nivaReAsure = null;
+//        WebElement NivaHealthCompanion = null;
+//        WebElement NivaReasure2PlatinumPlus = null;
+//        WebElement NivaReasure2TitaniumPlus = null;
+//        WebElement NivaGoActive = null;
+//        WebElement NivaReasure2BronzePlus = null;
+//        WebElement NivaArogyaSanjeevani = null;
+//        WebElement nivaReAsure = null;
 
         try {
             nivaHealthPlusEnhance = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthPlusEnhance")));
-            String queryHealthPlus = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=574 and SumInsured=300000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
+            String queryHealthPlus = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=574 and SumInsured=500000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
             ResultSet res = stmt.executeQuery(queryHealthPlus);
             while (res.next()) {
                 System.out.println("premium value from DB " + res.getString(1));
@@ -168,6 +168,7 @@ public class HealthCJStepdefs extends TestBase {
         Select spouseage = new Select(driver.findElement(By.xpath("(//div[@class='select_members_age']//select)[2]")));
         spouseage.selectByValue("30");
         driver.findElement(By.xpath("//div[contains(text(),'Apply')]")).click();
+        Thread.sleep(3000L);
     }
 
     @And("^Enter the details on proposer details screen \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
@@ -252,7 +253,7 @@ public class HealthCJStepdefs extends TestBase {
         driver.findElement(By.xpath("//input[@id='declarationInput']")).click();
         driver.findElement(By.xpath("//button[@class='btn zuno']")).click();
         Thread.sleep(10000L);
-        String premiumonpaymentsummarypage = driver.findElement(By.xpath("//div[@class='summaryTotalBlock__amount']")).getText();
+            String premiumonpaymentsummarypage = driver.findElement(By.xpath("//div[@class='summaryTotalBlock__amount']")).getText();
         System.out.println("***"+premiumonpaymentsummarypage+"****");
         //Assert.assertEquals(premiumonpaymentsummarypage,premiumofproposalpage);
     }

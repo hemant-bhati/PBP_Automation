@@ -7,21 +7,13 @@
 #6)Riders - Safeguard Benefit , Hospital Cash
 
 @HealthCJ
+
 Feature: Health Journey functionality
   Background: Login Application
     When Enter the Partner Code
     Then Clicks on the send otp button in login page
     Then enter the generated otp numbers
     Then Click on verify otp buttons
-
-#  Scenario Outline: validate the error msg while keeping name and mobile no as blank in Health page
-#    When Click on Sell now modules
-#    When Click on the Health buttons
-#    And Enter the detail in Health landing page "<FullName>","<MobileNo>"
-#    Then validate the error msg
-#    Examples:
-#      |FullName|MobileNo|
-#      |||
 
 
     Scenario Outline: Verify User should be able to enter the details in Health page
@@ -49,7 +41,7 @@ Feature: Health Journey functionality
 
       Examples:
       |FullName|MobileNo|eldestmemberage|city|panCard|address|contactEmail|emergencyMobile|dob|occupation|heightFeet|heightInch|weight|spouseName|spouseDOB|spouseOccupation|spouseHeightFeet|spouseHeightInch|spouseWeight|
-      |Test Automation|9810168351|35    |Noida|AYMPB1667K|Delhi|test@gmail.com|9411073568 |01-01-1998|1|60    |8         |72    |Pooja k   |01-01-2002|5     |60               |4               |68          |
+      |Test Automation|9810168351|35    |Chandigarh|AYMPB1667K|Delhi|test@gmail.com|9411073568 |01-01-1998|1|60    |8         |72    |Pooja k   |01-01-2002|5     |60               |4               |68          |
 
 #  Scenario: Niva Health Companion
 #   1)Gender - Male

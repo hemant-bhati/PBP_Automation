@@ -16,7 +16,7 @@ public class Dashboard extends TestBase {
         }
         driver.navigate().back();
         try {
-            String query = "use POSPDB EXEC [stats].[GetProductWiseBusinessStats_v1] @AffiliateCode='IP9022', @FromDate='2023-06-01', @ToDate='2023-06-21', @businessCheckOn=1";
+            String query = "use POSPDB EXEC [stats].[GetProductWiseBusinessStats_v1] @AffiliateCode='IP9022', @FromDate='2023-07-01', @ToDate='2023-07-07', @businessCheckOn=1";
 // Get the contents of userinfo table from DB
             ResultSet res = stmt.executeQuery(query);
 // Print the result untill all the records are printed
