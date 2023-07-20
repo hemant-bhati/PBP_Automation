@@ -1,3 +1,11 @@
+#Scenario:
+#1)Gender - FeMale
+#2)Combination - 2A
+#3)City - Noida
+#4)Cover - 3 lakh
+#5)Plan - Health Pulse Enhanced
+#6)Riders - Safeguard Benefit , Hospital Cash
+
 @HealthCJ
 Feature: Health Journey functionality
   Background: Login Application
@@ -80,6 +88,7 @@ Feature: Health Journey functionality
     And click on Continue button from Lead section
     And click on proceed to payment page
     And navigate to payment page and fill all mandatory entries
+
 
     Examples:
       |FullName|MobileNo|eldestmemberage|eldestchildage|city|panCard|address|contactEmail|emergencyMobile|dob|occupation|heightFeet|heightInch|weight|spouseName|spouseDOB|spouseOccupation|spouseHeightFeet|spouseHeightInch|spouseWeight|childName|childdob|childHeightFeet|childHeightInch|childweight|

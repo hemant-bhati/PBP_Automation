@@ -1,14 +1,11 @@
-package stepDef;
+package stepDef.healthStepDef;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -19,7 +16,6 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
 
 
 public class HealthCJStepdefs extends TestBase {
@@ -106,6 +102,7 @@ public class HealthCJStepdefs extends TestBase {
         WebElement NivaReasure2BronzePlus = null;
         WebElement NivaArogyaSanjeevani = null;
         WebElement nivaReAsure = null;
+
         try {
             nivaHealthPlusEnhance = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthPlusEnhance")));
             String queryHealthPlus = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=574 and SumInsured=300000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
@@ -135,7 +132,6 @@ public class HealthCJStepdefs extends TestBase {
         validatePremiumButtonText();
         Thread.sleep(3000L);
     }
-
     @And("^click on proceed to proposal page$")
     public void clickOnProceedToProposalPage() throws InterruptedException {
         WebElement premiumvalue = driver.findElement(By.xpath("//div[@class='flexRow section_premium']//div//span"));
@@ -219,17 +215,17 @@ public class HealthCJStepdefs extends TestBase {
 
     @And("^Enter the details on medical screen$")
     public void enterTheDetailsOnMedicalScreen() {
-        driver.findElement(By.xpath("(//div[@class='optionsModule'])[3]")).click();
-        driver.findElement(By.xpath("(//div[@class='optionsModule'])[6]")).click();
-        driver.findElement(By.xpath("(//div[@class='optionsModule'])[9]")).click();
-        driver.findElement(By.xpath("(//div[@class='optionsModule'])[12]")).click();
-        driver.findElement(By.xpath("(//div[@class='optionsModule'])[15]")).click();
-        driver.findElement(By.xpath("(//div[@class='optionsModule'])[18]")).click();
-        driver.findElement(By.xpath("(//div[@class='optionsModule'])[21]")).click();
-        driver.findElement(By.xpath("(//div[@class='optionsModule'])[24]")).click();
-        driver.findElement(By.xpath("(//div[@class='optionsModule'])[27]")).click();
-        driver.findElement(By.xpath("(//div[@class='optionsModule'])[30]")).click();
-        driver.findElement(By.xpath("(//div[@class='optionsModule'])[33]")).click();
+       driver.findElement(By.xpath("(//div[@class='optionsModule'])[3]")).click();
+       driver.findElement(By.xpath("(//div[@class='optionsModule'])[6]")).click();
+       driver.findElement(By.xpath("(//div[@class='optionsModule'])[9]")).click();
+       driver.findElement(By.xpath("(//div[@class='optionsModule'])[12]")).click();
+       driver.findElement(By.xpath("(//div[@class='optionsModule'])[15]")).click();
+       driver.findElement(By.xpath("(//div[@class='optionsModule'])[18]")).click();
+       driver.findElement(By.xpath("(//div[@class='optionsModule'])[21]")).click();
+       driver.findElement(By.xpath("(//div[@class='optionsModule'])[24]")).click();
+       driver.findElement(By.xpath("(//div[@class='optionsModule'])[27]")).click();
+       driver.findElement(By.xpath("(//div[@class='optionsModule'])[30]")).click();
+       driver.findElement(By.xpath("(//div[@class='optionsModule'])[33]")).click();
         WebElement highestQualification = driver.findElement(By.xpath("(//div[@class='field']/select)[1]"));
         Select dropdownhighestQualification = new Select(highestQualification);
         dropdownhighestQualification.selectByIndex(2);
@@ -249,10 +245,8 @@ public class HealthCJStepdefs extends TestBase {
         JavascriptExecutor jse4 = (JavascriptExecutor) driver;
         jse4.executeScript("arguments[0].scrollIntoView()", childElement1);
         jse4.executeScript("arguments[0].click();", childElement1);
-
         driver.findElement(By.xpath("//button[contains(text(),'REVIEW & PAY')]")).click();
     }
-
     @And("^check the Declaration popup$")
     public void checkTheDeclarationPopup() throws InterruptedException {
         driver.findElement(By.xpath("//input[@id='declarationInput']")).click();
@@ -631,7 +625,9 @@ public class HealthCJStepdefs extends TestBase {
 
         driver.findElement(By.xpath("//button[contains(text(),'REVIEW & PAY')]")).click();
     }
+
 }
+
 
 //    @And("^Enter the detail in Health preQuotes page \"([^\"]*)\",\"([^\"]*)\"$")
 //    public void enterTheDetailInHealthPreQuotesPage(String FullName, String MobileNo) throws Throwable {
@@ -698,6 +694,21 @@ public class HealthCJStepdefs extends TestBase {
 //
 //    }
 //}
+
+//    @And("^Click on the calander and pic date$")
+//    public void clickOnTheCalanderAndPicDate() {
+
+//        WebElement calendarElement = driver.findElement(By.id("calendarId")); // Replace with the actual ID or other locator of the calendar element
+//        calendarElement.click();
+//
+//        WebElement selectedDateElement = driver.findElement(By.xpath("//div[@class='selected-date']")); // Replace with the actual XPath or locator of the date element
+//        String selectedDate = selectedDateElement.getText();
+//
+//        System.out.println("Selected date: " + selectedDate);
+//    }
+//}
+
+
 
 
 
