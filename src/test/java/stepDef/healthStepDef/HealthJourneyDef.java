@@ -745,7 +745,5 @@ public class HealthJourneyDef extends TestBase {
         occuption.selectByValue(custOccupation);
     }
 
-    @And("^Enter the ChildRelationship through the edit member$")
-    public void enterTheChildRelationshipThroughTheEditMember() {
-    }
+
 }
