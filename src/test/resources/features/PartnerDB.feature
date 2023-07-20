@@ -1,4 +1,5 @@
 @PartnerDashboard
+@Regression
 Feature: Partner Dashboard functionality
   Background: Login functionality
     When Enter the Partner Code

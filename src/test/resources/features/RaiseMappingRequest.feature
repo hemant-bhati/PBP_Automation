@@ -1,4 +1,5 @@
 @MappingRequest
+@Regression
 Feature: Request Offline Quote
   Background: Login functionality
     When Enter the Partner Code

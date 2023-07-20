@@ -7,7 +7,7 @@
 #6)Riders - Safeguard Benefit , Hospital Cash
 
 @HealthCJ
-
+@Regression
 Feature: Health Journey functionality
   Background: Login Application
     When Enter the Partner Code
