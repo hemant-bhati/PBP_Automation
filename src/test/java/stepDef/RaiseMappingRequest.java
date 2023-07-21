@@ -4,10 +4,7 @@ package stepDef;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
@@ -123,7 +120,15 @@ public class RaiseMappingRequest extends TestBase {
         Select NCBValue = new Select(NCB.get(0));
         NCBValue.selectByValue("20");
         Thread.sleep(2000L);
-        driver.findElement(By.xpath(prop.getProperty("rmrregdate"))).sendKeys("01-01-2018");
+
+
+        WebElement regdate =  driver1.findElement(By.xpath(prop.getProperty("rmrregdate")));
+        regdate.sendKeys("20-05-2018");
+        regdate.sendKeys(Keys.ENTER);
+        WebElement mfgdate =  driver1.findElement(By.xpath(prop.getProperty("rmrmfgdate")));
+        mfgdate.sendKeys("20-04-2018");
+        mfgdate.sendKeys(Keys.ENTER);
+        driver1.findElement(By.xpath(prop.getProperty("rmrrtono"))).sendKeys("HR51");
         driver1.findElement(By.xpath(prop.getProperty("prePolNum"))).sendKeys("ABCD123456");
        List<WebElement> fuelT = driver1.findElements(By.xpath(prop.getProperty("fuelType")));
        Select fuelTy = new Select(fuelT.get(0));
