@@ -8,7 +8,9 @@ Feature: Request Offline Quote
 
   Scenario Outline: Generate Request Offline Quote
     When click on Request Offline Quote navigations "<prodID>","<custName>", "<regisNum>","<polNum>","<preMium>", "<docUpload>"
-    Then Open the Admin Panel "<prePolNum>", "<netPremium>"
+    Then Open the Admin Panel and search ticket "<prePolNum>", "<netPremium>"
+    Then click on verify button under Add New Remarks section
+    Then fill all mandatory inputs on policy details
 
 #    Then Click on Tickets
     Examples:
