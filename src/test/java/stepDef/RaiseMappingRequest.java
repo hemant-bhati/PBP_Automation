@@ -175,7 +175,7 @@ public class RaiseMappingRequest extends TestBase {
         JavascriptExecutor jse2 = (JavascriptExecutor) driver1;
         jse2.executeScript("arguments[0].scrollIntoView()", submitButt);
         jse2.executeScript("arguments[0].click();", submitButt);
-        Thread.sleep(5000L);
+        Thread.sleep(10000L);
 
     }
 
