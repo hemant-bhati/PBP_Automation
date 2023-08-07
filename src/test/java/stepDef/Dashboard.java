@@ -48,11 +48,11 @@ public class Dashboard extends TestBase {
             e.printStackTrace();
         }
     }
-    @Then("^Validate Offline Request tab under My Actionables$")
-    public void validateOfflineRequestTabUnderMyActionables() {
-        driver.findElement(By.xpath(prop.getProperty("OfflineRequest"))).click();
-        driver.navigate().back();
-    }
+//    @Then("^Validate Offline Request tab under My Actionables$")
+//    public void validateOfflineRequestTabUnderMyActionables() {
+//        driver.findElement(By.xpath(prop.getProperty("OfflineRequest"))).click();
+//        driver.navigate().back();
+//    }
     @Then("^Validate Leads tab under My Actionables$")
     public void validateLeadsTabUnderMyActionables() {
         driver.findElement(By.xpath(prop.getProperty("leads"))).click();

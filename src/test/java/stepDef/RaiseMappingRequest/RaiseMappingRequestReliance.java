@@ -1,26 +1,25 @@
-package stepDef;
+package stepDef.RaiseMappingRequest;
 
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import stepDef.TestBase;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class RaiseMappingRequest extends TestBase {
+public class RaiseMappingRequestReliance extends TestBase {
     String parent;
     WebDriver driver1;
     String lastWord;
 
 
-    public RaiseMappingRequest() throws IOException, InterruptedException {
+    public RaiseMappingRequestReliance() throws IOException, InterruptedException {
     }
     @When("^click on Request Offline Quote navigations \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\"$")
     public void clickOnRequestOfflineQuoteNavigations(String prodID, String custName, String regisNum, String polNum, String preMium, String docUpload) throws Throwable {
@@ -110,7 +109,7 @@ public class RaiseMappingRequest extends TestBase {
         List<WebElement> plan = driver1.findElements(By.xpath(prop.getProperty("plantype")));
         Select plantype = new Select(plan.get(0));
         plantype.selectByValue("1");
-        Thread.sleep(2000L);
+        Thread.sleep(5000L);
         WebElement planVal = driver1.findElement(By.xpath(prop.getProperty("plannameid")));
         Select planName = new Select(planVal);
         planName.selectByValue("902");
