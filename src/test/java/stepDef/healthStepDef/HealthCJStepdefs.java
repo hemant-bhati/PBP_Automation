@@ -1,13 +1,14 @@
 package stepDef.healthStepDef;
 
-import cucumber.api.PendingException;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -272,12 +273,12 @@ public class HealthCJStepdefs extends TestBase {
     @And("^verify the Lead ID from UI and DB$")
     public void verifyTheLeadIDFromUIAndDB() {
         try {
-            String query = "use PospDB select top(1) LeadID from dbo.LeadDetails_v1 where productID = 190 and name like '%Test Automation%' order by LeadID desc";
+            String query = "use PospDB select top(1) LeadID from dbo.LeadDetails_v1 where productID = 190 and name like '%Ankit Sharma%' order by LeadID desc";
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
                 System.out.println("leadId value from DB " + res.getString(1));
                 Thread.sleep(3000L);
-                List<WebElement> leadId = driver.findElements(By.xpath(prop.getProperty("leadidleadpage")));
+                List<WebElement> leadId = driver.findElements(By.xpath(prop.getProperty("Companionleadidpage")));
                 for (WebElement e : leadId) {
                     System.out.println("Lead Id value from UI " + e.getText());
                     String leadValue = res.getString(1);
@@ -290,7 +291,7 @@ public class HealthCJStepdefs extends TestBase {
     }
     @And("^click on Continue button from Lead section$")
     public void clickOnContinueButtonFromLeadSection() throws InterruptedException {
-        driver.findElement(By.xpath(prop.getProperty("continuebuttonleadpage"))).click();
+        driver.findElement(By.xpath(prop.getProperty("CompanionContinuebuttonleadpage"))).click();
         Thread.sleep(5000L);
     }
     @And("^click on proceed to payment page$")
@@ -620,7 +621,7 @@ public class HealthCJStepdefs extends TestBase {
     public void enterTheDetailsOnNomineePageAfterMedicalPage() throws InterruptedException {
         Thread.sleep(5000L);
         WebElement childElement1 = driver.findElement(By.xpath("(//div[@class='InputLabelBox'])[1]"));
-        JavascriptExecutor jse4 = (JavascriptExecutor) driver;
+        JavascriptExecutor jse4 =   (JavascriptExecutor) driver;
         jse4.executeScript("arguments[0].scrollIntoView()", childElement1);
         jse4.executeScript("arguments[0].click();", childElement1);
 
@@ -628,86 +629,6 @@ public class HealthCJStepdefs extends TestBase {
     }
 
 }
-
-
-//    @And("^Enter the detail in Health preQuotes page \"([^\"]*)\",\"([^\"]*)\"$")
-//    public void enterTheDetailInHealthPreQuotesPage(String FullName, String MobileNo) throws Throwable {
-//        // Write code here that turns the phrase above into concrete actions
-//        parent = driver.getWindowHandle();
-//        for (String child : driver.getWindowHandles()) {
-//            if (!parent.contentEquals(child)) {
-//                driver.switchTo().window(child);
-//                break;
-//            }
-//        }
-//        new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("Maleimage")))).click();
-//        new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("CustomerFullName")))).sendKeys(FullName);
-//        new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("CustomerMobileNumber")))).sendKeys(MobileNo);
-//        new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("ContinueButton1")))).click();
-//
-//
-//    }
-//
-//    @And("^click on premium button of niva Max Saver$")
-//    public void clickOnPremiumButtonOfNivaMaxSaver() throws InterruptedException {
-//        validateHealthMaxsaverPremiumButtonText();
-//        Thread.sleep(3000L);
-//    }
-//    public void validateHealthMaxsaverPremiumButtonText() {
-//        WebElement nivaHealthMaxsaver = null;
-//        try {
-//            nivaHealthMaxsaver = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthmaxsaver")));
-//            String querynivaHealthMaxsaver = "use HealthDB Select top 1 Premium from Hi.Health_Rates nolock where Plan_Id=319 and SumInsured=750000 and NumberOfAdults=2 and NumberOfChildren=1 and Max_AgeOfEldestMember=35 and Term = 1";
-//            ResultSet res1 = stmt.executeQuery(queryNivaCompanion);
-//            while (res1.next()) {
-//                System.out.println("premium value from DB " + res1.getString(1));
-//                String nivaHealthMaxsavertext;
-//                nivaHealthMaxsavertext = nivaHealthMaxsaver.getText();
-//                String Companionsymbol1 = nivaCompaniontext.replaceAll("₹", "");
-//                String Companionsymbol2 = Companionsymbol1.replaceAll("/year", "");
-//                String Companionfinalsymbol = Companionsymbol2.replaceAll(",", "");
-//                System.out.println("premium value from nivacompanion UI = " + Companionfinalsymbol);
-//                String expectedbuttontext = res1.getString(1);
-//                junit.framework.Assert.assertEquals(expectedbuttontext, Companionfinalsymbol);
-//                WebElement niva = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthCompanion")));
-//                niva.click();
-//            }
-//        } catch (org.openqa.selenium.NoSuchElementException e) {
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//    }
-//
-//    @And("^click on the cover amount dorp down button on the quote page$")
-//    public void clickOnTheCoverAmountDorpDownButtonOnTheQuotePage() {
-//        driver.findElement(By.xpath(prop.getProperty("coverammountbutton"))).click();
-//    }
-//
-//    @And("^Select the  (\\d+) crore suminsurred$")
-//    public void selectTheCroreSuminsurred(int arg0) {
-//        driver.findElement(By.xpath(prop.getProperty("1croreAmount"))).click();
-//    }
-//
-//    @And("^Click on the Apply button of cover amount drop down$")
-//    public void clickOnTheApplyButtonOfCoverAmountDropDown() {
-//        driver.findElement(By.xpath(prop.getProperty("Applybutton"))).click();
-//
-//    }
-//}
-
-//    @And("^Click on the calander and pic date$")
-//    public void clickOnTheCalanderAndPicDate() {
-
-//        WebElement calendarElement = driver.findElement(By.id("calendarId")); // Replace with the actual ID or other locator of the calendar element
-//        calendarElement.click();
-//
-//        WebElement selectedDateElement = driver.findElement(By.xpath("//div[@class='selected-date']")); // Replace with the actual XPath or locator of the date element
-//        String selectedDate = selectedDateElement.getText();
-//
-//        System.out.println("Selected date: " + selectedDate);
-//    }
-//}
 
 
 

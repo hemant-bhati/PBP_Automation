@@ -16,11 +16,13 @@ import stepDef.TestBase;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class NivaMaxSaverStepdefs extends TestBase {
     Select dropdownAge;
     String parent;
     String premiumofproposalpage;
+
     @When("^Click on Sell now modules icon$")
     public void clickOnSellNowModulesIcon() throws InterruptedException {
         Thread.sleep(10000L);
@@ -266,4 +268,139 @@ public class NivaMaxSaverStepdefs extends TestBase {
         driver.findElement(By.xpath("//input[@id='expiryDate']")).sendKeys(PolicyExpirydate);
 
     }
-}
+
+    @And("^Enter the Details on the Portability page \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
+    public void enterTheDetailsOnThePortabilityPage(String PolicyNumber, String SumInsurred, String CumulativeBonus, String PEDDeclared) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        Thread.sleep(3000L);
+        Select ReasonforProtability=new Select(driver.findElement(By.xpath("//select[@id='portabilityReason']")));
+        ReasonforProtability.selectByValue("1");
+        Thread.sleep(1000L);
+        Actions action = new Actions(driver);
+        WebElement childElement = driver.findElement(By.xpath("(//div[@class='optionsModule'])[2]"));
+        action.moveToElement(childElement).click().perform();
+        Select SelectInsurer=new Select(driver.findElement(By.xpath("//Select[@id='selectInsurer']")));
+        SelectInsurer.selectByValue("1028");
+        Thread.sleep(1000L);
+        Select SelectPlan=new Select(driver.findElement(By.xpath("//Select[@id='selectPlan']")));
+        SelectPlan.selectByValue("49");
+        driver.findElement(By.xpath("//input[@name='policyNumber']")).sendKeys(PolicyNumber);
+        Select SelectTerm=new Select(driver.findElement(By.xpath("//select[@id='selectTerm']")));
+        SelectTerm.selectByValue("1");
+        Select SelectPolicyType=new Select(driver.findElement(By.xpath("//select[@id='policyType']")));
+        SelectPolicyType.selectByValue("1");
+        action = new Actions(driver);
+        WebElement childElement1 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[4]"));
+        action.moveToElement(childElement1).click().perform();
+        action = new Actions(driver);
+        WebElement childElement2 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[6]"));
+        action.moveToElement(childElement2).click().perform();
+        action = new Actions(driver);
+        WebElement childElement3 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[7]"));
+        action.moveToElement(childElement3).click().perform();
+        Select SelectNumberofYear=new Select(driver.findElement(By.xpath("//div[contains(@class, 'field')]//select[contains(@id, 'renewalYears')]")));
+        SelectNumberofYear.selectByValue("1");
+        driver.findElement(By.xpath("//input[@name='sumInsured']")).sendKeys(SumInsurred);
+        driver.findElement(By.xpath("//input[@name='cumulativeBonus']")).sendKeys(CumulativeBonus);
+        driver.findElement(By.xpath("(//input[@name='pedDeclared'])")).sendKeys(PEDDeclared);
+        action = new Actions(driver);
+        WebElement childElement4 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[10]"));
+        action.moveToElement(childElement4).click().perform();
+        action = new Actions(driver);
+        WebElement childElement5 = driver.findElement(By.xpath("//input[@id='declarationInput']"));
+        action.moveToElement(childElement5).click().perform();
+        action = new Actions(driver);
+        WebElement childElement6 = driver.findElement(By.xpath("//input[@id='declarationInput1']"));
+        action.moveToElement(childElement6).click().perform();
+        Thread.sleep(1000L);
+        action = new Actions(driver);
+        WebElement childElement7 = driver.findElement(By.xpath("//button[@class='primaryButtonStyle btn']"));
+        action.moveToElement(childElement7).click().perform();
+
+    }
+
+    @And("^check to the Declaration popup$")
+    public void checkToTheDeclarationPopup() throws InterruptedException {
+        Thread.sleep(1000L);
+        Actions action = new Actions(driver);
+        WebElement childElement = driver.findElement(By.xpath("//input[@id='declarationInput' and @type='checkbox' and @class='checkbox_filter']"));
+        action.moveToElement(childElement).click().perform();
+
+        action = new Actions(driver);
+        WebElement childElement1 = driver.findElement(By.xpath("//button[@class='btn zuno']"));
+        action.moveToElement(childElement1).click().perform();
+
+        Thread.sleep(10000L);
+        String premiumonpaymentsummarypage = driver.findElement(By.xpath("//div[@class='summaryTotalBlock__amount']")).getText();
+        System.out.println("***"+premiumonpaymentsummarypage+"****");
+    }
+
+    @And("^move to POSP parent portal$")
+    public void moveToPOSPParentPortal() {
+        driver.close();
+        driver.switchTo().window(parent);
+    }
+
+    @And("^click on the Lead tab page$")
+    public void clickOnTheLeadTabPage() {
+        WebElement element = driver.findElement(By.xpath("//a//span[contains(text(),'Lead')]"));
+        JavascriptExecutor jse2 = (JavascriptExecutor) driver;
+        jse2.executeScript("arguments[0].scrollIntoView()", element);
+        jse2.executeScript("arguments[0].click();", element);
+    }
+
+    @And("^verify the to Lead ID from UI and DB$")
+    public void verifyTheToLeadIDFromUIAndDB() {
+        try {
+            String query = "use PospDB select top(1) LeadID from dbo.LeadDetails_v1 where productID = 190 and name like '%Rahul Sharma%' order by LeadID desc";
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                System.out.println("leadId value from DB " + res.getString(1));
+                Thread.sleep(3000L);
+                List<WebElement> leadId = driver.findElements(By.xpath(prop.getProperty("Maxsaverleadidleadpage")));
+                for (WebElement e : leadId) {
+                    System.out.println("Lead Id value from UI " + e.getText());
+                    String leadValue = res.getString(1);
+                    junit.framework.Assert.assertEquals("LEAD ID: " + leadValue, e.getText());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @And("^click on the Continue button from Lead section$")
+    public void clickOnTheContinueButtonFromLeadSection() throws InterruptedException {
+        driver.findElement(By.xpath(prop.getProperty("MaxsaverContinuebuttonleadpage"))).click();
+        Thread.sleep(5000L);
+    }
+
+    @And("^click on the proceed to payment page$")
+    public void clickOnTheProceedToPaymentPage() throws InterruptedException {
+        parent = driver.getWindowHandle();
+        for (String child : driver.getWindowHandles()) {
+            if (!parent.contentEquals(child)) {
+                driver.switchTo().window(child);
+                break;
+            }
+        }
+        driver.findElement(By.xpath("//button[@class='btn']")).click();
+    }
+
+
+    @And("^navigate to the payment page and fill all mandatory entries$")
+    public void navigateToThePaymentPageAndFillAllMandatoryEntries() throws InterruptedException {
+
+        //new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("(//div[@class='selectBank'])[1]")))).click();
+        Thread.sleep(20000l);
+        driver.findElement(By.xpath("(//div[@class='selectBank'])[1]")).click();
+        driver.findElement(By.xpath("//button[@class=\"btn\" and @id=\"paynb\"]")).click();
+        driver.findElement(By.xpath("//button[@data-val=\"S\" and @class=\"success\"]")).click();
+        Thread.sleep(10000L);
+        driver.navigate().refresh();
+
+    }
+
+    }
+

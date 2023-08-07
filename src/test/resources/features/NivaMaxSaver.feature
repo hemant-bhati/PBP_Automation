@@ -33,7 +33,7 @@ Feature: Health Journey functionality
      And Enter the details on the medical screen
      And Enter the details on the Nominee page
      And Enter the Policy Expire Date for the policy port "<PolicyExpirydate>"
-     And Enter the Details on the Portability page
+     And Enter the Details on the Portability page "<PolicyNumber>","<SumInsurred>","<CumulativeBonus>","<PEDDeclared>"
      And check to the Declaration popup
      And move to POSP parent portal
      And click on the Lead tab page
@@ -43,6 +43,6 @@ Feature: Health Journey functionality
      And navigate to the payment page and fill all mandatory entries
 
      Examples:
-       |FullName|MobileNo|eldestmemberage|city|panCard|address|contactEmail|emergencyMobile|dob|occupation|heightFeet|heightInch|weight|spouseName|spouseDOB|spouseOccupation|spouseHeightFeet|spouseHeightInch|spouseWeight|PolicyExpirydate|
-       |Rahul Sharma|9810168351|40    |Mumbai|AYMPB1667K|Mumbai|test@gmail.com|9411073568 |01-01-1983|1|60    |8         |72    |Sonam Sharma   |01-01-1993|5     |60               |4               |68          |24-09-2023                |
+       |FullName|MobileNo|eldestmemberage|city|panCard|address|contactEmail|emergencyMobile|dob|occupation|heightFeet|heightInch|weight|spouseName|spouseDOB|spouseOccupation|spouseHeightFeet|spouseHeightInch|spouseWeight|PolicyExpirydate|PolicyNumber|SumInsurred|CumulativeBonus|PEDDeclared|
+       |Rahul Sharma|9810168351|40    |Mumbai|AYMPB1667K|Mumbai|test@gmail.com|9411073568 |01-01-1983|1|60    |8         |72    |Sonam Sharma   |01-01-1993|5     |60               |4               |68          |24-09-2023                |1010101010101|      1000000    |  500000 |Abc123456|
 

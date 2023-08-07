@@ -6,7 +6,7 @@
 #5)Plan - Health Pulse Enhanced
 #6)Riders - Safeguard Benefit , Hospital Cash
 
-@123456
+@HealthPulseEnhanced
 Feature: Health Journey functionality
   Background: Login Application
     When Enter the Partner Code
@@ -51,7 +51,7 @@ Feature: Health Journey functionality
 #   6)Riders - Safeguard Benefit
 
 
-@1234
+@HealthCompanion
   Scenario Outline: Verify User should be able to enter the details in Health page
     When Click on Sell now modules
     When Click on the Health buttons
@@ -86,42 +86,5 @@ Feature: Health Journey functionality
       |Ankit sharma|9810168351|35    |       5          |Delhi |AYMPB1667K|Agra flat 45|test@gmail.com|9411073568 |01-01-1988|1|60    |8         |72    |Pooja k   |01-01-1993|5     |60               |4               |68          |Rahul Sharma  |02-02-2018|36  |4         |35    |
 
 
-  #Scenario: Max Saver
-#1)Gender - Male
-#2)Combination - 2A
-#3)City - Mumbai
-#4)Cover - 1cr (Non-POS)
-#5)Plan - Max Saver
-#6)Riders - Safeguard Benefit , Hospital Cash
-
-  Scenario Outline: Verify User should be able to enter the details in Health page
-    When Click on Sell now modules
-    When Click on the Health buttons
-    And Enter the detail in Health preQuotes page "<FullName>","<MobileNo>"
-    Then user should be able to navigate to member detail
-    And user should enter the mandatory fields on member screen "<eldestmemberage>"
-    And select City "<city>"
-    And select existing illness and click on View Plan
-    And Enter spouse age through edit member
-    And click on the cover amount dorp down button on the quote page
-    And Select the  1 crore suminsurred
-    And Click on the Apply button of cover amount drop down
-    And click on premium button of niva Max Saver
-    And click on proceed to proposal page
-    And Enter the details on proposer details screen "<panCard>","<address>","<contactEmail>","<emergencyMobile>"
-    And Enter the details on member details screen "<dob>","<occupation>","<heightFeet>","<heightInch>","<weight>","<spouseName>","<spouseDOB>","<spouseOccupation>","<spouseHeightFeet>","<spouseHeightInch>","<spouseWeight>"
-    And Enter the details on medical screen
-    And Enter the details on Nominee page
-    And check the Declaration popup
-    And move to the POSP parent portal
-    And click on the Lead tab
-    And verify the Lead ID from UI and DB
-    And click on Continue button from Lead section
-    And click on proceed to payment page
-    And navigate to payment page and fill all mandatory entries
-
-    Examples:
-      |FullName|MobileNo|eldestmemberage|city|panCard|address|contactEmail|emergencyMobile|dob|occupation|heightFeet|heightInch|weight|spouseName|spouseDOB|spouseOccupation|spouseHeightFeet|spouseHeightInch|spouseWeight|
-      |Rahul Sharma|9810168351|40    |Mumbai|AYMPB1667K|Mumbai|test@gmail.com|9411073568 |01-01-1983|1|60    |8         |72    |Sonam Sharma   |01-01-1993|5     |60               |4               |68          |
 
 
