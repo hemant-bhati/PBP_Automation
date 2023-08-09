@@ -241,8 +241,8 @@ public class HealthCJStepdefs extends TestBase {
 
     @And("^Enter the details on Nominee page$")
     public void enterTheDetailsOnNomineePage() throws InterruptedException {
-        Thread.sleep(5000L);
-        driver.navigate().refresh();
+//        Thread.sleep(5000L);
+//        driver.navigate().refresh();
         WebElement childElement1 = driver.findElement(By.xpath("(//div[@class='InputLabelBox'])[1]"));
         JavascriptExecutor jse4 = (JavascriptExecutor) driver;
         jse4.executeScript("arguments[0].scrollIntoView()", childElement1);
@@ -273,12 +273,12 @@ public class HealthCJStepdefs extends TestBase {
     @And("^verify the Lead ID from UI and DB$")
     public void verifyTheLeadIDFromUIAndDB() {
         try {
-            String query = "use PospDB select top(1) LeadID from dbo.LeadDetails_v1 where productID = 190 and name like '%Ankit Sharma%' order by LeadID desc";
+            String query = "use PospDB select top(1) LeadID from dbo.LeadDetails_v1 where productID = 190 and name like '%Test Automation%' order by LeadID desc";
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
                 System.out.println("leadId value from DB " + res.getString(1));
                 Thread.sleep(3000L);
-                List<WebElement> leadId = driver.findElements(By.xpath(prop.getProperty("Companionleadidpage")));
+                List<WebElement> leadId = driver.findElements(By.xpath(prop.getProperty("leadidleadpage")));
                 for (WebElement e : leadId) {
                     System.out.println("Lead Id value from UI " + e.getText());
                     String leadValue = res.getString(1);
@@ -291,7 +291,7 @@ public class HealthCJStepdefs extends TestBase {
     }
     @And("^click on Continue button from Lead section$")
     public void clickOnContinueButtonFromLeadSection() throws InterruptedException {
-        driver.findElement(By.xpath(prop.getProperty("CompanionContinuebuttonleadpage"))).click();
+        driver.findElement(By.xpath(prop.getProperty("continuebuttonleadpage"))).click();
         Thread.sleep(5000L);
     }
     @And("^click on proceed to payment page$")
