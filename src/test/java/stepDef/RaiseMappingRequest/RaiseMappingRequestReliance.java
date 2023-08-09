@@ -1,24 +1,25 @@
-package stepDef;
+package stepDef.RaiseMappingRequest;
 
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import stepDef.TestBase;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class RaiseMappingRequest extends TestBase {
+public class RaiseMappingRequestReliance extends TestBase {
     String parent;
+    WebDriver driver1;
+    String lastWord;
 
 
-    public RaiseMappingRequest() throws IOException, InterruptedException {
+    public RaiseMappingRequestReliance() throws IOException, InterruptedException {
     }
     @When("^click on Request Offline Quote navigations \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\"$")
     public void clickOnRequestOfflineQuoteNavigations(String prodID, String custName, String regisNum, String polNum, String preMium, String docUpload) throws Throwable {
@@ -53,9 +54,8 @@ public class RaiseMappingRequest extends TestBase {
         jse2.executeScript("arguments[0].scrollIntoView()", submitButton);
         jse2.executeScript("arguments[0].click();", submitButton);
         Thread.sleep(10000l);
-
     }
-    @Then("^Open the Admin Panel \"([^\"]*)\", \"([^\"]*)\"$")
+    @Then("^Open the Admin Panel and search ticket \"([^\"]*)\", \"([^\"]*)\"$")
     public void openTheAdminPanel(String prePolNum, String netPremium) throws Throwable {
         WebElement sentenceElement = driver.findElement(By.xpath("//div[@class='alert alert-success alert-important']"));
         // Get the text from the element
@@ -63,12 +63,12 @@ public class RaiseMappingRequest extends TestBase {
         // Split the sentence into words using whitespace as the delimiter
         String[] words = sentence.split("\\s+");
         // Extract the last word from the array
-        String lastWord = words[words.length - 1];
+         lastWord = words[words.length - 1];
         // Display the last word
         System.out.println("Last Word: " + lastWord);
 //        String ID = driver.findElement(By.xpath("//div[@class='alert alert-success alert-important']")).getText();
         System.setProperty("webdriver.chrome.driver", "D:\\PBP_Automation\\chromedriver.exe");
-        WebDriver driver1 = new ChromeDriver();
+        driver1 = new ChromeDriver();
         driver1.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver1.get("https://polbkqa.policybazaar.com/login");
         driver1.manage().window().maximize();
@@ -85,6 +85,10 @@ public class RaiseMappingRequest extends TestBase {
         JavascriptExecutor jse2 = (JavascriptExecutor) driver1;
         jse2.executeScript("arguments[0].scrollIntoView()", childElement1);
         jse2.executeScript("arguments[0].click();", childElement1);
+        }
+
+    @Then("^click on verify button under Add New Remarks section$")
+    public void clickOnVerifyButtonUnderAddNewRemarksSection() throws InterruptedException {
         driver1.findElement(By.xpath(prop.getProperty("viewTickets"))).click();
         driver1.findElement(By.xpath(prop.getProperty("globalSearch"))).sendKeys(lastWord);
         driver1.findElement(By.xpath(prop.getProperty("ticketEditButton"))).click();
@@ -93,6 +97,9 @@ public class RaiseMappingRequest extends TestBase {
         jse3.executeScript("arguments[0].scrollIntoView()", childElement4);
         jse3.executeScript("arguments[0].click();", childElement4);
         Thread.sleep(2000L);
+    }
+    @Then("^fill all mandatory inputs on policy details$")
+    public void fillAllMandatoryInputsOnPolicyDetails() throws InterruptedException {
         List<WebElement> busiType = driver1.findElements(By.xpath(prop.getProperty("businessTypeVerify")));
         Select businessType = new Select(busiType.get(0));
         businessType.selectByValue("1");
@@ -102,14 +109,14 @@ public class RaiseMappingRequest extends TestBase {
         List<WebElement> plan = driver1.findElements(By.xpath(prop.getProperty("plantype")));
         Select plantype = new Select(plan.get(0));
         plantype.selectByValue("1");
-        Thread.sleep(2000L);
-        List<WebElement> planVal = driver1.findElements(By.xpath(prop.getProperty("plannameid")));
-        Select planName = new Select(planVal.get(0));
+        Thread.sleep(5000L);
+        WebElement planVal = driver1.findElement(By.xpath(prop.getProperty("plannameid")));
+        Select planName = new Select(planVal);
         planName.selectByValue("902");
         Thread.sleep(4000L);
-        List<WebElement> term = driver1.findElements(By.xpath(prop.getProperty("rmrpolicyterm")));
-        Select policyterm = new Select(term.get(0));
-        policyterm.selectByValue("1");
+//        List<WebElement> term = driver1.findElements(By.xpath(prop.getProperty("rmrpolicyterm")));
+//        Select policyterm = new Select(term.get(0));
+//        policyterm.selectByValue("1");
         List<WebElement> OD = driver1.findElements(By.xpath(prop.getProperty("ODTerm")));
         Select ODTerm = new Select(OD.get(0));
         ODTerm.selectByValue("1");
@@ -120,8 +127,6 @@ public class RaiseMappingRequest extends TestBase {
         Select NCBValue = new Select(NCB.get(0));
         NCBValue.selectByValue("20");
         Thread.sleep(2000L);
-
-
         WebElement regdate =  driver1.findElement(By.xpath(prop.getProperty("rmrregdate")));
         regdate.sendKeys("20-05-2018");
         regdate.sendKeys(Keys.ENTER);
@@ -129,19 +134,49 @@ public class RaiseMappingRequest extends TestBase {
         mfgdate.sendKeys("20-04-2018");
         mfgdate.sendKeys(Keys.ENTER);
         driver1.findElement(By.xpath(prop.getProperty("rmrrtono"))).sendKeys("HR51");
-        driver1.findElement(By.xpath(prop.getProperty("prePolNum"))).sendKeys("ABCD123456");
-       List<WebElement> fuelT = driver1.findElements(By.xpath(prop.getProperty("fuelType")));
-       Select fuelTy = new Select(fuelT.get(0));
+        List<WebElement> subclass = driver1.findElements(By.xpath(prop.getProperty("rmrvehiclesubclass")));
+        Select Vehiclesubclass = new Select(subclass.get(0));
+        Vehiclesubclass.selectByValue("1");
+
+
+        driver1.findElement(By.xpath(prop.getProperty("rprCC"))).sendKeys("1200");
+        List<WebElement> fuelT = driver1.findElements(By.xpath(prop.getProperty("fuelType")));
+        Select fuelTy = new Select(fuelT.get(0));
         fuelTy.selectByValue("2");
-      List<WebElement> mode= driver1.findElements(By.xpath(prop.getProperty("model")));
-      Select carModel = new Select(mode.get(0));
-        carModel.selectByVisibleText("CARNIVAL");
-        driver1.findElement(By.xpath(prop.getProperty("netPremium"))).sendKeys(netPremium);
+        driver1.findElement(By.xpath(prop.getProperty("rprNoofseats"))).sendKeys("5");
+        List<WebElement> make= driver1.findElements(By.xpath(prop.getProperty("rmrmake")));
+        Select carMake = new Select(make.get(0));
+        carMake.selectByVisibleText("HONDA");
+        Thread.sleep(2000L);
+        List<WebElement> model= driver1.findElements(By.xpath(prop.getProperty("rmrmodel")));
+        Select carModel = new Select(model.get(0));
+        carModel.selectByVisibleText("CITY");
+        Thread.sleep(2000L);
+        driver1.findElement(By.xpath(prop.getProperty("rprODPremium"))).sendKeys("20000");
+
+        WebElement TPPremium = driver1.findElement(By.xpath(prop.getProperty("rprTPPremium")));
+        TPPremium.clear();
+        TPPremium.sendKeys("10000");
+
+        WebElement  NetPremium = driver1.findElement(By.xpath(prop.getProperty("rprnetpremium")));
+        NetPremium.clear();
+        NetPremium.sendKeys("30000");
+        Thread.sleep(2000L);
+        driver1.findElement(By.xpath(prop.getProperty("rprsuminsured"))).sendKeys("500000");
+        Thread.sleep(2000L);
+        driver1.findElement(By.xpath(prop.getProperty("rprgrosspremium"))).sendKeys("35000");
+
+        List<WebElement> term = driver1.findElements(By.xpath(prop.getProperty("rmrpolicyterm")));
+        Select policyterm = new Select(term.get(0));
+        policyterm.selectByValue("1");
+
         WebElement submitButt= driver1.findElement(By.xpath(prop.getProperty("updateButton")));
+        JavascriptExecutor jse2 = (JavascriptExecutor) driver1;
         jse2.executeScript("arguments[0].scrollIntoView()", submitButt);
         jse2.executeScript("arguments[0].click();", submitButt);
-//       List<WebElement> term = driver1.findElements(By.xpath(prop.getProperty("polTerm")));
-//       Select termpol= new Select(mode.get(0));
-//        termpol.selectByValue("1");
+        Thread.sleep(10000L);
+
     }
+
+
 }
