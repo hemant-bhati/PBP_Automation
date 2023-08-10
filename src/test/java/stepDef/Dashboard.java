@@ -16,7 +16,7 @@ public class Dashboard extends TestBase {
         }
         driver.navigate().back();
         try {
-            String query = "use POSPDB EXEC [stats].[GetProductWiseBusinessStats_v1] @AffiliateCode='IP9022', @FromDate='2023-06-01', @ToDate='2023-06-21', @businessCheckOn=1";
+            String query = "use POSPDB EXEC [stats].[GetProductWiseBusinessStats_v1] @AffiliateCode='IP9022', @FromDate='2023-07-01', @ToDate='2023-07-07', @businessCheckOn=1";
 // Get the contents of userinfo table from DB
             ResultSet res = stmt.executeQuery(query);
 // Print the result untill all the records are printed
@@ -24,12 +24,12 @@ public class Dashboard extends TestBase {
             int counter = 0;
             while (res.next()) {
                 //System.out.print("product id " + res.getString(1));
-                System.out.println("product name=" + res.getString(2) + "\n");
+                System.out.println("product name=" + res.getString(2));
                 System.out.println("Total no of policies= " + res.getString(3));
                 //System.out.println(" " + res.getString(4));
                 System.out.println("Total premium=" + res.getString(5));
                 System.out.println("Renewal booking count=" + res.getString(6));
-                System.out.println("Renewal APE=" + res.getString(7));
+                System.out.println("Renewal APE=" + res.getString(7)+"\n");
                 //counter += res.getInt(3);
                 //System.out.println(counter);
                 WebElement totalPol = driver.findElement(By.xpath("//div[@class='details']//h6"));
@@ -48,11 +48,11 @@ public class Dashboard extends TestBase {
             e.printStackTrace();
         }
     }
-    @Then("^Validate Offline Request tab under My Actionables$")
-    public void validateOfflineRequestTabUnderMyActionables() {
-        driver.findElement(By.xpath(prop.getProperty("OfflineRequest"))).click();
-        driver.navigate().back();
-    }
+//    @Then("^Validate Offline Request tab under My Actionables$")
+//    public void validateOfflineRequestTabUnderMyActionables() {
+//        driver.findElement(By.xpath(prop.getProperty("OfflineRequest"))).click();
+//        driver.navigate().back();
+//    }
     @Then("^Validate Leads tab under My Actionables$")
     public void validateLeadsTabUnderMyActionables() {
         driver.findElement(By.xpath(prop.getProperty("leads"))).click();

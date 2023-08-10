@@ -1,5 +1,5 @@
 @MappingRequest
-Feature: Request Offline Quote
+Feature: Raise Mapping Request of Reliance
   Background: Login functionality
     When Enter the Partner Code
     Then Clicks on the send otp button in login page
@@ -8,9 +8,11 @@ Feature: Request Offline Quote
 
   Scenario Outline: Generate Request Offline Quote
     When click on Request Offline Quote navigations "<prodID>","<custName>", "<regisNum>","<polNum>","<preMium>", "<docUpload>"
-    Then Open the Admin Panel "<prePolNum>", "<netPremium>"
+    Then Open the Admin Panel and search ticket "<prePolNum>", "<netPremium>"
+    Then click on verify button under Add New Remarks section
+    Then fill all mandatory inputs on policy details
 
 #    Then Click on Tickets
     Examples:
       |prePolNum|prodID|custName|regisNum|preMium|docUpload|polNum|netPremium|
-      |2872665565|186  |Neha Gupta|RJ09RG8899|56000  |C:\Users\NehaGupta\Desktop\Policies folder\Reliance\reliance car saod.pdf|hu78hc100|12596|
+      |2872665565|186  |Automation User|RJ09RG8899|56000  |D:\PB Partners\POSP\OCR\Reliance\reliance car comp.pdf|hu78pyc76|12596|
