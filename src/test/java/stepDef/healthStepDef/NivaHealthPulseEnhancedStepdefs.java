@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-public class HealthCJStepdefs extends TestBase {
+public class NivaHealthPulseEnhancedStepdefs extends TestBase {
     Select dropdownAge;
     String parent;
     String premiumofproposalpage;
@@ -96,17 +96,11 @@ public class HealthCJStepdefs extends TestBase {
         Thread.sleep(5000L);
        // driver.navigate().refresh();
         WebElement nivaHealthPlusEnhance = null;
-//        WebElement NivaHealthCompanion = null;
-//        WebElement NivaReasure2PlatinumPlus = null;
-//        WebElement NivaReasure2TitaniumPlus = null;
-//        WebElement NivaGoActive = null;
-//        WebElement NivaReasure2BronzePlus = null;
-//        WebElement NivaArogyaSanjeevani = null;
-//        WebElement nivaReAsure = null;
+
 
         try {
             nivaHealthPlusEnhance = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthPlusEnhance")));
-            String queryHealthPlus = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=574 and SumInsured=500000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
+            String queryHealthPlus = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=574 and SumInsured=300000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
             ResultSet res = stmt.executeQuery(queryHealthPlus);
             while (res.next()) {
                 System.out.println("premium value from DB " + res.getString(1));
@@ -217,17 +211,52 @@ public class HealthCJStepdefs extends TestBase {
 
     @And("^Enter the details on medical screen$")
     public void enterTheDetailsOnMedicalScreen() {
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[3]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[6]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[9]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[12]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[15]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[18]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[21]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[24]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[27]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[30]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[33]")).click();
+
+        Actions action = new Actions(driver);
+        WebElement childElement = driver.findElement(By.xpath("(//div[@class='optionsModule'])[3]"));
+        action.moveToElement(childElement).click().perform();
+
+        action = new Actions(driver);
+        WebElement childElement1 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[6]"));
+        action.moveToElement(childElement1).click().perform();
+
+        action = new Actions(driver);
+        WebElement childElement2 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[9]"));
+        action.moveToElement(childElement2).click().perform();
+
+        action = new Actions(driver);
+        WebElement childElement3 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[12]"));
+        action.moveToElement(childElement3).click().perform();
+
+        action = new Actions(driver);
+        WebElement childElement4 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[15]"));
+        action.moveToElement(childElement4).click().perform();
+
+        action = new Actions(driver);
+        WebElement childElement5 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[18]"));
+        action.moveToElement(childElement5).click().perform();
+
+        action = new Actions(driver);
+        WebElement childElement6 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[21]"));
+        action.moveToElement(childElement6).click().perform();
+
+        action = new Actions(driver);
+        WebElement childElement7 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[24]"));
+        action.moveToElement(childElement7).click().perform();
+
+        action = new Actions(driver);
+        WebElement childElement8 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[27]"));
+        action.moveToElement(childElement8).click().perform();
+
+        action = new Actions(driver);
+        WebElement childElement9 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[30]"));
+        action.moveToElement(childElement9).click().perform();
+
+        action = new Actions(driver);
+        WebElement childElement10 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[33]"));
+        action.moveToElement(childElement10).click().perform();
+
+
         WebElement highestQualification = driver.findElement(By.xpath("(//div[@class='field']/select)[1]"));
         Select dropdownhighestQualification = new Select(highestQualification);
         dropdownhighestQualification.selectByIndex(2);
@@ -236,17 +265,19 @@ public class HealthCJStepdefs extends TestBase {
         Select dropdownhighestQualificationSpouse = new Select(highestQualificationSpouse);
         dropdownhighestQualificationSpouse.selectByIndex(4);
         //dropdownhighestQualificationSpouse.selectByValue("Matric");
-        driver.findElement(By.xpath("//button[contains(text(),'CONTINUE TO NOMINEE SECTION')]")).click();
+        action = new Actions(driver);
+        WebElement childElement11 = driver.findElement(By.xpath("//button[@class=\"primaryButtonStyle btn\" and contains(text(), \"CONTINUE TO NOMINEE SECTION\")]"));
+        action.moveToElement(childElement11).click().perform();
     }
 
     @And("^Enter the details on Nominee page$")
     public void enterTheDetailsOnNomineePage() throws InterruptedException {
-//        Thread.sleep(5000L);
-//        driver.navigate().refresh();
+        Thread.sleep(5000L);
         WebElement childElement1 = driver.findElement(By.xpath("(//div[@class='InputLabelBox'])[1]"));
         JavascriptExecutor jse4 = (JavascriptExecutor) driver;
         jse4.executeScript("arguments[0].scrollIntoView()", childElement1);
         jse4.executeScript("arguments[0].click();", childElement1);
+
         driver.findElement(By.xpath("//button[contains(text(),'REVIEW & PAY')]")).click();
     }
     @And("^check the Declaration popup$")

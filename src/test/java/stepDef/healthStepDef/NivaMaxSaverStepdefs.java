@@ -27,7 +27,7 @@ public class NivaMaxSaverStepdefs extends TestBase {
     public void clickOnSellNowModulesIcon() throws InterruptedException {
         Thread.sleep(10000L);
         driver.findElement(By.xpath(prop.getProperty("sellnowbutton"))).click();
-        
+
     }
 
     @When("^Click on the Health buttons icon$")
@@ -123,7 +123,8 @@ public class NivaMaxSaverStepdefs extends TestBase {
         validateNivaMaxSaverPremiumButtonText();
         Thread.sleep(3000L);
     }
-    public void validateNivaMaxSaverPremiumButtonText(){
+
+    public void validateNivaMaxSaverPremiumButtonText() {
         WebElement nivaMaxSaver = null;
         try {
             nivaMaxSaver = driver.findElement(By.xpath(prop.getProperty("NivaMaxSaver")));
@@ -273,21 +274,21 @@ public class NivaMaxSaverStepdefs extends TestBase {
     public void enterTheDetailsOnThePortabilityPage(String PolicyNumber, String SumInsurred, String CumulativeBonus, String PEDDeclared) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         Thread.sleep(3000L);
-        Select ReasonforProtability=new Select(driver.findElement(By.xpath("//select[@id='portabilityReason']")));
+        Select ReasonforProtability = new Select(driver.findElement(By.xpath("//select[@id='portabilityReason']")));
         ReasonforProtability.selectByValue("1");
         Thread.sleep(1000L);
         Actions action = new Actions(driver);
         WebElement childElement = driver.findElement(By.xpath("(//div[@class='optionsModule'])[2]"));
         action.moveToElement(childElement).click().perform();
-        Select SelectInsurer=new Select(driver.findElement(By.xpath("//Select[@id='selectInsurer']")));
+        Select SelectInsurer = new Select(driver.findElement(By.xpath("//Select[@id='selectInsurer']")));
         SelectInsurer.selectByValue("1028");
         Thread.sleep(1000L);
-        Select SelectPlan=new Select(driver.findElement(By.xpath("//Select[@id='selectPlan']")));
+        Select SelectPlan = new Select(driver.findElement(By.xpath("//Select[@id='selectPlan']")));
         SelectPlan.selectByValue("49");
         driver.findElement(By.xpath("//input[@name='policyNumber']")).sendKeys(PolicyNumber);
-        Select SelectTerm=new Select(driver.findElement(By.xpath("//select[@id='selectTerm']")));
+        Select SelectTerm = new Select(driver.findElement(By.xpath("//select[@id='selectTerm']")));
         SelectTerm.selectByValue("1");
-        Select SelectPolicyType=new Select(driver.findElement(By.xpath("//select[@id='policyType']")));
+        Select SelectPolicyType = new Select(driver.findElement(By.xpath("//select[@id='policyType']")));
         SelectPolicyType.selectByValue("1");
         action = new Actions(driver);
         WebElement childElement1 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[4]"));
@@ -298,7 +299,7 @@ public class NivaMaxSaverStepdefs extends TestBase {
         action = new Actions(driver);
         WebElement childElement3 = driver.findElement(By.xpath("(//div[@class='optionsModule'])[7]"));
         action.moveToElement(childElement3).click().perform();
-        Select SelectNumberofYear=new Select(driver.findElement(By.xpath("//div[contains(@class, 'field')]//select[contains(@id, 'renewalYears')]")));
+        Select SelectNumberofYear = new Select(driver.findElement(By.xpath("//div[contains(@class, 'field')]//select[contains(@id, 'renewalYears')]")));
         SelectNumberofYear.selectByValue("1");
         driver.findElement(By.xpath("//input[@name='sumInsured']")).sendKeys(SumInsurred);
         driver.findElement(By.xpath("//input[@name='cumulativeBonus']")).sendKeys(CumulativeBonus);
@@ -332,7 +333,7 @@ public class NivaMaxSaverStepdefs extends TestBase {
 
         Thread.sleep(10000L);
         String premiumonpaymentsummarypage = driver.findElement(By.xpath("//div[@class='summaryTotalBlock__amount']")).getText();
-        System.out.println("***"+premiumonpaymentsummarypage+"****");
+        System.out.println("***" + premiumonpaymentsummarypage + "****");
     }
 
     @And("^move to POSP parent portal$")
@@ -402,5 +403,5 @@ public class NivaMaxSaverStepdefs extends TestBase {
 
     }
 
-    }
+}
 
