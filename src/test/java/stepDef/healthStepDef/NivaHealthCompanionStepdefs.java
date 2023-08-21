@@ -386,7 +386,7 @@ public class NivaHealthCompanionStepdefs extends TestBase {
             while (res.next()) {
                 System.out.println("leadId value from DB " + res.getString(1));
                 Thread.sleep(3000L);
-                List<WebElement> leadId = driver.findElements(By.xpath(prop.getProperty("leadidleadpage")));
+                List<WebElement> leadId = driver.findElements(By.xpath(prop.getProperty("Companionleadidpage")));
                 for (WebElement e : leadId) {
                     System.out.println("Lead Id value from UI " + e.getText());
                     String leadValue = res.getString(1);
@@ -400,7 +400,7 @@ public class NivaHealthCompanionStepdefs extends TestBase {
 
     @And("^click Continue button from Lead section$")
     public void clickContinueButtonFromLeadSection() throws InterruptedException {
-        driver.findElement(By.xpath(prop.getProperty("continuebuttonleadpage"))).click();
+        driver.findElement(By.xpath(prop.getProperty("CompanionContinuebuttonleadpage"))).click();
         Thread.sleep(5000L);
     }
 
