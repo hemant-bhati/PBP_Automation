@@ -41,4 +41,4 @@ Feature: Health Journey functionality
 
       Examples:
       |FullName|MobileNo|eldestmemberage|city|panCard|address|contactEmail|emergencyMobile|dob|occupation|heightFeet|heightInch|weight|spouseName|spouseDOB|spouseOccupation|spouseHeightFeet|spouseHeightInch|spouseWeight|
-      |Test Automation|9810168351|35    |Chandigarh|AYMPB1667K|Delhi|test@gmail.com|9411073568 |01-01-1998|1|60    |8         |72    |Pooja k   |01-01-2002|5     |60               |4               |68          |
+      |Test Automation|9810168355|35    |Chandigarh|AYMPB1667K|Delhi|test@gmail.com|9411073568 |01-01-1998|1|60    |8         |72    |Pooja k   |01-01-2002|5     |60               |4               |68          |

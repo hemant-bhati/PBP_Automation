@@ -54,7 +54,9 @@ public class HealthCJStepdefs extends TestBase {
         new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("CustomerFullName")))).sendKeys(FullName);
         new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("CustomerMobileNumber")))).sendKeys(MobileNo);
         new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("ContinueButton1")))).click();
+        Thread.sleep(4000L);
     }
+
 
 
     @Then("^user should be able to navigate to member detail$")
@@ -105,7 +107,7 @@ public class HealthCJStepdefs extends TestBase {
 
         try {
             nivaHealthPlusEnhance = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthPlusEnhance")));
-            String queryHealthPlus = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=574 and SumInsured=500000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
+            String queryHealthPlus = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=574 and SumInsured=300000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
             ResultSet res = stmt.executeQuery(queryHealthPlus);
             while (res.next()) {
                 System.out.println("premium value from DB " + res.getString(1));
@@ -290,7 +292,11 @@ public class HealthCJStepdefs extends TestBase {
     }
     @And("^click on Continue button from Lead section$")
     public void clickOnContinueButtonFromLeadSection() throws InterruptedException {
-        driver.findElement(By.xpath(prop.getProperty("continuebuttonleadpage"))).click();
+        Actions actions = new Actions(driver);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        actions.moveToElement(driver.findElement(By.xpath(prop.getProperty("makepaymentbuttonleadpage")))).perform();
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(prop.getProperty("makepaymentbuttonleadpage")))));
+        //driver.findElement(By.xpath(prop.getProperty("continuebuttonleadpage"))).click();
         Thread.sleep(5000L);
     }
     @And("^click on proceed to payment page$")

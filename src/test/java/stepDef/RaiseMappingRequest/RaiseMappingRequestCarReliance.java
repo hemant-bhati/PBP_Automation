@@ -13,16 +13,16 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class RaiseMappingRequestReliance extends TestBase {
+public class RaiseMappingRequestCarReliance extends TestBase {
     String parent;
     WebDriver driver1;
     String lastWord;
 
 
-    public RaiseMappingRequestReliance() throws IOException, InterruptedException {
+    public RaiseMappingRequestCarReliance() throws IOException, InterruptedException {
     }
-    @When("^click on Request Offline Quote navigations \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\"$")
-    public void clickOnRequestOfflineQuoteNavigations(String prodID, String custName, String regisNum, String polNum, String preMium, String docUpload) throws Throwable {
+    @When("^click on Raise mapping navigation \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\"$")
+    public void clickOnRequestOfflineQuoteNavigations(String prodID, String custName, String regisNum, String polNum, String premiumvalue, String docUpload) throws Throwable {
         driver.findElement(By.xpath("//li[@id='id-offlinereq']")).click();
         WebElement childElement = driver.findElement(By.xpath("//li[@data-sidenav='raise-mapping-request']"));
 //        Actions reqofflinequote = new Actions(driver);
@@ -44,7 +44,7 @@ public class RaiseMappingRequestReliance extends TestBase {
         Random appno = new Random();
         int policyno = appno.nextInt(500);
         driver.findElement(By.xpath(prop.getProperty("polNum"))).sendKeys(polNum+String.valueOf(policyno));
-        driver.findElement(By.xpath(prop.getProperty("preMium"))).sendKeys(preMium);
+        driver.findElement(By.xpath(prop.getProperty("premium"))).sendKeys(premiumvalue);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         // identify element
         WebElement l = driver.findElement(By.xpath(prop.getProperty("docUpload")));
