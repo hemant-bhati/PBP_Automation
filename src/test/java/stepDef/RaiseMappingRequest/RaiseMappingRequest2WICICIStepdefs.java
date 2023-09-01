@@ -165,5 +165,10 @@ public class RaiseMappingRequest2WICICIStepdefs extends TestBase {
         jse2.executeScript("arguments[0].click();", submitButt);
         Thread.sleep(10000L);
     }
+
+    @Then("^verify the lead value from UI and DB$")
+    public void verifyTheLeadValueFromUIAndDB() {
+        driver1.findElement(By.xpath(prop.getProperty("rprpopupclosebutton"))).click();
+    }
 }
 

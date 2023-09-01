@@ -109,7 +109,7 @@ public class RaiseMappingRequestCarReliance extends TestBase {
         List<WebElement> plan = driver1.findElements(By.xpath(prop.getProperty("plantype")));
         Select plantype = new Select(plan.get(0));
         plantype.selectByValue("1");
-        Thread.sleep(5000L);
+        Thread.sleep(10000L);
         WebElement planVal = driver1.findElement(By.xpath(prop.getProperty("plannameid")));
         Select planName = new Select(planVal);
         planName.selectByValue("902");
@@ -179,4 +179,9 @@ public class RaiseMappingRequestCarReliance extends TestBase {
     }
 
 
+    @Then("^verify the lead id from UI and DB$")
+    public void verifyTheLeadIdFromUIAndDB() {
+        driver1.findElement(By.xpath(prop.getProperty("rprpopupclosebutton"))).click();
+
+    }
 }

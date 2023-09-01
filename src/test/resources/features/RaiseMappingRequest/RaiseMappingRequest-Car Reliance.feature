@@ -11,6 +11,8 @@ Feature: Raise Mapping Request of Reliance
     Then Open the Admin Panel and search ticket "<prePolNum>", "<netPremium>"
     Then click on verify button under Add New Remarks section
     Then fill all mandatory inputs on policy details
+    Then verify the lead id from UI and DB
+
 
 #    Then Click on Tickets
     Examples:

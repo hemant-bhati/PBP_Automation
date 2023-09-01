@@ -14,6 +14,7 @@ Feature: Raise Mapping Request of ICICI
     Then click on verify radio button under Add New Remarks section
     Then fill all mandatory fields on policy details
     Then click on update button
+    Then verify the lead value from UI and DB
 
 #    Then Click on Tickets
     Examples:
