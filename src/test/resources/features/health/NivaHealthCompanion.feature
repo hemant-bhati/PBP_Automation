@@ -33,7 +33,7 @@ Feature: Health Journey
     And Enter details of the member on member details screen "<dob>","<occupation>","<heightFeet>","<heightInch>","<weight>","<spouseName>","<spouseDOB>","<spouseOccupation>","<spouseHeightFeet>","<spouseHeightInch>","<spouseWeight>"
     And Enter Details of the child on the member details Screen "<childName>","<childdob>","<childHeightFeet>","<childHeightInch>","<childweight>"
     And Enter details of medical question on medical screen
-    And Enter details on Nominee page after medical page
+    And Enter details on The Nominee page
     And check Declaration popup
     And move the POSP parent portal
     And click the Lead tab

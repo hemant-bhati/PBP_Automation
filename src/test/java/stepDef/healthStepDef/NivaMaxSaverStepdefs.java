@@ -85,10 +85,12 @@ public class NivaMaxSaverStepdefs extends TestBase {
         driver.findElement(By.xpath(prop.getProperty("continueofselectcity"))).click();
     }
 
+
     @And("^select existing illness & click on View Plan$")
     public void selectExistingIllnessClickOnViewPlan() throws InterruptedException {
-        driver.findElement(By.xpath(prop.getProperty("Noneofthese"))).click();
-        Thread.sleep(5000L);
+        new WebDriverWait(driver, 100).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("Noneofthese")))).click();
+//        driver.findElement(By.xpath(prop.getProperty("Noneofthese"))).click();
+        Thread.sleep(3000L);
     }
 
     @And("^Enter spouse Age through edit member$")
@@ -103,7 +105,8 @@ public class NivaMaxSaverStepdefs extends TestBase {
 
     @And("^click on the cover amount dorp down button on the quote page$")
     public void clickOnTheCoverAmountDorpDownButtonOnTheQuotePage() {
-        driver.findElement(By.xpath(prop.getProperty("coverammountbutton"))).click();
+//        driver.findElement(By.xpath(prop.getProperty("coverammountbutton"))).click();
+        new WebDriverWait(driver, 100).until(ExpectedConditions.presenceOfElementLocated((By.xpath(prop.getProperty("coverammountbutton"))))).click();
 
     }
 
@@ -313,7 +316,7 @@ public class NivaMaxSaverStepdefs extends TestBase {
         action = new Actions(driver);
         WebElement childElement6 = driver.findElement(By.xpath("//input[@id='declarationInput1']"));
         action.moveToElement(childElement6).click().perform();
-        Thread.sleep(1000L);
+        Thread.sleep(3000L);
         action = new Actions(driver);
         WebElement childElement7 = driver.findElement(By.xpath("//button[@class='primaryButtonStyle btn']"));
         action.moveToElement(childElement7).click().perform();
@@ -322,7 +325,7 @@ public class NivaMaxSaverStepdefs extends TestBase {
 
     @And("^check to the Declaration popup$")
     public void checkToTheDeclarationPopup() throws InterruptedException {
-        Thread.sleep(1000L);
+        Thread.sleep(2000L);
         Actions action = new Actions(driver);
         WebElement childElement = driver.findElement(By.xpath("//input[@id='declarationInput' and @type='checkbox' and @class='checkbox_filter']"));
         action.moveToElement(childElement).click().perform();
@@ -331,7 +334,7 @@ public class NivaMaxSaverStepdefs extends TestBase {
         WebElement childElement1 = driver.findElement(By.xpath("//button[@class='btn zuno']"));
         action.moveToElement(childElement1).click().perform();
 
-        Thread.sleep(10000L);
+        Thread.sleep(50000L);
         String premiumonpaymentsummarypage = driver.findElement(By.xpath("//div[@class='summaryTotalBlock__amount']")).getText();
         System.out.println("***" + premiumonpaymentsummarypage + "****");
     }
@@ -362,7 +365,7 @@ public class NivaMaxSaverStepdefs extends TestBase {
                 for (WebElement e : leadId) {
                     System.out.println("Lead Id value from UI " + e.getText());
                     String leadValue = res.getString(1);
-                    junit.framework.Assert.assertEquals("LEAD ID: " + leadValue, e.getText());
+                    junit.framework.Assert.assertEquals("Lead ID - " + leadValue, e.getText());
                 }
             }
         } catch (Exception e) {
@@ -373,8 +376,18 @@ public class NivaMaxSaverStepdefs extends TestBase {
 
     @And("^click on the Continue button from Lead section$")
     public void clickOnTheContinueButtonFromLeadSection() throws InterruptedException {
-        driver.findElement(By.xpath(prop.getProperty("MaxsaverContinuebuttonleadpage"))).click();
+        WebElement Childelement =driver.findElement(By.xpath(prop.getProperty("MaxsaverHowerbuttonleadpage")));
+        Actions action = new Actions(driver);
+        action.moveToElement(Childelement).build().perform();
         Thread.sleep(5000L);
+       WebElement Childelement1= driver.findElement(By.xpath(prop.getProperty("MaxsaverContinueLeadpagebutton")));
+       if(Childelement1.isDisplayed())
+       {
+           Childelement1.click();
+
+       }
+
+
     }
 
     @And("^click on the proceed to payment page$")
@@ -394,11 +407,11 @@ public class NivaMaxSaverStepdefs extends TestBase {
     public void navigateToThePaymentPageAndFillAllMandatoryEntries() throws InterruptedException {
 
         //new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("(//div[@class='selectBank'])[1]")))).click();
-        Thread.sleep(20000l);
+        Thread.sleep(50000l);
         driver.findElement(By.xpath("(//div[@class='selectBank'])[1]")).click();
         driver.findElement(By.xpath("//button[@class=\"btn\" and @id=\"paynb\"]")).click();
         driver.findElement(By.xpath("//button[@data-val=\"S\" and @class=\"success\"]")).click();
-        Thread.sleep(10000L);
+        Thread.sleep(20000L);
         driver.navigate().refresh();
 
     }

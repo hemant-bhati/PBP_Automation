@@ -25,7 +25,7 @@
 //    @Given("^Open the browser$")
 //    public void openTheBrowser() {
 //
-//        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+//        System.setProperty("webdriver.chrome.driver", "Test.exe");
 //        driver = new ChromeDriver();
 //
 //

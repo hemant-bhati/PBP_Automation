@@ -42,7 +42,6 @@ Feature: Health Journey functionality
      And click on the proceed to payment page
      And navigate to the payment page and fill all mandatory entries
 
-
      Examples:
        |FullName|MobileNo|eldestmemberage|city|panCard|address|contactEmail|emergencyMobile|dob|occupation|heightFeet|heightInch|weight|spouseName|spouseDOB|spouseOccupation|spouseHeightFeet|spouseHeightInch|spouseWeight|PolicyExpirydate|PolicyNumber|SumInsurred|CumulativeBonus|PEDDeclared|
        |Rahul Sharma|7701906615|40    |Mumbai|AYMPB1667K|Mumbai|test@gmail.com|9411073568 |01-01-1983|1|60    |8         |72    |Sonam Sharma   |01-01-1993|5     |60               |4               |68          |24-09-2023                |1010101010101|      1000000    |  500000 |Abc123456|

@@ -107,7 +107,9 @@ public class NivaHealthCompanionStepdefs extends TestBase {
         Thread.sleep(5000L);
         Select relationshipSelect = new Select(driver.findElement(By.xpath("(//div[@class='select_members_age child_dropdown']//select)[1]")));
         relationshipSelect.selectByValue("8");
-        driver.findElement(By.xpath("//div[contains(text(),'Apply')]")).click();
+        new WebDriverWait(driver, 100).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(),'Apply')]"))).click();
+
+//        driver.findElement(By.xpath("//div[contains(text(),'Apply')]")).click();
     }
 
     @And("^click on cover ammount dorp down button$")
@@ -234,7 +236,7 @@ public class NivaHealthCompanionStepdefs extends TestBase {
 
     @And("^Enter details of medical question on medical screen$")
     public void enterDetailsOfMedicalQuestionOnMedicalScreen() throws InterruptedException {
-        Thread.sleep(5000L);
+        Thread.sleep(10000L);
 
         Actions action = new Actions(driver);
         WebElement childElement = driver.findElement(By.xpath("(//div[@class='optionsModule'])[4]"));
@@ -342,26 +344,34 @@ public class NivaHealthCompanionStepdefs extends TestBase {
         driver.findElement(By.xpath("//button[@class=\"primaryButtonStyle btn\" and contains(text(), \"CONTINUE TO NOMINEE SECTION\")]")).click();
     }
 
-    @And("^Enter details on Nominee page after medical page$")
-    public void enterDetailsOnNomineePageAfterMedicalPage() throws InterruptedException {
+    @And("^Enter details on The Nominee page$")
+    public void enterDetailsOnTheNomineePage() throws InterruptedException {
         Thread.sleep(5000L);
         WebElement childElement1 = driver.findElement(By.xpath("(//div[@class='InputLabelBox'])[1]"));
         JavascriptExecutor jse4 = (JavascriptExecutor) driver;
         jse4.executeScript("arguments[0].scrollIntoView()", childElement1);
         jse4.executeScript("arguments[0].click();", childElement1);
 
-        driver.findElement(By.xpath("//button[contains(text(),'REVIEW & PAY')]")).click();
+        Actions action = new Actions(driver);
+        WebElement childElement = driver.findElement(By.xpath("//button[@class='primaryButtonStyle btn']"));
+        action.moveToElement(childElement).click().perform();
     }
 
     @And("^check Declaration popup$")
     public void checkDeclarationPopup() throws InterruptedException {
 
-        driver.findElement(By.xpath("//input[@id='declarationInput']")).click();
-        driver.findElement(By.xpath("//button[@class='btn zuno']")).click();
-        Thread.sleep(10000L);
+        Thread.sleep(2000L);
+        Actions action = new Actions(driver);
+        WebElement childElement = driver.findElement(By.xpath("//input[@id='declarationInput' and @type='checkbox' and @class='checkbox_filter']"));
+        action.moveToElement(childElement).click().perform();
+
+        action = new Actions(driver);
+        WebElement childElement1 = driver.findElement(By.xpath("//button[@class='btn zuno']"));
+        action.moveToElement(childElement1).click().perform();
+
+        Thread.sleep(50000L);
         String premiumonpaymentsummarypage = driver.findElement(By.xpath("//div[@class='summaryTotalBlock__amount']")).getText();
         System.out.println("***" + premiumonpaymentsummarypage + "****");
-        //Assert.assertEquals(premiumonpaymentsummarypage,premiumofproposalpage);
     }
 
     @And("^move the POSP parent portal$")
@@ -400,8 +410,15 @@ public class NivaHealthCompanionStepdefs extends TestBase {
 
     @And("^click Continue button from Lead section$")
     public void clickContinueButtonFromLeadSection() throws InterruptedException {
-        driver.findElement(By.xpath(prop.getProperty("CompanionContinuebuttonleadpage"))).click();
+        WebElement Childelement = driver.findElement(By.xpath(prop.getProperty("CompanionHowerbuttonleadpage")));
+        Actions action = new Actions(driver);
+        action.moveToElement(Childelement).build().perform();
         Thread.sleep(5000L);
+        WebElement Childelement1 = driver.findElement(By.xpath(prop.getProperty("CompanionContinueLeadpagebutton")));
+        if (Childelement1.isDisplayed()) {
+            Childelement1.click();
+
+        }
     }
 
     @And("^click proceed to payment page$")
@@ -413,16 +430,19 @@ public class NivaHealthCompanionStepdefs extends TestBase {
                 break;
             }
         }
+        driver.findElement(By.xpath("//button[@class='btn']")).click();
     }
 
     @And("^navigate payment page and fill all mandatory entries$")
     public void navigatePaymentPageAndFillAllMandatoryEntries() throws InterruptedException {
+        Thread.sleep(50000l);
         driver.findElement(By.xpath("(//div[@class='selectBank'])[1]")).click();
         driver.findElement(By.xpath("//button[@class=\"btn\" and @id=\"paynb\"]")).click();
         driver.findElement(By.xpath("//button[@data-val=\"S\" and @class=\"success\"]")).click();
-        Thread.sleep(10000L);
+        Thread.sleep(20000L);
         driver.navigate().refresh();
     }
+
 }
 
 
