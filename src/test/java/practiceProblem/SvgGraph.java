@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SvgGraph {
     public static void main(String args[]){
-        System.setProperty("webdriver.chrome.driver", "cromeDriver/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "cromeDriver/Test.exe");
        WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://www.worldometers.info/coronavirus/country/india/");

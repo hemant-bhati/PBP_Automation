@@ -1,13 +1,14 @@
 package stepDef.healthStepDef;
 
-import cucumber.api.PendingException;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -20,7 +21,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-public class HealthCJStepdefs extends TestBase {
+public class NivaHealthPulseEnhancedStepdefs extends TestBase {
     Select dropdownAge;
     String parent;
     String premiumofproposalpage;
@@ -43,7 +44,7 @@ public class HealthCJStepdefs extends TestBase {
 
     @And("^Enter the detail in Health landing page \"([^\"]*)\",\"([^\"]*)\"$")
     public void enterTheDetailInHealthLandingPage(String FullName, String MobileNo) throws Throwable {
-         parent = driver.getWindowHandle();
+        parent = driver.getWindowHandle();
         for (String child : driver.getWindowHandles()) {
             if (!parent.contentEquals(child)) {
                 driver.switchTo().window(child);
@@ -54,14 +55,12 @@ public class HealthCJStepdefs extends TestBase {
         new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("CustomerFullName")))).sendKeys(FullName);
         new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("CustomerMobileNumber")))).sendKeys(MobileNo);
         new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("ContinueButton1")))).click();
-        Thread.sleep(4000L);
     }
-
 
 
     @Then("^user should be able to navigate to member detail$")
     public void userShouldBeAbleToNavigateToMemberDetail() {
-         String actualTitle = driver.getTitle();
+        String actualTitle = driver.getTitle();
         String expectedTitle = "PolicyBazaar Health Insurance: Get a 5 Lac health plan @Rs. 373/Month";
         Assert.assertEquals(actualTitle, expectedTitle);
         System.out.println("Actual title is " + actualTitle);
@@ -70,7 +69,7 @@ public class HealthCJStepdefs extends TestBase {
     @And("^user should enter the mandatory fields on member screen \"([^\"]*)\"$")
     public void userShouldEnterTheMandatoryFieldsOnMemberScreen(String eldestmemberage) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("2Adult")))).click();
+        new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("2Adult")))).click();
         WebElement age = driver.findElement(By.xpath(prop.getProperty("eldestmemberagexpath")));
         dropdownAge = new Select(age);
         dropdownAge.selectByValue(eldestmemberage);
@@ -91,23 +90,17 @@ public class HealthCJStepdefs extends TestBase {
     public void selectExistingIllnessAndClickOnViewPlan() throws InterruptedException {
         driver.findElement(By.xpath(prop.getProperty("Noneofthese"))).click();
         Thread.sleep(5000L);
-        }
+    }
 
     public void validatePremiumButtonText() throws SQLException, InterruptedException {
         Thread.sleep(5000L);
-       // driver.navigate().refresh();
+        // driver.navigate().refresh();
         WebElement nivaHealthPlusEnhance = null;
-//        WebElement NivaHealthCompanion = null;
-//        WebElement NivaReasure2PlatinumPlus = null;
-//        WebElement NivaReasure2TitaniumPlus = null;
-//        WebElement NivaGoActive = null;
-//        WebElement NivaReasure2BronzePlus = null;
-//        WebElement NivaArogyaSanjeevani = null;
-//        WebElement nivaReAsure = null;
+
 
         try {
             nivaHealthPlusEnhance = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthPlusEnhance")));
-            String queryHealthPlus = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=574 and SumInsured=300000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
+            String queryHealthPlus = "use HealthDB Select Premium  from Hi.Health_Rates nolock where Plan_Id=574 and SumInsured=500000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
             ResultSet res = stmt.executeQuery(queryHealthPlus);
             while (res.next()) {
                 System.out.println("premium value from DB " + res.getString(1));
@@ -127,6 +120,7 @@ public class HealthCJStepdefs extends TestBase {
         }
 
     }
+
     @And("^click on premium button of NivaBupa$")
     public void clickOnpremiumButtonOfNivaBupa() throws InterruptedException, SQLException {
         //driver.navigate().refresh();
@@ -134,6 +128,7 @@ public class HealthCJStepdefs extends TestBase {
         validatePremiumButtonText();
         Thread.sleep(3000L);
     }
+
     @And("^click on proceed to proposal page$")
     public void clickOnProceedToProposalPage() throws InterruptedException {
         WebElement premiumvalue = driver.findElement(By.xpath("//div[@class='flexRow section_premium']//div//span"));
@@ -170,7 +165,7 @@ public class HealthCJStepdefs extends TestBase {
         Select spouseage = new Select(driver.findElement(By.xpath("(//div[@class='select_members_age']//select)[2]")));
         spouseage.selectByValue("30");
         driver.findElement(By.xpath("//div[contains(text(),'Apply')]")).click();
-        Thread.sleep(3000L);
+        Thread.sleep(5000L);
     }
 
     @And("^Enter the details on proposer details screen \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
@@ -218,17 +213,17 @@ public class HealthCJStepdefs extends TestBase {
 
     @And("^Enter the details on medical screen$")
     public void enterTheDetailsOnMedicalScreen() {
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[3]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[6]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[9]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[12]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[15]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[18]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[21]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[24]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[27]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[30]")).click();
-       driver.findElement(By.xpath("(//div[@class='optionsModule'])[33]")).click();
+        driver.findElement(By.xpath("(//div[@class='optionsModule'])[3]")).click();
+        driver.findElement(By.xpath("(//div[@class='optionsModule'])[6]")).click();
+        driver.findElement(By.xpath("(//div[@class='optionsModule'])[9]")).click();
+        driver.findElement(By.xpath("(//div[@class='optionsModule'])[12]")).click();
+        driver.findElement(By.xpath("(//div[@class='optionsModule'])[15]")).click();
+        driver.findElement(By.xpath("(//div[@class='optionsModule'])[18]")).click();
+        driver.findElement(By.xpath("(//div[@class='optionsModule'])[21]")).click();
+        driver.findElement(By.xpath("(//div[@class='optionsModule'])[24]")).click();
+        driver.findElement(By.xpath("(//div[@class='optionsModule'])[27]")).click();
+        driver.findElement(By.xpath("(//div[@class='optionsModule'])[30]")).click();
+        driver.findElement(By.xpath("(//div[@class='optionsModule'])[33]")).click();
         WebElement highestQualification = driver.findElement(By.xpath("(//div[@class='field']/select)[1]"));
         Select dropdownhighestQualification = new Select(highestQualification);
         dropdownhighestQualification.selectByIndex(2);
@@ -240,30 +235,43 @@ public class HealthCJStepdefs extends TestBase {
         driver.findElement(By.xpath("//button[contains(text(),'CONTINUE TO NOMINEE SECTION')]")).click();
     }
 
+
     @And("^Enter the details on Nominee page$")
     public void enterTheDetailsOnNomineePage() throws InterruptedException {
+
         Thread.sleep(5000L);
-        driver.navigate().refresh();
+
         WebElement childElement1 = driver.findElement(By.xpath("(//div[@class='InputLabelBox'])[1]"));
         JavascriptExecutor jse4 = (JavascriptExecutor) driver;
         jse4.executeScript("arguments[0].scrollIntoView()", childElement1);
         jse4.executeScript("arguments[0].click();", childElement1);
+
         driver.findElement(By.xpath("//button[contains(text(),'REVIEW & PAY')]")).click();
+
     }
+
     @And("^check the Declaration popup$")
     public void checkTheDeclarationPopup() throws InterruptedException {
-        driver.findElement(By.xpath("//input[@id='declarationInput']")).click();
-        driver.findElement(By.xpath("//button[@class='btn zuno']")).click();
-        Thread.sleep(10000L);
-            String premiumonpaymentsummarypage = driver.findElement(By.xpath("//div[@class='summaryTotalBlock__amount']")).getText();
-        System.out.println("***"+premiumonpaymentsummarypage+"****");
-        //Assert.assertEquals(premiumonpaymentsummarypage,premiumofproposalpage);
+        Thread.sleep(2000L);
+        Actions action = new Actions(driver);
+        WebElement childElement = driver.findElement(By.xpath("//input[@id='declarationInput' and @type='checkbox' and @class='checkbox_filter']"));
+        action.moveToElement(childElement).click().perform();
+
+        action = new Actions(driver);
+        WebElement childElement1 = driver.findElement(By.xpath("//button[@class='btn zuno']"));
+        action.moveToElement(childElement1).click().perform();
+
+        Thread.sleep(50000L);
+        String premiumonpaymentsummarypage = driver.findElement(By.xpath("//div[@class='summaryTotalBlock__amount']")).getText();
+        System.out.println("***" + premiumonpaymentsummarypage + "****");
     }
+
     @And("^move to the POSP parent portal$")
     public void moveToThePOSPParentPortal() {
         driver.close();
         driver.switchTo().window(parent);
     }
+
     @And("^click on the Lead tab$")
     public void clickOnTheLeadTab() {
         WebElement element = driver.findElement(By.xpath("//a//span[contains(text(),'Lead')]"));
@@ -271,6 +279,7 @@ public class HealthCJStepdefs extends TestBase {
         jse2.executeScript("arguments[0].scrollIntoView()", element);
         jse2.executeScript("arguments[0].click();", element);
     }
+
     @And("^verify the Lead ID from UI and DB$")
     public void verifyTheLeadIDFromUIAndDB() {
         try {
@@ -279,26 +288,32 @@ public class HealthCJStepdefs extends TestBase {
             while (res.next()) {
                 System.out.println("leadId value from DB " + res.getString(1));
                 Thread.sleep(3000L);
-                List<WebElement> leadId = driver.findElements(By.xpath(prop.getProperty("leadidleadpage")));
+                List<WebElement> leadId = driver.findElements(By.xpath(prop.getProperty("HealthPulseEnhancedleadidleadpage")));
                 for (WebElement e : leadId) {
                     System.out.println("Lead Id value from UI " + e.getText());
                     String leadValue = res.getString(1);
-                    junit.framework.Assert.assertEquals("LEAD ID: " + leadValue, e.getText());
+                    junit.framework.Assert.assertEquals("Lead ID - " + leadValue, e.getText());
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @And("^click on Continue button from Lead section$")
     public void clickOnContinueButtonFromLeadSection() throws InterruptedException {
-        Actions actions = new Actions(driver);
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        actions.moveToElement(driver.findElement(By.xpath(prop.getProperty("makepaymentbuttonleadpage")))).perform();
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(prop.getProperty("makepaymentbuttonleadpage")))));
-        //driver.findElement(By.xpath(prop.getProperty("continuebuttonleadpage"))).click();
+
+        WebElement Childelement = driver.findElement(By.xpath(prop.getProperty("HealthPulseEnhancedHowerbuttonleadpage")));
+        Actions action = new Actions(driver);
+        action.moveToElement(Childelement).build().perform();
         Thread.sleep(5000L);
+        WebElement Childelement1 = driver.findElement(By.xpath(prop.getProperty("HealthPulseEnhancedContinueLeadpagebutton")));
+        if (Childelement1.isDisplayed()) {
+            Childelement1.click();
+
+        }
     }
+
     @And("^click on proceed to payment page$")
     public void clickOnProceedToPaymentPage() {
         parent = driver.getWindowHandle();
@@ -315,7 +330,7 @@ public class HealthCJStepdefs extends TestBase {
 //        jse4.executeScript("arguments[0].scrollIntoView()", childElement1);
 //        jse4.executeScript("arguments[0].click();", childElement1);
         driver.findElement(By.xpath("//button[@class='btn']")).click();
-           }
+    }
 
     @And("^navigate to payment page and fill all mandatory entries$")
     public void navigateToPaymentPageAndFillAllMandatoryEntries() throws InterruptedException {
@@ -325,9 +340,12 @@ public class HealthCJStepdefs extends TestBase {
         Thread.sleep(10000L);
         driver.navigate().refresh();
 
-
     }
 }
+
+
+
+
 
 
 

@@ -67,7 +67,7 @@ public class RaiseMappingRequestCarReliance extends TestBase {
         // Display the last word
         System.out.println("Last Word: " + lastWord);
 //        String ID = driver.findElement(By.xpath("//div[@class='alert alert-success alert-important']")).getText();
-        System.setProperty("webdriver.chrome.driver", "D:\\PBP_Automation\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "D:\\PBP_Automation\\Test.exe");
         driver1 = new ChromeDriver();
         driver1.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver1.get("https://polbkqa.policybazaar.com/login");
