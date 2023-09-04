@@ -1,5 +1,5 @@
 @MappingRequestCarReliance
-Feature: Raise Mapping Request of Reliance
+Feature: Raise Mapping Request of Car Reliance
   Background: Login functionality
     When Enter the Partner Code
     Then Clicks on the send otp button in login page

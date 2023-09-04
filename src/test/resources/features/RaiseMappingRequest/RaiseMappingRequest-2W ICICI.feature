@@ -1,5 +1,5 @@
 @MappingRequest2WICICI
-Feature: Raise Mapping Request of ICICI
+Feature: Raise Mapping Request of 2W ICICI
   Background: Login functionality
     When Enter the Partner Code
     Then Clicks on the send otp button in login page
