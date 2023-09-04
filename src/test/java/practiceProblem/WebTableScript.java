@@ -10,7 +10,7 @@ import java.util.List;
 
 public class WebTableScript {
     public static void main(String args[]) {
-        System.setProperty("webdriver.chrome.driver", "Test/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "Test/Test.exe");
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
 

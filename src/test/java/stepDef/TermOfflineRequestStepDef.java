@@ -23,7 +23,7 @@
 //
 //    @Before
 //    public void intialization(){
-//        System.setProperty("webdriver.chrome.driver", "cromeDriver/chromedriver.exe");
+//        System.setProperty("webdriver.chrome.driver", "cromeDriver/Test.exe");
 //        driver = new ChromeDriver();
 //        driver.manage().window().maximize();
 //        driver.get(prop.getProperty("getURL"));
