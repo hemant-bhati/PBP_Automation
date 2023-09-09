@@ -20,7 +20,7 @@ public class TestBase {
     // Statement object
     public static Statement stmt;
     // Constant for Database URL
-    public static String DB_URL = "jdbc:sqlserver://10.81.5.54:1433;databaseName=PospDB";
+    public static String DB_URL = "jdbc:sqlserver://10.81.5.54:1433:1433;databaseName=PospDB";
     //Database Username
     public static String DB_USER = "Affiliate";
     // Database Password
