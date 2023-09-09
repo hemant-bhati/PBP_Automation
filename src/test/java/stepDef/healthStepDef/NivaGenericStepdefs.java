@@ -62,7 +62,7 @@ public class NivaGenericStepdefs extends TestBase {
     @And("^user should enter the details on member screen \"([^\"]*)\"$")
     public void userShouldEnterTheDetailsOnMemberScreen(String eldestmemberage) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("2Adult")))).click();
+        new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("Male2Adult")))).click();
         WebElement age = driver.findElement(By.xpath(prop.getProperty("eldestmemberagexpath")));
         dropdownAge = new Select(age);
         dropdownAge.selectByValue(eldestmemberage);
@@ -108,18 +108,14 @@ public class NivaGenericStepdefs extends TestBase {
     public void clickOnTheApplyButton() {
         driver.findElement(By.xpath(prop.getProperty("Applybutton"))).click();
     }
-
-    @And("^click on premium button of niva plan \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
-    public void clickOnPremiumButtonOfNivaPlan(String PlanName, String PlanId, String SumInsured) throws Throwable {
+        @And("^click on premium button of niva plan \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"And\"([^\"]*)\"$")
+        public void clickOnPremiumButtonOfNivaPlanAnd(String PlanName, String PlanId, String SumInsured, String CityGroup_Id) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-
-        //driver.navigate().refresh();
-        driver.findElement(By.xpath(prop.getProperty("Nivamoreplan"))).click();
-        validatePremiumButtonText(PlanName, PlanId, SumInsured);
+        validatePremiumButtonText(PlanName,PlanId,SumInsured,CityGroup_Id);
         Thread.sleep(3000L);
     }
 
-    public void validatePremiumButtonText(String PlanName, String PlanId, String SumInsured) throws SQLException, InterruptedException {
+    public void validatePremiumButtonText(String PlanName, String PlanId, String SumInsured, String CityGroup_Id) throws SQLException, InterruptedException {
         Thread.sleep(5000L);
         // driver.navigate().refresh();
         WebElement nivaHealthPlan = null;
@@ -127,7 +123,7 @@ public class NivaGenericStepdefs extends TestBase {
 
         try {
             nivaHealthPlan = driver.findElement(By.xpath(prop.getProperty("Nivabutton" + PlanName)));
-            String queryHealthPlus = "use HealthDB Select top 1 Premium  from Hi.Health_Rates nolock where Plan_Id=" + PlanId + "and SumInsured=" + SumInsured + " and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
+            String queryHealthPlus = "use HealthDB Select top 1 Premium  from Hi.Health_Rates nolock where Plan_Id=" + PlanId + "and SumInsured=" + SumInsured + "and CityGroup_Id=" + CityGroup_Id + "and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=35 and Term = 1";
             ResultSet res = stmt.executeQuery(queryHealthPlus);
             while (res.next()) {
                 System.out.println("premium value from DB " + res.getString(1));
@@ -345,6 +341,8 @@ public class NivaGenericStepdefs extends TestBase {
         Thread.sleep(10000L);
         driver.navigate().refresh();
     }
+
+
 }
 
 
