@@ -137,7 +137,7 @@ public class NivaHealthCompanionStepdefs extends TestBase {
         WebElement nivaHealthCompanion = null;
         try {
             nivaHealthCompanion = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthCompanion")));
-            String queryNivaCompanion = "use HealthDB Select top 1 Premium from Hi.Health_Rates nolock where Plan_Id=319 and SumInsured=750000 and NumberOfAdults=2 and NumberOfChildren=1 and Max_AgeOfEldestMember=35 and Term = 1";
+            String queryNivaCompanion = "use HealthDB Select top 1 Premium from Hi.Health_Rates nolock where Plan_Id=319 and SumInsured=750000 and NumberOfAdults=2 and NumberOfChildren=1 and Max_AgeOfEldestMember=35 and Term = 1 and CityGroup_Id=21";
             ResultSet res1 = stmt.executeQuery(queryNivaCompanion);
             while (res1.next()) {
                 System.out.println("premium value from DB " + res1.getString(1));

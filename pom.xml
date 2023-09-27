@@ -30,6 +30,7 @@
             <version>1.2.6</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-junit</artifactId>
@@ -53,6 +54,7 @@
             <version>7.0.0.jre8</version>
             <scope>test</scope>
         </dependency>
+
 
 
 

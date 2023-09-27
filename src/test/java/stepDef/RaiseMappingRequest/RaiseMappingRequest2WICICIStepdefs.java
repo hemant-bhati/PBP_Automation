@@ -5,7 +5,9 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import stepDef.TestBase;
 
 import java.util.List;
@@ -42,16 +44,21 @@ public class RaiseMappingRequest2WICICIStepdefs extends TestBase {
         WebElement insurer = driver.findElement(By.xpath(prop.getProperty("insID")));
         Select insurerdropdown = new Select(insurer);
         insurerdropdown.selectByValue("194");
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+//        Random appno = new Random();
+//        int policyno = appno.nextInt(500);
+//        driver.findElement(By.xpath(prop.getProperty("polNum"))).sendKeys(polNum+String.valueOf(policyno));
         Random appno = new Random();
-        int policyno = appno.nextInt(500);
-        driver.findElement(By.xpath(prop.getProperty("polNum"))).sendKeys(polNum+String.valueOf(policyno));
+        String uniquePolicyNumber = polNum + System.currentTimeMillis() + "_" + appno.nextInt(500);
+        driver.findElement(By.xpath(prop.getProperty("polNum"))).sendKeys(uniquePolicyNumber);
         driver.findElement(By.xpath(prop.getProperty("premium"))).sendKeys(premiumvalue);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
         // identify element
         WebElement l = driver.findElement(By.xpath(prop.getProperty("docUpload")));
         // file path passed with sendkeys()
         l.sendKeys(docUpload);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         WebElement submitButton = driver.findElement(By.xpath(prop.getProperty("subBut")));
         jse2.executeScript("arguments[0].scrollIntoView()", submitButton);
         jse2.executeScript("arguments[0].click();", submitButton);
@@ -116,7 +123,8 @@ public class RaiseMappingRequest2WICICIStepdefs extends TestBase {
         List<WebElement> plan = driver1.findElements(By.xpath(prop.getProperty("plantype")));
         Select plantype = new Select(plan.get(0));
         plantype.selectByValue("2");
-        Thread.sleep(10000L);
+        Thread.sleep(15000L);
+        //driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         WebElement planVal = driver1.findElement(By.xpath(prop.getProperty("plannameid")));
         Select planName = new Select(planVal);
         planName.selectByValue("195");
@@ -163,12 +171,14 @@ public class RaiseMappingRequest2WICICIStepdefs extends TestBase {
         JavascriptExecutor jse2 = (JavascriptExecutor) driver1;
         jse2.executeScript("arguments[0].scrollIntoView()", submitButt);
         jse2.executeScript("arguments[0].click();", submitButt);
-        Thread.sleep(10000L);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        //Thread.sleep(10000L);
     }
 
     @Then("^verify the lead value from UI and DB$")
     public void verifyTheLeadValueFromUIAndDB() {
-        driver1.findElement(By.xpath(prop.getProperty("rprpopupclosebutton"))).click();
+        new WebDriverWait(driver1, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("rprpopupclosebutton")))).click();
+        //driver1.findElement(By.xpath(prop.getProperty("rprpopupclosebutton"))).click();
     }
 }
 

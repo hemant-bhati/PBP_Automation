@@ -41,9 +41,12 @@ public class RaiseMappingRequestCarReliance extends TestBase {
         WebElement insurer = driver.findElement(By.xpath(prop.getProperty("insID")));
         Select insurerdropdown = new Select(insurer);
         insurerdropdown.selectByValue("1");
+//        Random appno = new Random();
+//        int policyno = appno.nextInt(500);
+//        driver.findElement(By.xpath(prop.getProperty("polNum"))).sendKeys(polNum+String.valueOf(policyno));
         Random appno = new Random();
-        int policyno = appno.nextInt(500);
-        driver.findElement(By.xpath(prop.getProperty("polNum"))).sendKeys(polNum+String.valueOf(policyno));
+        String uniquePolicyNumber = polNum + System.currentTimeMillis() + "_" + appno.nextInt(500);
+        driver.findElement(By.xpath(prop.getProperty("polNum"))).sendKeys(uniquePolicyNumber);
         driver.findElement(By.xpath(prop.getProperty("premium"))).sendKeys(premiumvalue);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         // identify element
@@ -67,7 +70,7 @@ public class RaiseMappingRequestCarReliance extends TestBase {
         // Display the last word
         System.out.println("Last Word: " + lastWord);
 //        String ID = driver.findElement(By.xpath("//div[@class='alert alert-success alert-important']")).getText();
-        System.setProperty("webdriver.chrome.driver", "D:\\PBP_Automation\\Test.exe");
+        System.setProperty("webdriver.chrome.driver", "D:\\PBP_Automation\\chromedriver.exe");
         driver1 = new ChromeDriver();
         driver1.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver1.get("https://polbkqa.policybazaar.com/login");
@@ -138,7 +141,6 @@ public class RaiseMappingRequestCarReliance extends TestBase {
         Select Vehiclesubclass = new Select(subclass.get(0));
         Vehiclesubclass.selectByValue("1");
 
-
         driver1.findElement(By.xpath(prop.getProperty("rprCC"))).sendKeys("1200");
         List<WebElement> fuelT = driver1.findElements(By.xpath(prop.getProperty("fuelType")));
         Select fuelTy = new Select(fuelT.get(0));
@@ -174,7 +176,7 @@ public class RaiseMappingRequestCarReliance extends TestBase {
         JavascriptExecutor jse2 = (JavascriptExecutor) driver1;
         jse2.executeScript("arguments[0].scrollIntoView()", submitButt);
         jse2.executeScript("arguments[0].click();", submitButt);
-        Thread.sleep(10000L);
+        Thread.sleep(50000L);
 
     }
 
