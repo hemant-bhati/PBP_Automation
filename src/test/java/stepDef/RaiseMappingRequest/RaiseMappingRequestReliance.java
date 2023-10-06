@@ -1,6 +1,11 @@
 package stepDef.RaiseMappingRequest;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.*;
@@ -9,20 +14,59 @@ import org.openqa.selenium.support.ui.Select;
 import stepDef.TestBase;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+class InsurerMapper {
+    private static final Map<String, String> insurerMap = new HashMap<>();
+
+    static {
+        insurerMap.put("Reliance", "Reliance General Insurance Company Ltd");
+        insurerMap.put("HDFC", "HDFC Ergo General Insurance Company Ltd");
+        insurerMap.put("ICICI", "ICICI Lombard General Insurance Company Ltd");
+        insurerMap.put("Cholamandalam", "Cholamandalam MS General Insurance Company Ltd");
+        insurerMap.put("Iffco", "Iffco Tokio General Insurance Company Ltd");
+        insurerMap.put("National", "National Insurance Company Ltd");
+        insurerMap.put("The Oriental", "The Oriental Insurance Company Ltd");
+        insurerMap.put("Tata AIG", "Tata AIG General Insurance Company ltd.");
+        insurerMap.put("Royal Sundaram", "Royal Sundaram Alliance Insurance Company Ltd");
+        insurerMap.put("United India", "United India Insurance Company Ltd");
+        insurerMap.put("The New India", "The New India Assurance Co. Ltd.");
+        insurerMap.put("Bajaj Allianz", "Bajaj Allianz General Insurance Company Ltd");
+        insurerMap.put("Future Generali", "Future Generali India General Insurance Company Ltd");
+        insurerMap.put("Shriram", "Shriram General Insurance Company Ltd");
+        insurerMap.put("Bharti AXA", "Bharti AXA General Insurance Company Ltd");
+        insurerMap.put("Universal Sompo", "Universal Sompo General Insurance Company Ltd");
+        insurerMap.put("SBI", "SBI General Insurance Company Ltd");
+        insurerMap.put("Liberty Videocon", "Liberty Videocon General Insurance Co. Ltd");
+        insurerMap.put("Magma HDI", "Magma HDI General Insurance Company Ltd");
+        insurerMap.put("Raheja QBE", "Raheja QBE General Insurance Company");
+        insurerMap.put("Kotak Mahindra", "Kotak Mahindra General Insurance Company Ltd");
+        insurerMap.put("Go Digit", "Go Digit General Insurance Limited");
+        insurerMap.put("Edelwiess", "Edelwiess");
+        insurerMap.put("Navi", "Navi General Insurance");
+        insurerMap.put("Oriental", "Oriental Insurance");
+    }
+
+    public static String getInsurerFullName(String firstName) {
+        return insurerMap.get(firstName);
+    }
+
+}
 
 public class RaiseMappingRequestReliance extends TestBase {
     String parent;
     WebDriver driver1;
     String lastWord;
 
-
     public RaiseMappingRequestReliance() throws IOException, InterruptedException {
     }
-    @When("^click on Request Offline Quote navigations \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\"$")
-    public void clickOnRequestOfflineQuoteNavigations(String prodID, String custName, String regisNum, String polNum, String preMium, String docUpload) throws Throwable {
+    @When("^click on Request Offline Quote navigation$")
+    public void clickOnRequestOfflineQuoteNavigation() throws InterruptedException {
+
         driver.findElement(By.xpath("//li[@id='id-offlinereq']")).click();
         WebElement childElement = driver.findElement(By.xpath("//li[@data-sidenav='raise-mapping-request']"));
 //        Actions reqofflinequote = new Actions(driver);
@@ -32,30 +76,64 @@ public class RaiseMappingRequestReliance extends TestBase {
         jse2.executeScript("arguments[0].scrollIntoView()", childElement);
         jse2.executeScript("arguments[0].click();", childElement);
         childElement.click();
-        Thread.sleep(3000L);
-        List<WebElement> productName = driver.findElements(By.xpath(prop.getProperty("prodID")));
-        Select details = new Select(productName.get(0));
-        details.selectByValue(prodID);
-        driver.findElement(By.xpath(prop.getProperty("custName"))).sendKeys(custName);
-        driver.findElement(By.xpath(prop.getProperty("regisNum"))).sendKeys(regisNum);
-        WebElement insurer = driver.findElement(By.xpath(prop.getProperty("insID")));
-        Select insurerdropdown = new Select(insurer);
-        insurerdropdown.selectByValue("1");
-        Random appno = new Random();
-        int policyno = appno.nextInt(500);
-        driver.findElement(By.xpath(prop.getProperty("polNum"))).sendKeys(polNum+String.valueOf(policyno));
-        driver.findElement(By.xpath(prop.getProperty("preMium"))).sendKeys(preMium);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        // identify element
-        WebElement l = driver.findElement(By.xpath(prop.getProperty("docUpload")));
-        // file path passed with sendkeys()
-        l.sendKeys(docUpload);
-        WebElement submitButton = driver.findElement(By.xpath(prop.getProperty("subBut")));
-        jse2.executeScript("arguments[0].scrollIntoView()", submitButton);
-        jse2.executeScript("arguments[0].click();", submitButton);
-        Thread.sleep(10000l);
+
+
     }
-    @Then("^Open the Admin Panel and search ticket \"([^\"]*)\", \"([^\"]*)\"$")
+    @And("^Fill all the details of Raise Mapping Request \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\"$")
+    public void fillAllTheDetailsOfRaiseMappingRequest(String prodID, String custName, String regisNum, String polNum, String preMium, String docUpload, String insurerName) throws Throwable {
+
+            List<WebElement> productName = driver.findElements(By.xpath(prop.getProperty("prodID")));
+            Select details = new Select(productName.get(0));
+            details.selectByValue(prodID);
+
+            driver.findElement(By.xpath(prop.getProperty("custName"))).sendKeys(custName);
+            driver.findElement(By.xpath(prop.getProperty("regisNum"))).sendKeys(regisNum);
+
+            String fullInsurerName = InsurerMapper.getInsurerFullName(insurerName);
+            selectInsurerByName(driver, fullInsurerName);
+
+//            Random appno = new Random();
+//            int policyno = appno.nextInt(500);
+//            driver.findElement(By.xpath(prop.getProperty("polNum"))).sendKeys(polNum + String.valueOf(policyno));
+        // Generate a unique policy number
+        Random appno = new Random();
+        String uniquePolicyNumber = polNum + System.currentTimeMillis() + "_" + appno.nextInt(500);
+        driver.findElement(By.xpath(prop.getProperty("polNum"))).sendKeys(uniquePolicyNumber);
+
+        driver.findElement(By.xpath(prop.getProperty("preMium"))).sendKeys(preMium);
+
+        Thread.sleep(10000);
+
+                    WebElement uploadInput = driver.findElement(By.xpath(prop.getProperty("docUpload")));
+            uploadInput.sendKeys(docUpload);
+            WebElement submitButton = driver.findElement(By.xpath(prop.getProperty("subBut")));
+            JavascriptExecutor jse2 = (JavascriptExecutor) driver;
+            jse2.executeScript("arguments[0].scrollIntoView()", submitButton);
+            jse2.executeScript("arguments[0].click();", submitButton);
+
+            Thread.sleep(10000L);
+
+            if ("188".equals(prodID)) {
+                WebElement IsThisSchoolBus = driver.findElement(By.xpath(prop.getProperty("SchoolBusId")));
+                Select IsThisSchoolBusdropdown = new Select(IsThisSchoolBus);
+                IsThisSchoolBusdropdown.selectByValue("1");
+            }
+        }
+
+        private void selectInsurerByName(WebDriver driver, String fullInsurerName) {
+            WebElement insurerDropdown = driver.findElement(By.xpath(prop.getProperty("insID")));
+            Select insurerSelect = new Select(insurerDropdown);
+
+            // Iterate through the options to find the one with the specified name
+            for (WebElement option : insurerSelect.getOptions()) {
+                if (option.getText().equalsIgnoreCase(fullInsurerName)) {
+                    option.click();
+                    break;
+                }
+            }
+        }
+
+        @Then("^Open the Admin Panel and search ticket \"([^\"]*)\", \"([^\"]*)\"$")
     public void openTheAdminPanel(String prePolNum, String netPremium) throws Throwable {
         WebElement sentenceElement = driver.findElement(By.xpath("//div[@class='alert alert-success alert-important']"));
         // Get the text from the element
@@ -67,7 +145,7 @@ public class RaiseMappingRequestReliance extends TestBase {
         // Display the last word
         System.out.println("Last Word: " + lastWord);
 //        String ID = driver.findElement(By.xpath("//div[@class='alert alert-success alert-important']")).getText();
-        System.setProperty("webdriver.chrome.driver", "D:\\PBP_Automation\\Test.exe");
+        System.setProperty("webdriver.chrome.driver", "Test1.exe");
         driver1 = new ChromeDriver();
         driver1.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver1.get("https://polbkqa.policybazaar.com/login");
@@ -113,6 +191,11 @@ public class RaiseMappingRequestReliance extends TestBase {
         WebElement planVal = driver1.findElement(By.xpath(prop.getProperty("plannameid")));
         Select planName = new Select(planVal);
         planName.selectByValue("902");
+//        WebDriverWait wait = new WebDriverWait(driver, 10);
+//        WebElement planVal = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(prop.getProperty("plannameid"))));
+//        Select planName = new Select(planVal);
+//        planName.selectByValue("902");
+
         Thread.sleep(4000L);
 //        List<WebElement> term = driver1.findElements(By.xpath(prop.getProperty("rmrpolicyterm")));
 //        Select policyterm = new Select(term.get(0));
@@ -174,9 +257,20 @@ public class RaiseMappingRequestReliance extends TestBase {
         JavascriptExecutor jse2 = (JavascriptExecutor) driver1;
         jse2.executeScript("arguments[0].scrollIntoView()", submitButt);
         jse2.executeScript("arguments[0].click();", submitButt);
-        Thread.sleep(10000L);
+        int maxWaitTimeInSeconds = 20;
+        WebDriverWait wait = new WebDriverWait(driver1, maxWaitTimeInSeconds);
+        try {
+            WebElement closeButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("CloseButton")));
+            closeButton.click();
+        } catch (org.openqa.selenium.TimeoutException e) {
+            System.out.println("Close button did not appear within the timeout Refreshing the page.");
+            driver1.navigate().refresh();
+            // Wait for the page to load after refresh (you can adjust the timeout)
+            WebDriverWait pageLoadWait = new WebDriverWait(driver1, 20);
+            pageLoadWait.until(webDriver ->
+                    ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+        }
 
     }
-
 
 }

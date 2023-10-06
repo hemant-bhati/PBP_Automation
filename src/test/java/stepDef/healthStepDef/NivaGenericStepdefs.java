@@ -6,6 +6,7 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -69,6 +70,7 @@ public class NivaGenericStepdefs extends TestBase {
         driver.findElement(By.xpath(prop.getProperty("ContinueButton2"))).click();
     }
 
+
     @And("^User should be able to select the City Name \"([^\"]*)\"$")
     public void userShouldBeAbleToSelectTheCityName(String city) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
@@ -108,10 +110,11 @@ public class NivaGenericStepdefs extends TestBase {
     public void clickOnTheApplyButton() {
         driver.findElement(By.xpath(prop.getProperty("Applybutton"))).click();
     }
-        @And("^click on premium button of niva plan \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"And\"([^\"]*)\"$")
-        public void clickOnPremiumButtonOfNivaPlanAnd(String PlanName, String PlanId, String SumInsured, String CityGroup_Id) throws Throwable {
+
+    @And("^click on premium button of niva plan \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"And\"([^\"]*)\"$")
+    public void clickOnPremiumButtonOfNivaPlanAnd(String PlanName, String PlanId, String SumInsured, String CityGroup_Id) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        validatePremiumButtonText(PlanName,PlanId,SumInsured,CityGroup_Id);
+        validatePremiumButtonText(PlanName, PlanId, SumInsured, CityGroup_Id);
         Thread.sleep(3000L);
     }
 
@@ -140,6 +143,8 @@ public class NivaGenericStepdefs extends TestBase {
                 niva.click();
             }
         } catch (org.openqa.selenium.NoSuchElementException e) {
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -174,7 +179,20 @@ public class NivaGenericStepdefs extends TestBase {
     @And("^Enter details on the proposer details screen \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
     public void enterDetailsOnTheProposerDetailsScreen(String panCard, String address, String contactEmail, String emergencyMobile) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        driver.findElement(By.xpath("//input[@id='pan']")).sendKeys(panCard);
+        int maxWaitTimeInSeconds = 5;
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, maxWaitTimeInSeconds);
+            ExpectedCondition<WebElement> presenceOfElementLocated = ExpectedConditions.presenceOfElementLocated(By.id("pan"));
+            WebElement element = wait.until(presenceOfElementLocated);
+            element.sendKeys("NXAPS8425T");
+
+        } catch (org.openqa.selenium.TimeoutException e) {
+            driver.navigate().refresh();
+        } catch (StaleElementReferenceException e) {
+
+            e.printStackTrace();
+        }
+//        driver.findElement(By.xpath("//input[@id='pan']")).sendKeys(panCard);
         driver.findElement(By.xpath("//input[@id='addressLine1']")).sendKeys(address);
         driver.findElement(By.xpath("//input[@id='email']")).sendKeys(contactEmail);
         driver.findElement(By.xpath("//input[@id='emergencyMobile']")).sendKeys(emergencyMobile);
