@@ -25,7 +25,7 @@ public class RaiseMappingRequestReliance extends TestBase {
     public void clickOnRequestOfflineQuoteNavigations(String prodID, String custName, String regisNum, String polNum, String preMium, String docUpload) throws Throwable {
         driver.findElement(By.xpath("//li[@id='id-offlinereq']")).click();
         WebElement childElement = driver.findElement(By.xpath("//li[@data-sidenav='raise-mapping-request']"));
-//        Actions reqofflinequote = new Actions(driver);
+//        Actions reqofflinequote = new Actions(driver);a
 //        reqofflinequote.moveToElement(childElement).build().perform();
         Thread.sleep(5000L);
         JavascriptExecutor jse2 = (JavascriptExecutor) driver;
@@ -67,7 +67,7 @@ public class RaiseMappingRequestReliance extends TestBase {
         // Display the last word
         System.out.println("Last Word: " + lastWord);
 //        String ID = driver.findElement(By.xpath("//div[@class='alert alert-success alert-important']")).getText();
-        System.setProperty("webdriver.chrome.driver", "D:\\PBP_Automation\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "D:\\Cucumber_automation\\Test\\chromedriver.exe");
         driver1 = new ChromeDriver();
         driver1.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver1.get("https://polbkqa.policybazaar.com/login");

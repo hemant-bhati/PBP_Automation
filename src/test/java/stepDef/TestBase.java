@@ -3,6 +3,7 @@ package stepDef;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import jdk.jfr.events.FileReadEvent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -51,10 +52,11 @@ public class TestBase {
             }
         }
         if (prop.getProperty("browser").equalsIgnoreCase("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+//            System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
             ChromeOptions options = new ChromeOptions();
-           // options.addArguments("--headless");
-            options.addArguments("--remote-allow-origins=*");
+//           // options.addArguments("--headless");
+//            options.addArguments("--remote-allow-origins=*");
+            WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver(options);
             if (prop.getProperty("env").equalsIgnoreCase("prod")) {
                 driver.get(prop.getProperty("ProdURL"));
