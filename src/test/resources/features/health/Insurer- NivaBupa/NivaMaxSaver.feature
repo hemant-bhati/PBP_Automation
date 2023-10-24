@@ -26,6 +26,7 @@ Feature: Health Journey functionality
      And click on the cover amount dorp down button on the quote page
      And Select the  1 crore suminsurred
      And Click on the Apply button of cover amount drop down
+     And click on the Insurer name dropdown button and select the name of the insurer
      And click on premium button of niva Max Saver
      And click on proceed to the proposal page
      And Enter the details on proposer details on the screen "<panCard>","<address>","<contactEmail>","<emergencyMobile>"
@@ -44,5 +45,5 @@ Feature: Health Journey functionality
 
      Examples:
        |FullName|MobileNo|eldestmemberage|city|panCard|address|contactEmail|emergencyMobile|dob|occupation|heightFeet|heightInch|weight|spouseName|spouseDOB|spouseOccupation|spouseHeightFeet|spouseHeightInch|spouseWeight|PolicyExpirydate|PolicyNumber|SumInsurred|CumulativeBonus|PEDDeclared|
-       |Rahul Sharma|7701906615|40    |Mumbai|AYMPB1667K|Mumbai|test@gmail.com|9411073568 |01-01-1983|1|60    |8         |72    |Sonam Sharma   |01-01-1993|5     |60               |4               |68          |24-09-2023                |1010101010101|      1000000    |  500000 |Abc123456|
+       |Rahul Sharma|7701906615|40    |Mumbai|AYMPB1667K|Mumbai|test@gmail.com|9411073568 |01-01-1983|1|60    |8         |72    |Sonam Sharma   |01-01-1993|5     |60               |4               |68          |24-11-2023                |1010101010101|      1000000    |  500000 |Abc123456|
 

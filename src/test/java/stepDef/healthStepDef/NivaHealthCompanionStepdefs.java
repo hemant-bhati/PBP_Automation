@@ -18,127 +18,128 @@ import java.util.List;
 
 
 public class NivaHealthCompanionStepdefs extends TestBase {
-        Select dropdownAge;
-        String parent;
-        String premiumofproposalpage;
+    Select dropdownAge;
+    String parent;
+    String premiumofproposalpage;
 
     @When("^Click on the sell now button$")
-            public void clickOnSellNowModulesIcon() throws InterruptedException {
-                Thread.sleep(10000L);
-                driver.findElement(By.xpath(prop.getProperty("sellnowbutton"))).click();
+    public void clickOnSellNowModulesIcon() throws InterruptedException {
+        Thread.sleep(10000L);
+        driver.findElement(By.xpath(prop.getProperty("sellnowbutton"))).click();
+    }
+
+    @When("^Click on the Health Module$")
+    public void clickOnTheHealthModule() throws InterruptedException {
+        Thread.sleep(1500);
+
+        WebElement childElement = driver.findElement(By.xpath("//div[@class='col-lg-2 col-md-4 col-sm-4 item']//p[contains(text(),'Health')]"));
+        JavascriptExecutor jse2 = (JavascriptExecutor) driver;
+        jse2.executeScript("arguments[0].scrollIntoView()", childElement);
+        jse2.executeScript("arguments[0].click();", childElement);
+    }
+
+    @And("^Enter the detail on Health page \"([^\"]*)\",\"([^\"]*)\"$")
+    public void enterTheDetailOnHealthPage(String FullName, String MobileNo) throws Throwable {
+        parent = driver.getWindowHandle();
+        for (String child : driver.getWindowHandles()) {
+            if (!parent.contentEquals(child)) {
+                driver.switchTo().window(child);
+                break;
             }
+        }
+        new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("Maleimage")))).click();
+        new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("CustomerFullName")))).sendKeys(FullName);
+        new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("CustomerMobileNumber")))).sendKeys(MobileNo);
+        new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("ContinueButton1")))).click();
+    }
 
-            @When("^Click on the Health Module$")
-            public void clickOnTheHealthModule() throws InterruptedException {
-                Thread.sleep(1500);
+    @Then("^user should be able to navigate member detail$")
+    public void userShouldBeAbleToNavigateMemberDetail() {
+        String actualTitle = driver.getTitle();
+        String expectedTitle = "PolicyBazaar Health Insurance: Get a 5 Lac health plan @Rs. 373/Month";
+        Assert.assertEquals(actualTitle, expectedTitle);
+        System.out.println("Actual title is " + actualTitle);
+    }
 
-                WebElement childElement = driver.findElement(By.xpath("//div[@class='col-lg-2 col-md-4 col-sm-4 item']//p[contains(text(),'Health')]"));
-                JavascriptExecutor jse2 = (JavascriptExecutor) driver;
-                jse2.executeScript("arguments[0].scrollIntoView()", childElement);
-                jse2.executeScript("arguments[0].click();", childElement);
-            }
+    @And("^user should enter the details on the member screen \"([^\"]*)\",\"([^\"]*)\"$")
+    public void userShouldEnterTheDetailsOnTheMemberScreen(String eldestmemberage, String eldestchildage) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("2Adult+1Kid")))).click();
+        WebElement age1 = driver.findElement(By.xpath(prop.getProperty("eldestmemberagexpath")));
+        dropdownAge = new Select(age1);
+        dropdownAge.selectByValue(eldestmemberage);
 
-            @And("^Enter the detail on Health page \"([^\"]*)\",\"([^\"]*)\"$")
-            public void enterTheDetailOnHealthPage(String FullName, String MobileNo) throws Throwable {
-                parent = driver.getWindowHandle();
-                for (String child : driver.getWindowHandles()) {
-                    if (!parent.contentEquals(child)) {
-                        driver.switchTo().window(child);
-                        break;
-                    }
-                }
-                new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("Maleimage")))).click();
-                new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("CustomerFullName")))).sendKeys(FullName);
-                new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("CustomerMobileNumber")))).sendKeys(MobileNo);
-                new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("ContinueButton1")))).click();
-            }
+        WebElement age2 = driver.findElement(By.xpath(prop.getProperty("eldestchildage")));
+        dropdownAge = new Select(age2);
+        dropdownAge.selectByValue(eldestchildage);
 
-            @Then("^user should be able to navigate member detail$")
-            public void userShouldBeAbleToNavigateMemberDetail() {
-                String actualTitle = driver.getTitle();
-                String expectedTitle = "PolicyBazaar Health Insurance: Get a 5 Lac health plan @Rs. 373/Month";
-                Assert.assertEquals(actualTitle, expectedTitle);
-                System.out.println("Actual title is " + actualTitle);
-            }
-
-            @And("^user should enter the details on the member screen \"([^\"]*)\",\"([^\"]*)\"$")
-            public void userShouldEnterTheDetailsOnTheMemberScreen(String eldestmemberage, String eldestchildage) throws Throwable {
-                // Write code here that turns the phrase above into concrete actions
-                new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("2Adult+1Kid")))).click();
-                WebElement age1 = driver.findElement(By.xpath(prop.getProperty("eldestmemberagexpath")));
-                dropdownAge = new Select(age1);
-                dropdownAge.selectByValue(eldestmemberage);
-
-                WebElement age2 = driver.findElement(By.xpath(prop.getProperty("eldestchildage")));
-                dropdownAge = new Select(age2);
-                dropdownAge.selectByValue(eldestchildage);
-
-                driver.findElement(By.xpath(prop.getProperty("ContinueButton2"))).click();
+        driver.findElement(By.xpath(prop.getProperty("ContinueButton2"))).click();
 
 
-            }
+    }
 
-            @And("^User should be able to select City Name \"([^\"]*)\"$")
-            public void userShouldBeAbleToSelectCityName(String city) throws Throwable {
-                // Write code here that turns the phrase above into concrete actions
-                WebElement selectCity = driver.findElement(By.xpath(prop.getProperty("selectcity")));
-                selectCity.sendKeys(city);
-                selectCity.sendKeys(Keys.ENTER);
-                driver.findElement(By.xpath(prop.getProperty("continueofselectcity"))).click();
-            }
+    @And("^User should be able to select City Name \"([^\"]*)\"$")
+    public void userShouldBeAbleToSelectCityName(String city) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        WebElement selectCity = driver.findElement(By.xpath(prop.getProperty("selectcity")));
+        selectCity.sendKeys(city);
+        selectCity.sendKeys(Keys.ENTER);
+        driver.findElement(By.xpath(prop.getProperty("continueofselectcity"))).click();
+    }
 
-            @And("^select existing illness and click on View Plan checkbox$")
-            public void selectExistingIllnessAndClickOnViewPlanCheckbox() throws InterruptedException {
-                driver.findElement(By.xpath(prop.getProperty("Noneofthese"))).click();
-                Thread.sleep(5000L);
-            }
+    @And("^select existing illness and click on View Plan checkbox$")
+    public void selectExistingIllnessAndClickOnViewPlanCheckbox() throws InterruptedException {
+        driver.findElement(By.xpath(prop.getProperty("Noneofthese"))).click();
+        Thread.sleep(5000L);
+    }
 
-            @And("^Enter the spouse age through edit member on the quote page$")
-            public void enterTheSpouseAgeThroughEditMemberOnTheQuotePage() throws InterruptedException {
-                driver.findElement(By.xpath("//span[contains(text(),'Edit Members')]")).click();
-                Thread.sleep(5000L);
-                Select spouseage = new Select(driver.findElement(By.xpath("(//div[@class='select_members_age']//select)[2]")));
-                spouseage.selectByValue("30");
-            }
+    @And("^Enter the spouse age through edit member on the quote page$")
+    public void enterTheSpouseAgeThroughEditMemberOnTheQuotePage() throws InterruptedException {
+        driver.findElement(By.xpath("//span[contains(text(),'Edit Members')]")).click();
+        Thread.sleep(5000L);
+        Select spouseage = new Select(driver.findElement(By.xpath("(//div[@class='select_members_age']//select)[2]")));
+        spouseage.selectByValue("30");
+    }
 
-            @And("^Enter ChildRelationship through the edit members$")
-            public void enterChildRelationshipThroughTheEditMembers() throws InterruptedException {
-                Thread.sleep(5000L);
-                Select relationshipSelect = new Select(driver.findElement(By.xpath("(//div[@class='select_members_age child_dropdown']//select)[1]")));
-                relationshipSelect.selectByValue("8");
-                new WebDriverWait(driver, 100).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(),'Apply')]"))).click();
+    @And("^Enter ChildRelationship through the edit members$")
+    public void enterChildRelationshipThroughTheEditMembers() throws InterruptedException {
+        Thread.sleep(5000L);
+        Select relationshipSelect = new Select(driver.findElement(By.xpath("(//div[@class='select_members_age child_dropdown']//select)[1]")));
+        relationshipSelect.selectByValue("8");
+        new WebDriverWait(driver, 100).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(),'Apply')]"))).click();
 
 //        driver.findElement(By.xpath("//div[contains(text(),'Apply')]")).click();
-            }
+    }
 
-            @And("^click on cover ammount dorp down button$")
-            public void clickOnCoverAmmountDorpDownButton() {
-                driver.findElement(By.xpath(prop.getProperty("coverammountbutton"))).click();
-            }
+    @And("^click on cover ammount dorp down button$")
+    public void clickOnCoverAmmountDorpDownButton() {
+        driver.findElement(By.xpath(prop.getProperty("coverammountbutton"))).click();
+    }
 
-            @And("^Select the (\\d+)\\.(\\d+) lakhs suminsurred$")
-            public void selectTheLakhsSuminsurred(int arg0, int arg1) {
-                driver.findElement(By.xpath(prop.getProperty("10lakhcoverAmmount"))).click();
-            }
+    @And("^Select the (\\d+)\\.(\\d+) lakhs suminsurred$")
+    public void selectTheLakhsSuminsurred(int arg0, int arg1) {
+        driver.findElement(By.xpath(prop.getProperty("10lakhcoverAmmount"))).click();
+    }
 
-            @And("^Click on Apply button$")
-            public void clickOnApplyButton() {
-                driver.findElement(By.xpath(prop.getProperty("Applybutton"))).click();
-            }
+    @And("^Click on Apply button$")
+    public void clickOnApplyButton() {
 
-            @And("^click on the premium button of healthcompanion of niva$")
-            public void clickOnThePremiumButtonOfHealthcompanionOfNiva() throws InterruptedException {
-                validateHealthCampanionPremiumButtonText();
-                Thread.sleep(3000L);
-            }
+        driver.findElement(By.xpath(prop.getProperty("Applybutton"))).click();
+    }
+
+    @And("^click on the premium button of healthcompanion of niva$")
+    public void clickOnThePremiumButtonOfHealthcompanionOfNiva() throws InterruptedException {
+        validateHealthCampanionPremiumButtonText();
+        Thread.sleep(3000L);
+    }
 
 
     public void validateHealthCampanionPremiumButtonText() {
         try {
             boolean healthCompanionFound = false;
 
+            // Check if the "Health Companion" text is found on the page
             while (!healthCompanionFound) {
-                // Check if the "Health Companion" text is found on the page
                 boolean isTextPresent = (boolean) ((JavascriptExecutor) driver).executeScript(
                         "return document.body.innerText.includes('Health Companion');"
                 );
@@ -153,20 +154,27 @@ public class NivaHealthCompanionStepdefs extends TestBase {
             }
 
             WebElement nivaHealthCompanion = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthCompanion")));
-            String queryNivaCompanion = "use HealthDB Select top 1 Premium from Hi.Health_Rates nolock where Plan_Id=319 and SumInsured=750000 and NumberOfAdults=2 and NumberOfChildren=1 and Max_AgeOfEldestMember=35 and Term = 1 and CityGroup_Id=21";
-            ResultSet res1 = stmt.executeQuery(queryNivaCompanion);
-            while (res1.next()) {
-                System.out.println("premium value from DB " + res1.getString(1));
-                String nivaCompaniontext;
-                nivaCompaniontext = nivaHealthCompanion.getText();
-                String Companionsymbol1 = nivaCompaniontext.replaceAll("₹", "");
-                String Companionsymbol2 = Companionsymbol1.replaceAll("/year", "");
-                String Companionfinalsymbol = Companionsymbol2.replaceAll(",", "");
-                System.out.println("premium value from nivacompanion UI = " + Companionfinalsymbol);
-                String expectedbuttontext = res1.getString(1);
-                junit.framework.Assert.assertEquals(expectedbuttontext, Companionfinalsymbol);
-                WebElement niva = driver.findElement(By.xpath(prop.getProperty("NivabuttonHealthCompanion")));
-                niva.click();
+
+            // Check the value of the "env" property
+            if (prop.getProperty("env").equalsIgnoreCase("qa")) {
+                // Execute the query
+                String queryNivaCompanion = "use HealthDB Select top 1 Premium from Hi.Health_Rates nolock where Plan_Id=319 and SumInsured=750000 and NumberOfAdults=2 and NumberOfChildren=1 and Max_AgeOfEldestMember=35 and Term = 1 and CityGroup_Id=21";
+                ResultSet res1 = stmt.executeQuery(queryNivaCompanion);
+
+                while (res1.next()) {
+                    System.out.println("premium value from DB " + res1.getString(1));
+                    String nivaCompaniontext = nivaHealthCompanion.getText();
+                    String Companionsymbol1 = nivaCompaniontext.replaceAll("₹", "");
+                    String Companionsymbol2 = Companionsymbol1.replaceAll("/year", "");
+                    String Companionfinalsymbol = Companionsymbol2.replaceAll(",", "");
+                    System.out.println("premium value from nivacompanion UI = " + Companionfinalsymbol);
+                    String expectedbuttontext = res1.getString(1);
+                    junit.framework.Assert.assertEquals(expectedbuttontext, Companionfinalsymbol);
+                    nivaHealthCompanion.click();
+                }
+            } else {
+                // Execute a different action when "env" is not "qa"
+                nivaHealthCompanion.click();
             }
         } catch (org.openqa.selenium.NoSuchElementException e) {
             // Handle element not found exception
@@ -178,21 +186,9 @@ public class NivaHealthCompanionStepdefs extends TestBase {
     }
 
 
-    @And("^click on the proceed to proposal Page after adding rider$")
+        @And("^click on the proceed to proposal Page after adding rider$")
             public void clickOnTheProceedToProposalPageAfterAddingRider() throws InterruptedException {
-        int maxWaitTimeInSeconds = 5;
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, maxWaitTimeInSeconds);
-            ExpectedCondition<WebElement> presenceOfElementLocated = ExpectedConditions.presenceOfElementLocated(By.id("pan"));
-            WebElement element = wait.until(presenceOfElementLocated);
-            element.sendKeys("NXAPS8425T");
 
-        } catch (org.openqa.selenium.TimeoutException e) {
-            driver.navigate().refresh();
-        } catch (StaleElementReferenceException e) {
-
-            e.printStackTrace();
-        }
                 WebElement premiumvalue = driver.findElement(By.xpath("//div[@class='flexRow section_premium']//div//span"));
                 System.out.println("*****Premium value before adding rider*****" + premiumvalue.getText());
                 String beforerider = premiumvalue.getText();
@@ -216,16 +212,22 @@ public class NivaHealthCompanionStepdefs extends TestBase {
             public void enterDetailsOnProposerDetailsScreen(String panCard, String address, String contactEmail, String emergencyMobile) throws Throwable {
                 // Write code here that turns the phrase above into concrete actions
                 int maxWaitTimeInSeconds = 5;
+                WebDriverWait wait = null;
                 try {
-                    WebDriverWait wait = new WebDriverWait(driver, maxWaitTimeInSeconds);
+                    wait = new WebDriverWait(driver, maxWaitTimeInSeconds);
                     ExpectedCondition<WebElement> presenceOfElementLocated = ExpectedConditions.presenceOfElementLocated(By.id("pan"));
                     WebElement element = wait.until(presenceOfElementLocated);
                     element.sendKeys("NXAPS8425T");
-
                 } catch (org.openqa.selenium.TimeoutException e) {
+                    // Handle timeout exception
                     driver.navigate().refresh();
-                } catch (StaleElementReferenceException e) {
 
+                    // Reuse the existing wait variable
+                    ExpectedCondition<WebElement> presenceOfElementLocated = ExpectedConditions.presenceOfElementLocated(By.id("pan"));
+                    WebElement element = wait.until(presenceOfElementLocated);
+                    element.sendKeys("NXAPS8425T");
+                } catch (StaleElementReferenceException e) {
+                    // Handle stale element reference exception
                     e.printStackTrace();
                 }
                 driver.findElement(By.xpath("//input[@id='addressLine1']")).sendKeys(address);

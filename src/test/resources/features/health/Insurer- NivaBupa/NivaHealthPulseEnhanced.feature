@@ -24,6 +24,7 @@ Feature: Health Journey functionality
       And select City "<city>"
       And select existing illness and click on View Plan
       And Enter spouse age through edit member
+      And Click on the Insurer dropdown button and select the insurer
       And click on premium button of NivaBupa
       And click on proceed to proposal page
       And Enter the details on proposer details screen "<panCard>","<address>","<contactEmail>","<emergencyMobile>"
