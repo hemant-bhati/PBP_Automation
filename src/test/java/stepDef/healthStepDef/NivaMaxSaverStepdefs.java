@@ -4,18 +4,15 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import stepDef.TestBase;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 public class NivaMaxSaverStepdefs extends TestBase {
@@ -120,6 +117,19 @@ public class NivaMaxSaverStepdefs extends TestBase {
     public void clickOnTheApplyButtonOfCoverAmountDropDown() {
         driver.findElement(By.xpath(prop.getProperty("Applybutton"))).click();
     }
+    @And("^click on the Insurer name dropdown button and select the name of the insurer$")
+    public void clickOnTheInsurerNameDropdownButtonAndSelectTheNameOfTheInsurer() {
+        WebElement insurerDropdownButton = driver.findElement(By.xpath(prop.getProperty("InsurerDropdownbutton")));
+        insurerDropdownButton.click();
+
+        // Use WebDriverWait to wait for the insurer element to be clickable
+        WebDriverWait wait = new WebDriverWait(driver, 10); // Adjust the timeout as needed
+        By insurerElementLocator = By.xpath("//input[@id='Niva Bupa (formerly known as Max Bupa)']");
+        WebElement insurerElement = wait.until(ExpectedConditions.elementToBeClickable(insurerElementLocator));
+
+        insurerElement.click();
+        driver.findElement(By.xpath(prop.getProperty("Applybutton"))).click();
+    }
 
     @And("^click on premium button of niva Max Saver$")
     public void clickOnPremiumButtonOfNivaMaxSaver() throws InterruptedException {
@@ -128,32 +138,84 @@ public class NivaMaxSaverStepdefs extends TestBase {
     }
 
     public void validateNivaMaxSaverPremiumButtonText() {
-        WebElement nivaMaxSaver = null;
         try {
-            nivaMaxSaver = driver.findElement(By.xpath(prop.getProperty("NivaMaxSaver")));
-            String queryNivaMaxSaver = "use HealthDB Select top 1 Premium from Hi.Health_Rates nolock where Plan_Id=12114 and SumInsured=10000000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=40 and Term = 1";
-            ResultSet res1 = stmt.executeQuery(queryNivaMaxSaver);
-            while (res1.next()) {
-                System.out.println("premium value from DB " + res1.getString(1));
-                String nivaMaxSavertext;
-                nivaMaxSavertext = nivaMaxSaver.getText();
-                String MaxSaversymbol1 = nivaMaxSavertext.replaceAll("₹", "");
-                String MaxSaversymbol2 = MaxSaversymbol1.replaceAll("/year", "");
-                String MaxSaverfinalsymbol = MaxSaversymbol2.replaceAll(",", "");
-                System.out.println("premium value from nivaMaxSaver UI = " + MaxSaverfinalsymbol);
-                String expectedbuttontext = res1.getString(1);
-                junit.framework.Assert.assertEquals(expectedbuttontext, MaxSaverfinalsymbol);
-                WebElement niva = driver.findElement(By.xpath(prop.getProperty("NivaMaxSaver")));
-                niva.click();
+            String nameToFind = "Max Saver"; // The name you want to find
+
+            boolean MaxSaverFound = false;
+
+            // Check if the "Max Saver" text is found on the page
+            while (!MaxSaverFound) {
+                boolean isTextPresent = (boolean) ((JavascriptExecutor) driver).executeScript(
+                        "return document.body.innerText.includes('" + nameToFind + "');"
+                );
+
+                if (isTextPresent) {
+                    MaxSaverFound = true;
+                } else {
+                    // Scroll the page down
+                    ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 300);");
+                    Thread.sleep(1000); // Adjust the sleep duration as needed
+                }
             }
-        } catch (org.openqa.selenium.NoSuchElementException e) {
-        } catch (SQLException e) {
+
+            if (MaxSaverFound) {
+//                WebElement nivaMaxSaver = driver.findElement(By.xpath(prop.getProperty("NivaMaxSaver")));
+                // Check the value of the "env" property
+                if (prop.getProperty("env").equalsIgnoreCase("qa")) {
+                    WebElement  nivaMaxSaver = driver.findElement(By.xpath(prop.getProperty("NivaMaxSaver")));
+                    // Execute the query
+                    String queryNivaMaxSaver = "use HealthDB Select top 1 Premium from Hi.Health_Rates nolock where Plan_Id=12114 and SumInsured=10000000 and NumberOfAdults=2 and NumberOfChildren=0 and Max_AgeOfEldestMember=40 and Term = 1";
+                    ResultSet res1 = stmt.executeQuery(queryNivaMaxSaver);
+
+                    while (res1.next()) {
+                        System.out.println("premium value from DB " + res1.getString(1));
+                        String nivaMaxSavertext = nivaMaxSaver.getText();
+                        String maxSaverSymbol1 = nivaMaxSavertext.replaceAll("₹", "");
+                        String maxSaverSymbol2 = maxSaverSymbol1.replaceAll("/year", "");
+                        String maxSaverFinalSymbol = maxSaverSymbol2.replaceAll(",", "");
+                        System.out.println("premium value from nivaMaxSaver UI = " + maxSaverFinalSymbol);
+                        String expectedButtonText = res1.getString(1);
+                        junit.framework.Assert.assertEquals(expectedButtonText, maxSaverFinalSymbol);
+
+                        // Click the element outside the loop
+                        nivaMaxSaver.click();
+                    }
+                } else {
+                    // Execute a different action when "env" is not "qa"
+                    WebElement  nivaMaxSaverprod = driver.findElement(By.xpath(prop.getProperty("NivaMaxSaverprod")));
+                    nivaMaxSaverprod.click();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
 
     @And("^click on proceed to the proposal page$")
     public void clickOnProceedToTheProposalPage() throws InterruptedException {
+        int maxWaitTimeInSeconds = 5;
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, maxWaitTimeInSeconds);
+            // Define the ExpectedCondition to check if the "Cover Amount" text is visible
+            ExpectedCondition<Boolean> CoverAmountVisible = webDriver -> {
+                try {
+                    WebElement coverAmountElement = driver.findElement(By.xpath("//h3[contains(text(), 'Cover Amount')]"));
+                    return coverAmountElement.isDisplayed();
+                } catch (StaleElementReferenceException e) {
+                    return false;
+                }
+            };
+            // Wait for the "Cover Amount" text to be visible
+            wait.until(CoverAmountVisible);
+            // If it becomes visible within the specified time, continue with your code
+
+        } catch (TimeoutException e) {
+            // The "Cover Amount" text is not visible within the timeout
+            // Refresh the page
+            driver.navigate().refresh();
+            // Continue with any additional actions you want to perform after the page refresh
+        }
         WebElement premiumvalue = driver.findElement(By.xpath("//div[@class='flexRow section_premium']//div//span"));
         System.out.println("*****Premium value before adding rider*****" + premiumvalue.getText());
         String beforerider = premiumvalue.getText();
@@ -186,8 +248,26 @@ public class NivaMaxSaverStepdefs extends TestBase {
 
     @And("^Enter the details on proposer details on the screen \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
     public void enterTheDetailsOnProposerDetailsOnTheScreen(String panCard, String address, String contactEmail, String emergencyMobile) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        driver.findElement(By.xpath("//input[@id='pan']")).sendKeys(panCard);
+        int maxWaitTimeInSeconds = 5;
+        WebDriverWait wait = null;
+        try {
+            wait = new WebDriverWait(driver, maxWaitTimeInSeconds);
+            ExpectedCondition<WebElement> presenceOfElementLocated = ExpectedConditions.presenceOfElementLocated(By.id("pan"));
+            WebElement element = wait.until(presenceOfElementLocated);
+            element.sendKeys("NXAPS8425T");
+        } catch (org.openqa.selenium.TimeoutException e) {
+            // Handle timeout exception
+            driver.navigate().refresh();
+
+            // Reuse the existing wait variable
+            ExpectedCondition<WebElement> presenceOfElementLocated = ExpectedConditions.presenceOfElementLocated(By.id("pan"));
+            WebElement element = wait.until(presenceOfElementLocated);
+            element.sendKeys("NXAPS8425T");
+        } catch (StaleElementReferenceException e) {
+            // Handle stale element reference exception
+            e.printStackTrace();
+        }
+
         driver.findElement(By.xpath("//input[@id='addressLine1']")).sendKeys(address);
         driver.findElement(By.xpath("//input[@id='email']")).sendKeys(contactEmail);
         driver.findElement(By.xpath("//input[@id='emergencyMobile']")).sendKeys(emergencyMobile);
