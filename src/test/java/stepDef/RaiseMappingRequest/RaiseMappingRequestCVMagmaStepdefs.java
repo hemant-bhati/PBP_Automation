@@ -77,7 +77,7 @@ public class RaiseMappingRequestCVMagmaStepdefs extends TestBase {
         // Display the last word
         System.out.println("Last Word: " + lastWord);
 //        String ID = driver.findElement(By.xpath("//div[@class='alert alert-success alert-important']")).getText();
-        System.setProperty("webdriver.chrome.driver", "D:\\PBP_Automation\\old.exe");
+        System.setProperty("webdriver.chrome.driver", "D:\\PBP_Automation\\chromedriver.exe");
         driver1 = new ChromeDriver();
         driver1.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver1.get("https://polbkqa.policybazaar.com/login");
@@ -126,8 +126,10 @@ public class RaiseMappingRequestCVMagmaStepdefs extends TestBase {
         cvcarrier.selectByValue("1");
         List<WebElement> plan = driver1.findElements(By.xpath(prop.getProperty("plantype")));
         Select plantype = new Select(plan.get(0));
+        plantype.selectByValue("2");
+        //Thread.sleep(2000L);
         plantype.selectByValue("1");
-        Thread.sleep(15000L);
+        Thread.sleep(5000L);
         //driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         WebElement planVal = driver1.findElement(By.xpath(prop.getProperty("plannameid")));
         Select planName = new Select(planVal);
@@ -153,11 +155,49 @@ public class RaiseMappingRequestCVMagmaStepdefs extends TestBase {
         Vehiclesubclass.selectByValue("1");
         driver1.findElement(By.xpath(prop.getProperty("rprCC"))).sendKeys("1200");
         driver1.findElement(By.xpath(prop.getProperty("rmrcvgvw"))).sendKeys("200");
-        List<WebElement> fuelT = driver1.findElements(By.xpath(prop.getProperty("fuelType")));
+        Thread.sleep(2000L);
+        List<WebElement> fuelT = driver1.findElements(By.xpath(prop.getProperty("rmrfuelTypeCV")));
         Select fuelTy = new Select(fuelT.get(0));
         fuelTy.selectByValue("2");
         driver1.findElement(By.xpath(prop.getProperty("rprNoofseats"))).sendKeys("5");
+        List<WebElement> wheels = driver1.findElements(By.xpath(prop.getProperty("rmrnoofwheels")));
+        Select Noofwheels = new Select(wheels.get(0));
+        Noofwheels.selectByValue("4");
+        List<WebElement> make= driver1.findElements(By.xpath(prop.getProperty("rmrmake")));
+        Select carMake = new Select(make.get(0));
+        carMake.selectByVisibleText("MAHINDRA");
+        Thread.sleep(2000L);
+        List<WebElement> model= driver1.findElements(By.xpath(prop.getProperty("rmrmodel")));
+        Select carModel = new Select(model.get(0));
+        carModel.selectByVisibleText("215 YUVRAJ");
+        Thread.sleep(2000L);
+        List<WebElement> term = driver1.findElements(By.xpath(prop.getProperty("rmrpolicyterm")));
+        Select policyterm = new Select(term.get(0));
+        policyterm.selectByValue("1");
+        driver1.findElement(By.xpath(prop.getProperty("rprODPremium"))).sendKeys("20000");
+        WebElement TPPremium = driver1.findElement(By.xpath(prop.getProperty("rprTPPremium")));
+        TPPremium.clear();
+        TPPremium.sendKeys("10000");
+        WebElement  NetPremium = driver1.findElement(By.xpath(prop.getProperty("rprnetpremium")));
+        NetPremium.clear();
+        NetPremium.sendKeys("30000");
+        Thread.sleep(2000L);
+        driver1.findElement(By.xpath(prop.getProperty("rprsuminsured"))).sendKeys("500000");
+        Thread.sleep(2000L);
+        driver1.findElement(By.xpath(prop.getProperty("rprgrosspremium"))).sendKeys("35000");
+        WebElement submitButt= driver1.findElement(By.xpath(prop.getProperty("updateButton")));
+        JavascriptExecutor jse2 = (JavascriptExecutor) driver1;
+        jse2.executeScript("arguments[0].scrollIntoView()", submitButt);
+        jse2.executeScript("arguments[0].click();", submitButt);
+        Thread.sleep(50000L);
 
+    }
 
+    @Then("^click on the update button$")
+    public void clickOnTheUpdateButton() {
+        WebElement submitButt = driver1.findElement(By.xpath(prop.getProperty("updateButton")));
+        JavascriptExecutor jse2 = (JavascriptExecutor) driver1;
+        jse2.executeScript("arguments[0].scrollIntoView()", submitButt);
+        jse2.executeScript("arguments[0].click();", submitButt);
     }
 }

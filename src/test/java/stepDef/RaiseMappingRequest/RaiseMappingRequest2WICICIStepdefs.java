@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import stepDef.TestBase;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +36,7 @@ public class RaiseMappingRequest2WICICIStepdefs extends TestBase {
         jse2.executeScript("arguments[0].scrollIntoView()", childElement);
         jse2.executeScript("arguments[0].click();", childElement);
         childElement.click();
-        Thread.sleep(3000L);
+        Thread.sleep(5000L);
         List<WebElement> productName = driver.findElements(By.xpath(prop.getProperty("prodID")));
         Select details = new Select(productName.get(0));
         details.selectByValue(prodID);
@@ -122,8 +123,10 @@ public class RaiseMappingRequest2WICICIStepdefs extends TestBase {
         stpNstp.selectByValue("2");
         List<WebElement> plan = driver1.findElements(By.xpath(prop.getProperty("plantype")));
         Select plantype = new Select(plan.get(0));
+        plantype.selectByValue("1");
+        Thread.sleep(1000);
         plantype.selectByValue("2");
-        Thread.sleep(15000L);
+        Thread.sleep(5000L);
         //driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         WebElement planVal = driver1.findElement(By.xpath(prop.getProperty("plannameid")));
         Select planName = new Select(planVal);
@@ -141,7 +144,7 @@ public class RaiseMappingRequest2WICICIStepdefs extends TestBase {
         Select Vehiclesubclass = new Select(subclass.get(0));
         Vehiclesubclass.selectByValue("1");
         driver1.findElement(By.xpath(prop.getProperty("rprCC"))).sendKeys("100");
-        List<WebElement> fuelT = driver1.findElements(By.xpath(prop.getProperty("fuelType")));
+        List<WebElement> fuelT = driver1.findElements(By.xpath(prop.getProperty("rmrfuelType")));
         Select fuelTy = new Select(fuelT.get(0));
         fuelTy.selectByValue("2");
         List<WebElement> make= driver1.findElements(By.xpath(prop.getProperty("rmrmake")));
@@ -176,9 +179,45 @@ public class RaiseMappingRequest2WICICIStepdefs extends TestBase {
     }
 
     @Then("^verify the lead value from UI and DB$")
-    public void verifyTheLeadValueFromUIAndDB() {
-        new WebDriverWait(driver1, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("rprpopupclosebutton")))).click();
+    public void verifyTheLeadValueFromUIAndDB() throws InterruptedException {
+        //new WebDriverWait(driver1, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath(prop.getProperty("rprpopupclosebutton")))).click();
         //driver1.findElement(By.xpath(prop.getProperty("rprpopupclosebutton"))).click();
+
+       // int maxWaitTimeInSeconds = 90;
+        //WebDriverWait wait = new WebDriverWait(driver1, maxWaitTimeInSeconds);
+        //try {
+
+//            WebElement closeButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("rprpopupclosebutton")));
+//            closeButton.click();
+        Thread.sleep(85000L);
+        //WebElement closeButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("rprpopupcancelbutton")));
+        driver1.findElement(By.xpath("rprpopupcancelbutton")).click();
+        //closeButton.click();
+//        } catch (org.openqa.selenium.TimeoutException e) {
+//            System.out.println("Close button did not appear within the timeout Refreshing the page.");
+//            //driver1.navigate().refresh();
+//            // Wait for the page to load after refresh (you can adjust the timeout)
+//            WebDriverWait pageLoadWait = new WebDriverWait(driver1, 10);
+//            pageLoadWait.until(webDriver ->
+//                    ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+//        }
+        try {
+            String query = "use PospDB select top(1) LeadID from dbo.BookingDetails_v1 where productID = 187 and PlanId = 195 order by LeadID desc";
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                System.out.println("leadId value from DB " + res.getString(1));
+                Thread.sleep(5000L);
+                WebElement leadId = driver.findElement(By.xpath(prop.getProperty("rmrLeadIdUI")));
+                //for (WebElement e : leadId) {
+                    System.out.println("Lead Id value from UI " + leadId.getText());
+                    String leadValue = res.getString(1);
+                    junit.framework.Assert.assertEquals("LEAD ID: " + leadValue, leadId.getText());
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
 
