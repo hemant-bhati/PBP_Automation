@@ -79,7 +79,7 @@ public class RaiseMappingRequest2WICICIStepdefs extends TestBase {
         // Display the last word
         System.out.println("Last Word: " + lastWord);
 //        String ID = driver.findElement(By.xpath("//div[@class='alert alert-success alert-important']")).getText();
-        System.setProperty("webdriver.chrome.driver", "D:\\PBP_Automation\\hb.exe");
+        System.setProperty("webdriver.chrome.driver", "D:\\PBP_Automation\\chromedriver.exe");
         driver1 = new ChromeDriver();
         driver1.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver1.get("https://polbkqa.policybazaar.com/login");
@@ -191,7 +191,7 @@ public class RaiseMappingRequest2WICICIStepdefs extends TestBase {
 //            closeButton.click();
         Thread.sleep(85000L);
         //WebElement closeButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("rprpopupcancelbutton")));
-        driver1.findElement(By.xpath("rprpopupcancelbutton")).click();
+        driver1.findElement(By.xpath(prop.getProperty("rprpopupclosebutton"))).click();
         //closeButton.click();
 //        } catch (org.openqa.selenium.TimeoutException e) {
 //            System.out.println("Close button did not appear within the timeout Refreshing the page.");
