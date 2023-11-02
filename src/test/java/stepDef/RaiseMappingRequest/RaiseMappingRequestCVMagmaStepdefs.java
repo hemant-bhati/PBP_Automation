@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import stepDef.TestBase;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -77,7 +78,7 @@ public class RaiseMappingRequestCVMagmaStepdefs extends TestBase {
         // Display the last word
         System.out.println("Last Word: " + lastWord);
 //        String ID = driver.findElement(By.xpath("//div[@class='alert alert-success alert-important']")).getText();
-        System.setProperty("webdriver.chrome.driver", "D:\\PBP_Automation\\hb.exe");
+        System.setProperty("webdriver.chrome.driver", "D:\\PBP_Automation\\chromedriver.exe");
         driver1 = new ChromeDriver();
         driver1.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver1.get("https://polbkqa.policybazaar.com/login");
@@ -185,10 +186,11 @@ public class RaiseMappingRequestCVMagmaStepdefs extends TestBase {
         driver1.findElement(By.xpath(prop.getProperty("rprsuminsured"))).sendKeys("500000");
         Thread.sleep(2000L);
         driver1.findElement(By.xpath(prop.getProperty("rprgrosspremium"))).sendKeys("35000");
-        WebElement submitButt= driver1.findElement(By.xpath(prop.getProperty("updateButton")));
-        JavascriptExecutor jse2 = (JavascriptExecutor) driver1;
-        jse2.executeScript("arguments[0].scrollIntoView()", submitButt);
-        jse2.executeScript("arguments[0].click();", submitButt);
+//        WebElement submitButt= driver1.findElement(By.xpath(prop.getProperty("updateButton")));
+//        JavascriptExecutor jse2 = (JavascriptExecutor) driver1;
+//        jse2.executeScript("arguments[0].scrollIntoView()", submitButt);
+//        jse2.executeScript("arguments[0].click();", submitButt);
+
         Thread.sleep(50000L);
 
     }
@@ -199,5 +201,29 @@ public class RaiseMappingRequestCVMagmaStepdefs extends TestBase {
         JavascriptExecutor jse2 = (JavascriptExecutor) driver1;
         jse2.executeScript("arguments[0].scrollIntoView()", submitButt);
         jse2.executeScript("arguments[0].click();", submitButt);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+    }
+
+    @Then("^verify the lead values from UI and DB$")
+    public void verifyTheLeadValuesFromUIAndDB() throws InterruptedException {
+        Thread.sleep(85000L);
+        driver1.findElement(By.xpath(prop.getProperty("rprpopupclosebutton"))).click();
+
+        try {
+            String query = "use PospDB select top(1) LeadID from dbo.BookingDetails_v1 where productID = 188 and PlanId = 29 order by LeadID desc";
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                System.out.println("leadId value from DB " + res.getString(1));
+                Thread.sleep(5000L);
+                WebElement leadId = driver.findElement(By.xpath(prop.getProperty("rmrLeadIdUI")));
+                //for (WebElement e : leadId) {
+                System.out.println("Lead Id value from UI " + leadId.getText());
+                String leadValue = res.getString(1);
+                junit.framework.Assert.assertEquals("LEAD ID: " + leadValue, leadId.getText());
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
