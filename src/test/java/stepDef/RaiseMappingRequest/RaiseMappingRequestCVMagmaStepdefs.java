@@ -191,7 +191,7 @@ public class RaiseMappingRequestCVMagmaStepdefs extends TestBase {
 //        jse2.executeScript("arguments[0].scrollIntoView()", submitButt);
 //        jse2.executeScript("arguments[0].click();", submitButt);
 
-        Thread.sleep(50000L);
+        Thread.sleep(30000L);
 
     }
 
@@ -201,12 +201,12 @@ public class RaiseMappingRequestCVMagmaStepdefs extends TestBase {
         JavascriptExecutor jse2 = (JavascriptExecutor) driver1;
         jse2.executeScript("arguments[0].scrollIntoView()", submitButt);
         jse2.executeScript("arguments[0].click();", submitButt);
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @Then("^verify the lead values from UI and DB$")
     public void verifyTheLeadValuesFromUIAndDB() throws InterruptedException {
-        Thread.sleep(85000L);
+        Thread.sleep(75000L);
         driver1.findElement(By.xpath(prop.getProperty("rprpopupclosebutton"))).click();
 
         try {
