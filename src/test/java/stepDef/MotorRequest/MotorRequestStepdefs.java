@@ -29,8 +29,9 @@ public class MotorRequestStepdefs {
         jse2.executeScript("arguments[0].click();", childElement1);
         childElement1.click();
         Thread.sleep(5000L);
-        WebElement childElement = driver.findElement(By.xpath("//a[contains(text(),'New Motor Request')]"));
-        childElement.click();
+        driver.findElement(By.xpath("//a[contains(text(),'New Motor Request')]")).click();
+//        WebElement childElement = driver.findElement(By.xpath("//a[contains(text(),'New Motor Request')]"));
+//        childElement.click();
 
     }
 
