@@ -42,12 +42,16 @@ public class MotorRequestStepdefs {
         WebElement regidate = driver.findElement(By.xpath(prop.getProperty("regisDate")));
         regidate.sendKeys("2022-12-20");
         regidate.sendKeys(Keys.ENTER);
-        driver.findElement(By.xpath(prop.getProperty("vehiType"))).click();
+//        driver.findElement(By.xpath(prop.getProperty("vehiType"))).click();
+        WebElement vehicleType = driver.findElement(By.xpath(prop.getProperty("vehiType")));
+        JavascriptExecutor jse2 = (JavascriptExecutor) driver;
+        jse2.executeScript("arguments[0].scrollIntoView()", vehicleType);
+        jse2.executeScript("arguments[0].click();", vehicleType);
 
         WebElement childElement3= driver.findElement(By.xpath(prop.getProperty("polType")));
-        JavascriptExecutor jse2 = (JavascriptExecutor) driver;
-        jse2.executeScript("arguments[0].scrollIntoView()", childElement3);
-        jse2.executeScript("arguments[0].click();", childElement3);
+        JavascriptExecutor jse3 = (JavascriptExecutor) driver;
+        jse3.executeScript("arguments[0].scrollIntoView()", childElement3);
+        jse3.executeScript("arguments[0].click();", childElement3);
 //        childElement3.click();
 //        driver.findElement(By.xpath(prop.getProperty("insurer"))).click();
 ////        driver.findElement(By.xpath(prop.getProperty("insList"))).click();
