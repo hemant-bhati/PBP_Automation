@@ -24,4 +24,4 @@ Feature: New Motor Request of Car
 
     Examples:
     |registraNum|idvValue|custemail|mobileNo|panNo|rc|
-    |HR01th6767|50000|nehagupta@pbpartners.com|8889099999|CKIPN9898J|C:\Users\NehaGupta\Desktop\Policies folder\Reliance\reliance car saod.pdf|
+    |HR01th6767|50000|nehagupta@pbpartners.com|8889099999|CKIPN9898J|D:\PB Partners\POSP\OCR\ICICI\icici tw2.pdf|
