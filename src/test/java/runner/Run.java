@@ -10,7 +10,7 @@ import java.io.File;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(dryRun = false, features = "src/test/resources/features", glue = "stepDef",
-        tags = "@MappingRequestCarReliance", plugin = {"pretty", "com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html"}
+        tags = "@MappingRequest2WICICI", plugin = {"pretty", "com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html"}
 
 )
 public class Run {
