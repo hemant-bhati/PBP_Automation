@@ -16,7 +16,7 @@ public class Dashboard extends TestBase {
         }
         driver.navigate().back();
         try {
-            String query = "use POSPDB EXEC [stats].[GetProductWiseBusinessStats_v1] @AffiliateCode='IP9022', @FromDate='2023-07-01', @ToDate='2023-07-07', @businessCheckOn=1";
+            String query = "use POSPDB EXEC [stats].[GetProductWiseBusinessStats_v1] @AffiliateCode='IP9022', @FromDate='2023-08-01', @ToDate='2023-08-31', @businessCheckOn=1";
 // Get the contents of userinfo table from DB
             ResultSet res = stmt.executeQuery(query);
 // Print the result untill all the records are printed
@@ -56,7 +56,7 @@ public class Dashboard extends TestBase {
     @Then("^Validate Leads tab under My Actionables$")
     public void validateLeadsTabUnderMyActionables() {
         driver.findElement(By.xpath(prop.getProperty("leads"))).click();
-        driver.navigate().back();
+       // driver.navigate().back();
     }
     @Then("^Click on continue button through leads$")
     public void clickOnContinueButtonThroughLeads() {
