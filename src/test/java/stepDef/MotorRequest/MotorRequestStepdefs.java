@@ -151,7 +151,7 @@ public class MotorRequestStepdefs {
     }
 
     @Then("^Open the Admin panel$")
-    public void openTheAdminPanel() {
+    public void openTheAdminPanel() throws InterruptedException {
 //        System.setProperty("webdriver.chrome.driver", "D:\\Cucumber_automation\\Test\\chromedriver.exe");
         ChromeDriver driver1 = new ChromeDriver();
         driver1.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -164,11 +164,12 @@ public class MotorRequestStepdefs {
         JavascriptExecutor jse1 = (JavascriptExecutor) driver1;
         jse1.executeScript("arguments[0].scrollIntoView()", childElement);
         jse1.executeScript("arguments[0].click();", childElement);
+        Thread.sleep(300L);
     }
 
     @Then("^Open the Offline Request through admin$")
     public void openTheOfflineRequestThroughAdmin() {
-        WebElement childElement = driver.findElement(By.xpath(prop.getProperty("offlineReq")));
+        WebElement childElement = driver1.findElement(By.xpath(prop.getProperty("offlineReq")));
         JavascriptExecutor jse2 = (JavascriptExecutor) driver1;
         jse2.executeScript("arguments[0].scrollIntoView()", childElement);
         jse2.executeScript("arguments[0].click();", childElement);
